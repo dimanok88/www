@@ -1,4 +1,4 @@
-<h2>Загрузка фотографии</h2>
+<h2>Загрузка прайса</h2>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
