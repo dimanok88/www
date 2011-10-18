@@ -1,0 +1,58 @@
+.order p {
+    margin: 5px 0;
+}
+.order .row {
+    margin: 10px 0;
+}
+.order .row label {
+    display: block;
+}
+.order .row label.options {
+    display: inline;
+}
+.order .errorMessage {
+    color: red;
+    font-size: 10px;
+}
+.order label.button-list-label {
+    display: inline;
+}
+.order ul {
+    padding: 25px;
+}
+.order a {
+    color: #6B6B6B;
+    text-decoration: underline;
+}
+.order a:hover {
+    color: #000;
+    text-decoration: none;
+}
+.order span.required {
+    color: red;
+}
+.order .delivery {
+    width: 100%;
+}
+.order .delivery td {
+    vertical-align: middle;
+}
+.order .delivery .cost {
+    text-align: center;
+    width: 100px;
+}
+.order .delivery .select {
+    text-align: center;
+    width: 50px;
+}
+.order h2 {
+    padding: 5px 0;
+}
+.order .note {
+    background-color: #eee;
+    color: #000;
+    padding: 5px;
+}
+.order .buttons {
+    text-align: center;
+}

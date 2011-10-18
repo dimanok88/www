@@ -1,0 +1,16 @@
+.registration p {
+    margin: 5px 0;
+}
+.registration .row {
+    margin: 10px 0;
+}
+.registration .row label {
+    display: block;
+}
+.registration .errorMessage {
+    color: red;
+    font-size: 10px;
+}
+.registration label.button-list-label {
+    display: inline;
+}

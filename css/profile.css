@@ -1,0 +1,42 @@
+.profile p {
+    margin: 5px 0;
+}
+.profile .row {
+    margin: 10px 0;
+}
+.profile .row label {
+    display: block;
+}
+.profile .errorMessage {
+    color: red;
+    font-size: 10px;
+}
+.profile label.button-list-label {
+    display: inline;
+}
+.profile ul {
+    padding: 25px;
+}
+.profile a {
+    color: #6B6B6B;
+    text-decoration: underline;
+}
+.profile a:hover {
+    color: #000;
+    text-decoration: none;
+}
+.breadcrumbs {
+    padding: 5px 0;
+}
+.order .row p {
+    padding: 3px 0;
+}
+.errorSummary {
+    font-size: 12px;
+}
+.errorSummary ul {
+    padding: 0 15px;
+}
+.errorSummary ul li {
+    padding: 5px 0;
+}

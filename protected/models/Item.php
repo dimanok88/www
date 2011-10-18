@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * This is the model class for table "item".
+ *
+ * The followings are the available columns in table 'item':
+ * @property integer $id
+ * @property string $main_string
+ * @property double $price
+ * @property string $type
+ * @property string $type_item
+ * @property integer $season
+ * @property double $diametr
+ * @property double $width
+ * @property double $profile
+ * @property double $vilet
+ * @property string $stupica
+ * @property double $krepezh
+ * @property string $color
+ * @property string $model
+ * @property integer $active
+ * @property string $date_add
+ * @property string $date_modify
+ */
+class Item extends CActiveRecord implements IECartPosition
+{
+
+        const ITEM_TYPE_TIRE = 'tire';
+        const ITEM_TYPE_DISC = 'disc';
+        const ITEM_TYPE_OTHER = 'other';
+
+        public function getTypeList()
+        {
+            return array(
+                self::ITEM_TYPE_DISC => 'Диск',
+                self::ITEM_TYPE_TIRE => 'Шина',
+                self::ITEM_TYPE_OTHER => 'Разное',
+            );
+        }
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return Item the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'item';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('main_string, price', 'required'),
+			array('season, active', 'numerical', 'integerOnly'=>true),
+			array('price, d, w, hw, vilet, krepezh', 'numerical'),
+			array('main_string', 'length', 'max'=>255),
+			array('type', 'length', 'max'=>10),
+			array('type_item', 'length', 'max'=>6),
+			array('stupica', 'length', 'max'=>30),
+			array('color', 'length', 'max'=>200),
+			array('model', 'length', 'max'=>100),
+                        array('pic, descript, marka', 'default'),
+			// The following rule is used by search().
+			// Please remove those attributes that should not be searched.
+			array('id, main_string, price, type, type_item, season, d, w, hw, vilet, stupica, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'main_string' => 'Строка',
+			'price' => 'Цена',
+			'type' => 'Тип',
+			'type_item' => 'Тип элемента',
+			'season' => 'сезон',
+			'd' => 'Радиус',
+			'w' => 'Ширина',
+			'hw' => 'Профиль',
+			'vilet' => 'Вылет',
+			'stupica' => 'Ступица',
+			'krepezh' => 'Крепеж',
+			'color' => 'Цвет',
+			'model' => 'Модель',
+			'active' => 'Активность',
+			'date_add' => 'Добавлен',
+			'date_modify' => 'Изменен',
+                        'pic'=> 'Картинка',
+                        'descript'=>'Описание',
+                        'marka'=>'Марка',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('main_string',$this->main_string,true);
+		$criteria->compare('price',$this->price);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('type_item',$this->type_item,true);
+		$criteria->compare('season',$this->season);
+		$criteria->compare('diametr',$this->diametr);
+		$criteria->compare('width',$this->width);
+		$criteria->compare('profile',$this->profile);
+		$criteria->compare('vilet',$this->vilet);
+		$criteria->compare('stupica',$this->stupica,true);
+		$criteria->compare('krepezh',$this->krepezh);
+		$criteria->compare('color',$this->color,true);
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('active',$this->active);
+		$criteria->compare('date_add',$this->date_add,true);
+		$criteria->compare('date_modify',$this->date_modify,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+        public function getId()
+        {
+            return 'item' . $this->id;
+        }
+
+        public function getPrice()
+        {
+            return $this->price;
+        }
+}

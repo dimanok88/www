@@ -1,0 +1,4 @@
+!assets/index.html
+assets/*
+!protected/runtime/index.html
+protected/runtime/*
