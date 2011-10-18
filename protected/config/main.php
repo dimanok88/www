@@ -10,7 +10,7 @@ return array(
     'sourceLanguage' => 'ru_ru',
     'charset' => 'utf-8',
 
-    'defaultController' => 'front',
+    'defaultController' => 'parser',
 
 	'import'=>array(
 		'application.models.*',
