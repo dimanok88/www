@@ -51,6 +51,7 @@ class ParserController extends Controller
                                     $item->attributes=$result;
                                     $item->main_string = $main_string;
                                     $item->price = $price;
+                                    $item->pic = '';
                                    
                                     if( $item->save() )
                                     {
