@@ -39,14 +39,14 @@ class ParserController extends Controller
                                 if($row[3] == 'other')
                                 {
                                      $result = $parser_other->run($row[0]);
-                                     $price = $row[1];
+                                     $price = trim($row[1]);
                                      $season = '';
                                      $shipi = '';
                                 }
                                 else
                                 {
                                     $result = $parser_info->run($row[0]);
-                                    $price = $row[2];
+                                    $price = trim($row[2]);
                                     $season = $row[4];
                                     $shipi = $row[5];
                                 }
@@ -54,6 +54,8 @@ class ParserController extends Controller
                                 if(!empty($result))
                                 {
                                     $item = new Item();
+                                    $id_new = $item->NewPrice($main_string, $price);
+                                    
                                     if($item->NewString($main_string))
                                     {
                                         $item->attributes=$result;
@@ -69,9 +71,9 @@ class ParserController extends Controller
                                             continue;
                                         }
                                     }
-                                    elseif($id_new = $item->NewPrice($main_string, $price))
+                                    elseif($id_new != false)
                                     {
-                                        $item->updateByPk($id_new, array('price'=>$price));
+                                        $item->updateByPk($id_new, array('price'=>$price, 'date_modify'=> new CDbExpression('NOW()')));
                                     }
                                     
                                 }
@@ -80,7 +82,7 @@ class ParserController extends Controller
                             fclose($handle);
                         }
 
-                        $this->redirect(array('index'));
+                        //$this->redirect(array('index'));
                     }
                 }
 

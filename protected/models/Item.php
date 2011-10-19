@@ -94,7 +94,7 @@ class Item extends CActiveRecord implements IECartPosition
 	    if ($this->isNewRecord) {
 	        $this->date_add = new CDbExpression('NOW()');
 	    }
-
+        
 	    return parent::beforeSave();
 	}
 
@@ -198,7 +198,8 @@ class Item extends CActiveRecord implements IECartPosition
             $searchString = $this->find('main_string=:main', array(':main'=>$string));
             if(count($searchString) > 0)
             {
-                if($searchString->price != $price) return $searchString->id;
+                if($searchString->price !== $price) return $searchString->id;
+                else return false;
             }
             return false;
         }
