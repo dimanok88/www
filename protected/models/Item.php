@@ -63,7 +63,7 @@ class Item extends CActiveRecord implements IECartPosition
 		// will receive user inputs.
 		return array(
 			array('main_string, price', 'required'),
-			array('season, active', 'numerical', 'integerOnly'=>true),
+			array('active', 'numerical'),
 			array('price, d, w, hw, vilet, krepezh', 'numerical'),
 			array('main_string', 'length', 'max'=>255),
 			array('type', 'length', 'max'=>10),
@@ -71,10 +71,10 @@ class Item extends CActiveRecord implements IECartPosition
 			array('stupica', 'length', 'max'=>30),
 			array('color', 'length', 'max'=>200),
 			array('model', 'length', 'max'=>100),
-                        array('pic, descript, marka', 'default'),
+            array('season, pic, descript, marka, shipi', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, price, type, type_item, season, d, w, hw, vilet, stupica, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, price, type, type_item, season, d, w, hw, vilet, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -89,6 +89,16 @@ class Item extends CActiveRecord implements IECartPosition
 		);
 	}
 
+
+    public function beforeSave() {
+	    if ($this->isNewRecord) {
+	        $this->date_add = new CDbExpression('NOW()');
+	    }
+
+	    return parent::beforeSave();
+	}
+
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -100,7 +110,7 @@ class Item extends CActiveRecord implements IECartPosition
 			'price' => 'Цена',
 			'type' => 'Тип',
 			'type_item' => 'Тип элемента',
-			'season' => 'сезон',
+			'season' => 'Сезон',
 			'd' => 'Радиус',
 			'w' => 'Ширина',
 			'hw' => 'Профиль',
@@ -112,9 +122,9 @@ class Item extends CActiveRecord implements IECartPosition
 			'active' => 'Активность',
 			'date_add' => 'Добавлен',
 			'date_modify' => 'Изменен',
-                        'pic'=> 'Картинка',
-                        'descript'=>'Описание',
-                        'marka'=>'Марка',
+            'pic'=> 'Картинка',
+            'descript'=>'Описание',
+            'marka'=>'Марка',
 		);
 	}
 
@@ -140,6 +150,7 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('profile',$this->profile);
 		$criteria->compare('vilet',$this->vilet);
 		$criteria->compare('stupica',$this->stupica,true);
+        $criteria->compare('shipi',$this->shipi);
 		$criteria->compare('krepezh',$this->krepezh);
 		$criteria->compare('color',$this->color,true);
 		$criteria->compare('model',$this->model,true);
@@ -159,6 +170,36 @@ class Item extends CActiveRecord implements IECartPosition
 
         public function getPrice()
         {
+            /*if( $this->price == 0 )
+            {
+                return 'Звоните';
+            }
+            return number_format($this->price, 2, ",", " ");*/
             return $this->price;
+        }
+
+        public function getMain_string()
+        {
+            return $this->main_string;
+        }
+
+        public function NewString($string)
+        {
+            $searchString = $this->count('main_string=:main', array(':main'=>$string));
+            if($searchString == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public function NewPrice($string, $price)
+        {
+            $searchString = $this->find('main_string=:main', array(':main'=>$string));
+            if(count($searchString) > 0)
+            {
+                if($searchString->price != $price) return $searchString->id;
+            }
+            return false;
         }
 }

@@ -10,7 +10,7 @@ class ParserController extends Controller
 	private $_model;
 
 	public function actionIndex()
-	{            
+	{
 		$model = new PriceForm();
                 if( isset($_POST['PriceForm']) )
                 {
@@ -20,7 +20,7 @@ class ParserController extends Controller
                         $totalRows = 0;
                         $totalRowsDone = 0;
                         $parser_other = new CsvParserOther();
-                        $parser_info = new CsvParserInfo();                        
+                        $parser_info = new CsvParserInfo();
 
                         if( ($handle = fopen($model->file->tempName, 'r')) !== FALSE )
                         {
@@ -34,35 +34,52 @@ class ParserController extends Controller
                                 $totalRows++;
                                 //echo $row[1]."\n";
                                 $main_string= $row[0];
+                                $type_item = $row[7];
+                                $pic = $row[6];
                                 if($row[3] == 'other')
                                 {
                                      $result = $parser_other->run($row[0]);
                                      $price = $row[1];
+                                     $season = '';
+                                     $shipi = '';
                                 }
                                 else
                                 {
                                     $result = $parser_info->run($row[0]);
                                     $price = $row[2];
+                                    $season = $row[4];
+                                    $shipi = $row[5];
                                 }
                                 //if(!empty($result)) echo $result['type']."<br>";
                                 if(!empty($result))
                                 {
                                     $item = new Item();
-                                    $item->attributes=$result;
-                                    $item->main_string = $main_string;
-                                    $item->price = $price;
-                                    $item->pic = '';
-                                   
-                                    if( $item->save() )
+                                    if($item->NewString($main_string))
                                     {
-                                        continue;
+                                        $item->attributes=$result;
+                                        $item->main_string = $main_string;
+                                        $item->price = $price;
+                                        $item->pic = $pic;
+                                        $item->season = $season;
+                                        $item->shipi = $shipi;
+                                        $item->type_item = $type_item;
+
+                                        if( $item->save() )
+                                        {
+                                            continue;
+                                        }
                                     }
+                                    elseif($id_new = $item->NewPrice($main_string, $price))
+                                    {
+                                        $item->updateByPk($id_new, array('price'=>$price));
+                                    }
+                                    
                                 }
                                 //print_r($result);
                             }
                             fclose($handle);
                         }
-                        
+
                         $this->redirect(array('index'));
                     }
                 }
@@ -72,6 +89,6 @@ class ParserController extends Controller
 
         public function InsertDataBase($array)
         {
-            
+
         }
 }
