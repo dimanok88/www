@@ -125,6 +125,7 @@ class Item extends CActiveRecord implements IECartPosition
             'pic'=> 'Картинка',
             'descript'=>'Описание',
             'marka'=>'Марка',
+            'shipi'=>'Шипи',
 		);
 	}
 
@@ -170,12 +171,12 @@ class Item extends CActiveRecord implements IECartPosition
 
         public function getPrice()
         {
-            /*if( $this->price == 0 )
+            if( $this->price == 0 )
             {
                 return 'Звоните';
             }
-            return number_format($this->price, 2, ",", " ");*/
-            return $this->price;
+            return number_format($this->price, 2, ",", " ");
+            //return $this->price;
         }
 
         public function getMain_string()
