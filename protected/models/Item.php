@@ -298,7 +298,7 @@ class Item extends CActiveRecord implements IECartPosition
     // для определения ID модели передаем название модели и ищим ее в таблице model и после выдаем  ID
     public function ModelId($ModelName)
     {
-        $model_id = 
+        $model_id = this->find();
     }
 
 }
