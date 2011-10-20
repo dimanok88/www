@@ -80,6 +80,10 @@ class ParserController extends Controller
                                 //print_r($result);
                             }
                             fclose($handle);
+                            Yii::app()->user->setFlash(
+                                'price',
+                                "Новый прайс загружен и обновлен! ".CHtml::link('Перейти в раздел.', array('item'))
+                            );
                         }
 
                         $this->redirect(array('index'));

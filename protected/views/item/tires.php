@@ -1,3 +1,12 @@
+<?php
+    $this->breadcrumbs = array(
+        'Общий раздел' => array('item/'),
+        "Шины"
+    );
+?>
+
+<h2>Шины</h2>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tires-grid',
 	'dataProvider'=>$model->tires(),

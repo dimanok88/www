@@ -1,5 +1,20 @@
+<?
+Yii::app()->clientScript->registerScript(
+   'flash-success',
+   '$(".flash-success").animate({opacity: 1.0}, 10000).fadeOut("slow");',
+   CClientScript::POS_READY
+);
+?>
+
+
 <h2>Загрузка прайса</h2>
 <div class="form">
+        <?php if(Yii::app()->user->hasFlash('price')): ?>
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('price'); ?>
+        </div>
+        <?php endif; ?>
+
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id' => 'photos-form',
@@ -24,3 +39,4 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+

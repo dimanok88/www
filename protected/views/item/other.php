@@ -1,3 +1,12 @@
+<?php
+    $this->breadcrumbs = array(
+        'Общий раздел' => array('item/'),
+        "Разное"
+    );
+?>
+
+<h2>Разное</h2>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'other-grid',
 	'dataProvider'=>$model->other(),
