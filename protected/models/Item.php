@@ -196,12 +196,95 @@ class Item extends CActiveRecord implements IECartPosition
 
         public function NewPrice($string, $price)
         {
-            $searchString = $this->find('main_string=:main', array(':main'=>$string));
+            $searchString = $this->find('main_string=:main AND price!=:p', array(':main'=>$string, ':p'=>$price));
             if(count($searchString) > 0)
             {
-                if($searchString->price !== $price) return $searchString->id;
-                else return false;
+                if($searchString->price == $price) return false;
+                else return $searchString->id;
             }
             return false;
         }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function tires()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                '`price` > 0',
+                "`type` = 'tire'",
+                "`active` = 1",
+            )
+        );
+        $criteria->compare('`d`', $this->d);
+        $criteria->compare('`season`', $this->season);
+        $criteria->compare('`price`', $this->price, 'LIKE');
+        //$criteria->addSearchCondition('`name`', $this->name);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
+
+    public function discs()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                '`price` > 0',
+                "`type` = 'disc'",
+                "`active` = 1",
+            )
+        );
+        $criteria->compare('`d`', $this->d);
+        $criteria->compare('`price`', $this->price, 'LIKE');
+        //$criteria->addSearchCondition('`name`', $this->name);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
+
+    public function other()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                '`price` > 0',
+                "`type` = 'other'",
+                "`active` = 1",
+            )
+        );
+        $criteria->compare('`marka`', $this->d);
+        $criteria->compare('`price`', $this->price, 'LIKE');
+        //$criteria->addSearchCondition('`name`', $this->name);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

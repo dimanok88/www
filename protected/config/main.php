@@ -61,9 +61,9 @@ return array(
 					'levels'=>'error, warning',
 				),
 				
-                array(
+                /*array(
 					'class'=>'CWebLogRoute',
-				),
+				),*/
 			),
 		),
 
@@ -86,7 +86,7 @@ return array(
     ),
 
 	'params' => array(
-		'adminEmail' => 'oleg@codebe.com',
+		'adminEmail' => 'dimanok88@gmail.com',
 
         'uploadDir' => '/resources/upload/',
 

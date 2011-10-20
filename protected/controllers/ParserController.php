@@ -75,14 +75,14 @@ class ParserController extends Controller
                                     {
                                         $item->updateByPk($id_new, array('price'=>$price, 'date_modify'=> new CDbExpression('NOW()')));
                                     }
-                                    
+                                    set_time_limit(0);
                                 }
                                 //print_r($result);
                             }
                             fclose($handle);
                         }
 
-                        //$this->redirect(array('index'));
+                        $this->redirect(array('index'));
                     }
                 }
 
