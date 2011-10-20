@@ -65,6 +65,9 @@ class ParserController extends Controller
                                         $item->season = $season;
                                         $item->shipi = $shipi;
                                         $item->type_item = $type_item;
+                                        if($result['type'] == 'tire') $item->category = $item->ModelIdTire($result['model']);
+                                        elseif($result['type'] == 'disc') $item->category = $item->ModelIdDisc($result['model']);
+                                        elseif($result['type'] == 'other') $item->category = $item->ModelIdOther($result['model']);
 
                                         if( $item->save() )
                                         {

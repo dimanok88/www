@@ -39,7 +39,7 @@ class OboznachenieModel extends CActiveRecord
 			array('oboznach, model_id', 'required'),
 			array('model_id', 'numerical', 'integerOnly'=>true),
 			array('oboznach', 'length', 'max'=>50),
-			array('type', 'length', 'max'=>1),
+			array('type', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, oboznach, model_id, type', 'safe', 'on'=>'search'),
@@ -84,7 +84,7 @@ class OboznachenieModel extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('oboznach',$this->oboznach,true);
 		$criteria->compare('model_id',$this->model_id);
-		$criteria->compare('type',$this->type,true);
+		$criteria->compare('type',$this->type);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -296,9 +296,38 @@ class Item extends CActiveRecord implements IECartPosition
 
     // получаем ID нужной нам модели
     // для определения ID модели передаем название модели и ищим ее в таблице model и после выдаем  ID
-    public function ModelId($ModelName)
+    public function ModelIdTire($ModelName)
     {
-        $model_id = this->find();
+        $pattern = "!(.*?)[\s-]!ims";
+		echo $pattern;
+	    preg_match_all($pattern, $ModelName, $model_id);
+		$name = $model_id[1][0];
+        $oboz['model_id'] = 0;
+        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='tire'", array(':ob'=>$name));
+
+        return $oboz['model_id'];
+    }
+    public function ModelIdDisc($ModelName)
+    {
+        $pattern = "!(.*?)[\s-]!ims";
+		echo $pattern;
+	    preg_match_all($pattern, $ModelName, $model_id);
+		$name = $model_id[1][0];
+        $oboz['model_id'] = 0;
+        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='disc'", array(':ob'=>$name));
+
+        return $oboz['model_id'];
+    }
+    public function ModelIdOther($ModelName)
+    {
+        $pattern = "!(.*?)[\s-]!ims";
+		echo $pattern;
+	    preg_match_all($pattern, $ModelName, $model_id);
+		$name = $model_id[1][0];
+        $oboz['model_id'] = 0;
+        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='other'", array(':ob'=>$name));
+
+        return $oboz['model_id'];
     }
 
 }
