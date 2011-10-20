@@ -184,6 +184,8 @@ class Item extends CActiveRecord implements IECartPosition
             return $this->main_string;
         }
 
+
+        //проверка на существование строки в базе если ее нет то функция возвращет true
         public function NewString($string)
         {
             $searchString = $this->count('main_string=:main', array(':main'=>$string));
@@ -194,6 +196,7 @@ class Item extends CActiveRecord implements IECartPosition
             return false;
         }
 
+        // проверка цены у строк. Если цена обновилось у строки то возвращется ID этой строки
         public function NewPrice($string, $price)
         {
             $searchString = $this->find('main_string=:main AND price!=:p', array(':main'=>$string, ':p'=>$price));
@@ -208,6 +211,7 @@ class Item extends CActiveRecord implements IECartPosition
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //выборка шин с ценой > 0 и находится в активном состоянии 1
     public function tires()
     {
         $criteria = new CDbCriteria();
@@ -234,6 +238,7 @@ class Item extends CActiveRecord implements IECartPosition
         );
     }
 
+    //выборка дисков с ценой > 0 и находится в активном состоянии 1
     public function discs()
     {
         $criteria = new CDbCriteria();
@@ -259,6 +264,7 @@ class Item extends CActiveRecord implements IECartPosition
         );
     }
 
+    //выборка разного с ценой > 0 и находится в активном состоянии 1
     public function other()
     {
         $criteria = new CDbCriteria();
