@@ -12,9 +12,14 @@
 	'id'=>'discs-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+    'ajaxUpdate'=>false,
 	'columns'=>array(
 		'oboznach',
-		'model_id',
+		array(
+            'name' => 'model_id',
+            'filter'=> Models::model()->getModelList($type),
+            'value' => '$data->getModelID("'.$type.'")',
+        ),
 
 		array(
             'class' => 'CButtonColumn',

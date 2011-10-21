@@ -19,7 +19,11 @@
 		'main_string',
 		'price',
 		'd',
-		'model',
+		'category'=>array(
+            'name'=>'category',
+            'filter'=> Models::model()->getModelList('disc'),
+            'value'=>'Item::model()->ModelName($data->category, "disc");'
+        ),
 		//'password',	
 		//'date_birthday',
 		'active',

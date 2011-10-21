@@ -64,8 +64,8 @@ class OboznachenieModel extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'oboznach' => 'Oboznach',
-			'model_id' => 'Model',
+			'oboznach' => 'Обозначение',
+			'model_id' => 'Модель',
 			'type' => 'Type',
 		);
 	}
@@ -100,5 +100,11 @@ class OboznachenieModel extends CActiveRecord
             'params'=>array(':t'=>$t),
         ));
         return $this;
+    }
+
+    public function getModelID($type)
+    {
+        $name = Item::model()->ModelName($this->model_id,$type);
+        return $name;
     }
 }

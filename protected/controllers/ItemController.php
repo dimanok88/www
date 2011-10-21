@@ -55,7 +55,7 @@ class ItemController extends Controller
         $oboznach->unsetAttributes();  // clear any default values
 		if(isset($_GET['OboznachenieModel']))
 			$oboznach->attributes=$_GET['OboznachenieModel'];
-
+        
         $this->render('oboznach',array(
 			'model'=>$oboznach, 'type'=>$type
 		));

@@ -71,10 +71,10 @@ class Item extends CActiveRecord implements IECartPosition
 			array('stupica', 'length', 'max'=>30),
 			array('color', 'length', 'max'=>200),
 			array('model', 'length', 'max'=>100),
-            array('season, pic, descript, marka, shipi', 'default'),
+            array('season, pic, descript, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, price, type, type_item, season, d, w, hw, vilet, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, price, type, type_item, season, d, w, hw, vilet,, category stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -126,6 +126,7 @@ class Item extends CActiveRecord implements IECartPosition
             'descript'=>'Описание',
             'marka'=>'Марка',
             'shipi'=>'Шипи',
+            'category'=>'Категория'
 		);
 	}
 
@@ -157,6 +158,7 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('active',$this->active);
 		$criteria->compare('date_add',$this->date_add,true);
+        $criteria->compare('category',$this->category,true);
 		$criteria->compare('date_modify',$this->date_modify,true);
 
 		return new CActiveDataProvider($this, array(
@@ -224,6 +226,7 @@ class Item extends CActiveRecord implements IECartPosition
         );
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`season`', $this->season);
+        $criteria->compare('`category`', $this->category);
         $criteria->compare('`price`', $this->price, 'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);
 
@@ -299,9 +302,8 @@ class Item extends CActiveRecord implements IECartPosition
     public function ModelIdTire($ModelName)
     {
         $pattern = "!(.*?)[\s-]!ims";
-		echo $pattern;
 	    preg_match_all($pattern, $ModelName, $model_id);
-		$name = $model_id[1][0];
+		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
         if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='tire'", array(':ob'=>$name));
 
@@ -310,9 +312,8 @@ class Item extends CActiveRecord implements IECartPosition
     public function ModelIdDisc($ModelName)
     {
         $pattern = "!(.*?)[\s-]!ims";
-		echo $pattern;
 	    preg_match_all($pattern, $ModelName, $model_id);
-		$name = $model_id[1][0];
+		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
         if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='disc'", array(':ob'=>$name));
 
@@ -321,13 +322,19 @@ class Item extends CActiveRecord implements IECartPosition
     public function ModelIdOther($ModelName)
     {
         $pattern = "!(.*?)[\s-]!ims";
-		echo $pattern;
 	    preg_match_all($pattern, $ModelName, $model_id);
-		$name = $model_id[1][0];
+		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
         if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='other'", array(':ob'=>$name));
 
         return $oboz['model_id'];
+    }
+
+    //получаем имя нужной нам модели по ее id
+    public function ModelName($id_model, $type)
+    {
+        $name = Models::model()->find("id=:id AND type=:t", array(':id'=>$id_model, ':t'=>$type));
+        return $name['model'];
     }
 
 }

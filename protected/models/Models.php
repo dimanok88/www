@@ -9,7 +9,7 @@
  * @property string $activate
  * @property string $type
  */
-class Model extends CActiveRecord
+class Models extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -90,4 +90,31 @@ class Model extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getModelList($type, $addEmptyItem = false)
+    {
+        $result = array();
+
+        $criteria = new CDbCriteria();
+        $criteria->select = 'model, id';
+        $criteria->group = '`model`';
+        $criteria->condition = "`type` = :type AND activate='1'";
+        $criteria->params = array(
+            ':type' => $type,
+        );
+
+        $values = $this->findAll($criteria);
+
+        if( $addEmptyItem )
+        {
+            $result[''] = '';
+        }
+
+        foreach($values as $value)
+        {
+            $result[$value->id] = $value->model;
+        }
+
+        return $result;
+    }
 }

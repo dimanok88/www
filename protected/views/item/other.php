@@ -19,7 +19,11 @@
 		'main_string',
 		'price',
 		'marka',
-		'model',
+		'category'=>array(
+            'name'=>'category',
+            'filter'=> Models::model()->getModelList('other'),
+            'value'=>'Item::model()->ModelName($data->category, "other");'
+        ),
 		//'password',	
 		//'date_birthday',
 		'active',

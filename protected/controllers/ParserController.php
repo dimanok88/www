@@ -85,7 +85,7 @@ class ParserController extends Controller
                             fclose($handle);
                             Yii::app()->user->setFlash(
                                 'price',
-                                "Новый прайс загружен и обновлен! ".CHtml::link('Перейти в раздел.', array('item'))
+                                "Новый прайс загружен и обновлен! ".CHtml::link('Перейти в раздел.', array('item/'))
                             );
                         }
 

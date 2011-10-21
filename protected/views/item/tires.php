@@ -20,6 +20,11 @@
 		'price',
 		'd',
 		'season',
+        'category'=>array(
+            'name'=>'category',
+            'filter'=> Models::model()->getModelList('tire'),
+            'value'=>'Item::model()->ModelName($data->category, "tire");'
+        ),
 		//'password',	
 		//'date_birthday',
 		'active',
