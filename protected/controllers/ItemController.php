@@ -1,13 +1,15 @@
 <?php
 class ItemController extends Controller
 {
+    public $layout='//layouts/column2';
+    
     public function actionIndex()
 	{
         $this->render('index');
 	}
 
     //Визуальное представление для шин
-    public function actionTires()
+    public function actionTire()
     {
         $model=new Item('tires'); //загрузка модели с возможностью поиска по шинам
 		$model->unsetAttributes();  // clear any default values
@@ -20,7 +22,7 @@ class ItemController extends Controller
     }
 
     //Визуальное представление для дисков
-    public function actionDiscs()
+    public function actionDisc()
     {
         $model=new Item('discs');//загрузка модели с возможностью поиска по диска
 		$model->unsetAttributes();  // clear any default values
@@ -42,6 +44,16 @@ class ItemController extends Controller
 
 		$this->render('other',array(
 			'model'=>$model,
+		));
+    }
+
+
+    public function actionOboznach($type)
+    {
+        $oboznach = new OboznachenieModel($type);
+
+        $this->render('oboznach',array(
+			'model'=>$oboznach, 'type'=>$type
 		));
     }
 }

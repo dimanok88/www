@@ -5,7 +5,10 @@
     );
 ?>
 
+<?= $this->renderPartial('_menu'); ?>
+
 <h2>Шины</h2>
+<?= CHtml::image('/images/shini.png'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tires-grid',

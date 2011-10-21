@@ -5,7 +5,10 @@
     );
 ?>
 
+<?= $this->renderPartial('_menu'); ?>
+
 <h2>Разное</h2>
+<?= CHtml::image('/images/sotra.jpg'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'other-grid',

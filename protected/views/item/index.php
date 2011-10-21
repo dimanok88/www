@@ -1,8 +1,8 @@
 <h1>Выберите нужный вам раздел</h1>
 <div>
-    <ul>
-        <li><?= CHtml::link('Шины', array('item/tires')); ?></li>
-        <li><?= CHtml::link('Диски', array('item/discs')); ?></li>
-        <li><?= CHtml::link('Разное', array('item/other')); ?></li>
+    <ul class="main_part">
+        <li><?= CHtml::link(CHtml::image('/images/shini.png').'<br/>Шины', array('item/tire')); ?></li>
+        <li><?= CHtml::link(CHtml::image('/images/disc.jpg').'<br/>Диски', array('item/disc')); ?></li>
+        <li><?= CHtml::link(CHtml::image('/images/sotra.jpg').'<br/>Разное', array('item/other')); ?></li>
     </ul>
 </div>

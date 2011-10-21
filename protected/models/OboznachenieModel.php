@@ -90,4 +90,71 @@ class OboznachenieModel extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+
+    public function tire()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                "`type` = 'tire'",
+            )
+        );
+        $criteria->compare('`model_id`', $this->model_id);
+        $criteria->compare('`oboznach`', $this->oboznach);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
+
+    public function disc()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                "`type` = 'disc'",
+            )
+        );
+        $criteria->compare('`model_id`', $this->model_id);
+        $criteria->compare('`oboznach`', $this->oboznach);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
+
+    public function other()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(
+            array(
+                "`type` = 'other'",
+            )
+        );
+        $criteria->compare('`model_id`', $this->model_id);
+        $criteria->compare('`oboznach`', $this->oboznach);
+
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                'criteria' => $criteria,
+                'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                )
+            )
+        );
+    }
 }

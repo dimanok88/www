@@ -5,7 +5,10 @@
     );
 ?>
 
+<?= $this->renderPartial('_menu'); ?>
+
 <h2>Диски</h2>
+<?= CHtml::image('/images/disc.jpg'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'discs-grid',
