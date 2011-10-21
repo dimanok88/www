@@ -50,7 +50,11 @@ class ItemController extends Controller
 
     public function actionOboznach($type)
     {
-        $oboznach = new OboznachenieModel($type);
+        $oboznach = OboznachenieModel::model()->oboz($type);
+
+        $oboznach->unsetAttributes();  // clear any default values
+		if(isset($_GET['OboznachenieModel']))
+			$oboznach->attributes=$_GET['OboznachenieModel'];
 
         $this->render('oboznach',array(
 			'model'=>$oboznach, 'type'=>$type

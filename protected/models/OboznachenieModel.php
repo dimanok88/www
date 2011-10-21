@@ -81,80 +81,24 @@ class OboznachenieModel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
 		$criteria->compare('oboznach',$this->oboznach,true);
 		$criteria->compare('model_id',$this->model_id);
-		$criteria->compare('type',$this->type);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+            'pagination' => array(
+                  'pageSize' => Yii::app()->params['countItemsByPage'],
+            )
 		));
 	}
 
 
-    public function tire()
+    public function oboz($t = 'tire')
     {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition(
-            array(
-                "`type` = 'tire'",
-            )
-        );
-        $criteria->compare('`model_id`', $this->model_id);
-        $criteria->compare('`oboznach`', $this->oboznach);
-
-        return new CActiveDataProvider(
-            get_class($this),
-            array(
-                'criteria' => $criteria,
-                'pagination' => array(
-                    'pageSize' => Yii::app()->params['countItemsByPage'],
-                )
-            )
-        );
-    }
-
-    public function disc()
-    {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition(
-            array(
-                "`type` = 'disc'",
-            )
-        );
-        $criteria->compare('`model_id`', $this->model_id);
-        $criteria->compare('`oboznach`', $this->oboznach);
-
-        return new CActiveDataProvider(
-            get_class($this),
-            array(
-                'criteria' => $criteria,
-                'pagination' => array(
-                    'pageSize' => Yii::app()->params['countItemsByPage'],
-                )
-            )
-        );
-    }
-
-    public function other()
-    {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition(
-            array(
-                "`type` = 'other'",
-            )
-        );
-        $criteria->compare('`model_id`', $this->model_id);
-        $criteria->compare('`oboznach`', $this->oboznach);
-
-        return new CActiveDataProvider(
-            get_class($this),
-            array(
-                'criteria' => $criteria,
-                'pagination' => array(
-                    'pageSize' => Yii::app()->params['countItemsByPage'],
-                )
-            )
-        );
+        $this->getDbCriteria()->mergeWith(array(
+            'condition'=>'type=:t',
+            'params'=>array(':t'=>$t),
+        ));
+        return $this;
     }
 }
