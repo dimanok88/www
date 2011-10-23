@@ -39,7 +39,7 @@
                 ),
                 'delete' => array(
                     'label'=>'delete',     // text label of the button
-                    'url'=>'array("item/deleteOboznach", "id"=>$data->id))',       // a PHP expression for generating the URL of the button
+                    'url'=>'Yii::app()->createUrl("item/deleteOboznach", array("id"=>$data->id))',
                 ),
             ),
         ),
