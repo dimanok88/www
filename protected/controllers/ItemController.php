@@ -11,7 +11,7 @@ class ItemController extends Controller
     //Визуальное представление для шин
     public function actionTire()
     {
-        $model=new Item('tires'); //загрузка модели с возможностью поиска по шинам
+        $model=new Item('tire'); //загрузка модели с возможностью поиска по шинам
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$model->attributes=$_GET['Item'];
@@ -24,7 +24,7 @@ class ItemController extends Controller
     //Визуальное представление для дисков
     public function actionDisc()
     {
-        $model=new Item('discs');//загрузка модели с возможностью поиска по диска
+        $model=new Item('disc');//загрузка модели с возможностью поиска по диска
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$model->attributes=$_GET['Item'];
@@ -47,7 +47,10 @@ class ItemController extends Controller
 		));
     }
 
-
+    ///////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////Обозначения///////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //Вывод списка обозначений
     public function actionOboznach($type)
     {
         $oboznach = OboznachenieModel::model()->oboz($type);
@@ -60,6 +63,83 @@ class ItemController extends Controller
 			'model'=>$oboznach, 'type'=>$type
 		));
     }
+
+    // Добавить обозначение
+    public function actionAddOboznach($type, $id= '')
+    {
+        $oboznach = new OboznachenieModel();
+        //echo $_GET['id'];
+        if(!empty($id)) $oboznach = OboznachenieModel::model()->findByPk($id);
+
+        if(isset($_POST['OboznachenieModel']))
+        {
+            $oboznach->attributes = $_POST[get_class($oboznach)];
+            $oboznach->type = $type;
+
+            if($oboznach->save())
+            {
+                Yii::app()->user->setFlash(
+                    'addoboz',
+                    "Новое обозначение добавлено <b>".$oboznach->oboznach."</b>! "
+                );
+                if(!empty($id)){
+                    Yii::app()->user->setFlash(
+                    'addoboz',
+                    "Обозначение <b>".$oboznach->oboznach."</b> отредактировано! "
+                );
+                }
+                $this->redirect(array('item/oboznach', 'type'=>$type));
+            }
+        }
+
+        $this->render('addOboznach', array('model'=>$oboznach, 'type'=>$type));
+    }
+
+    public function actionDeleteOboznach()
+    {
+        if( Yii::app()->request->isPostRequest )
+		{
+			OboznachenieModel::model()->findbyPk($_GET['id'])->delete();
+
+			if( !isset($_GET['ajax']) )
+            {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('item/'));
+            }
+		}
+		else
+        {
+			throw new CHttpException(400, 'Ошибка в запросе.');
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////Категории///////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    //Вывод категорий по типу
+    public function actionCategory($type)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->condition = "`type` = :type AND activate='1'";
+        $criteria->params = array(
+            ':type' => $type,
+        );
+        $category = new CActiveDataProvider('Models',
+            array(
+                 'criteria' => $criteria,
+                 'pagination' => array(
+                    'pageSize' => Yii::app()->params['countItemsByPage'],
+                 )
+            )
+        );
+
+        $this->render('category', array('category'=>$category, 'type'=>$type));
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
 }
 ?>
  

@@ -147,9 +147,9 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('type',$this->type,true);
 		$criteria->compare('type_item',$this->type_item,true);
 		$criteria->compare('season',$this->season);
-		$criteria->compare('diametr',$this->diametr);
-		$criteria->compare('width',$this->width);
-		$criteria->compare('profile',$this->profile);
+		$criteria->compare('d',$this->diametr);
+		$criteria->compare('w',$this->width);
+		$criteria->compare('hw',$this->profile);
 		$criteria->compare('vilet',$this->vilet);
 		$criteria->compare('stupica',$this->stupica,true);
         $criteria->compare('shipi',$this->shipi);
@@ -214,16 +214,30 @@ class Item extends CActiveRecord implements IECartPosition
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
     //выборка шин с ценой > 0 и находится в активном состоянии 1
-    public function tires()
+    public function tire($id = '')
     {
         $criteria = new CDbCriteria();
-        $criteria->addCondition(
+        if(!empty($id))
+        {
+            $criteria->addCondition(
+            array(
+                'category = '.$id,
+                '`price` > 0',
+                "`type` = 'tire'",
+                "`active` = 1",
+            )
+        );
+        }
+        else
+        {
+            $criteria->addCondition(
             array(
                 '`price` > 0',
                 "`type` = 'tire'",
                 "`active` = 1",
             )
         );
+        }
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`season`', $this->season);
         $criteria->compare('`category`', $this->category);
@@ -242,16 +256,30 @@ class Item extends CActiveRecord implements IECartPosition
     }
 
     //выборка дисков с ценой > 0 и находится в активном состоянии 1
-    public function discs()
+    public function disc($id = '')
     {
         $criteria = new CDbCriteria();
-        $criteria->addCondition(
+        if(!empty($id))
+        {
+            $criteria->addCondition(
+            array(
+                'category = '.$id,
+                '`price` > 0',
+                "`type` = 'disc'",
+                "`active` = 1",
+            )
+        );
+        }
+        else
+        {
+            $criteria->addCondition(
             array(
                 '`price` > 0',
                 "`type` = 'disc'",
                 "`active` = 1",
             )
         );
+        }
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`price`', $this->price, 'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);
@@ -268,16 +296,30 @@ class Item extends CActiveRecord implements IECartPosition
     }
 
     //выборка разного с ценой > 0 и находится в активном состоянии 1
-    public function other()
+    public function other($id = '')
     {
         $criteria = new CDbCriteria();
-        $criteria->addCondition(
+        if(!empty($id))
+        {
+            $criteria->addCondition(
+            array(
+                'category = '.$id,
+                '`price` > 0',
+                "`type` = 'other'",
+                "`active` = 1",
+            )
+        );
+        }
+        else
+        {
+            $criteria->addCondition(
             array(
                 '`price` > 0',
                 "`type` = 'other'",
                 "`active` = 1",
             )
         );
+        }
         $criteria->compare('`marka`', $this->d);
         $criteria->compare('`price`', $this->price, 'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);

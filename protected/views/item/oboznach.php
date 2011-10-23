@@ -6,7 +6,14 @@
     );
 ?>
 
+<?= $this->renderPartial('_menu_oboznach', array('type'=>$type)); ?>
 <h2>Обозначения</h2>
+
+    <?php if(Yii::app()->user->hasFlash('addoboz')): ?>
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('addoboz'); ?>
+        </div>
+    <?php endif; ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'discs-grid',
@@ -25,6 +32,16 @@
             'class' => 'CButtonColumn',
             'header' => 'Действия',
             'template' => '{update} {delete}',
+            'buttons'=>array(
+                'update' => array(
+                    'label'=>'update',     // text label of the button
+                    'url'=>'Yii::app()->createUrl("item/addOboznach", array("id"=>$data->id, "type"=>"'.$type.'"))',       // a PHP expression for generating the URL of the button
+                ),
+                'delete' => array(
+                    'label'=>'delete',     // text label of the button
+                    'url'=>'array("item/deleteOboznach", "id"=>$data->id))',       // a PHP expression for generating the URL of the button
+                ),
+            ),
         ),
 	),
 )); ?>

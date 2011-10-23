@@ -12,7 +12,7 @@
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'discs-grid',
-	'dataProvider'=>$model->discs(),
+	'dataProvider'=>$model->disc(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
@@ -24,8 +24,6 @@
             'filter'=> Models::model()->getModelList('disc'),
             'value'=>'Item::model()->ModelName($data->category, "disc");'
         ),
-		//'password',	
-		//'date_birthday',
 		'active',
 
 		array(

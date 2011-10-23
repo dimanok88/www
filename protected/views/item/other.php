@@ -24,8 +24,6 @@
             'filter'=> Models::model()->getModelList('other'),
             'value'=>'Item::model()->ModelName($data->category, "other");'
         ),
-		//'password',	
-		//'date_birthday',
 		'active',
 
 		array(

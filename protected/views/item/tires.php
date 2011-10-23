@@ -12,7 +12,7 @@
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tires-grid',
-	'dataProvider'=>$model->tires(),
+	'dataProvider'=>$model->tire(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
