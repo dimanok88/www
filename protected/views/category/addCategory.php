@@ -11,9 +11,15 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'model'); ?>
-		<?php echo $form->textField($model,'model',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'model'); ?>
 		<?php echo $form->error($model,'model'); ?>
 	</div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model,'file_pic'); ?>
+		<?php echo $form->FileField($model,'file_pic'); ?>
+		<?php echo $form->error($model,'file_pic'); ?>
+    </div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'activate'); ?>
