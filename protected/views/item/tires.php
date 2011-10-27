@@ -15,20 +15,20 @@
 	'dataProvider'=>$model->tire(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
-		'main_string',
-		'price',
-		'd',
-		'season',
+        'w',
+        'hw',
+        'd',
+        'model',
+        'type_item',
+        'season',
         'category'=>array(
             'name'=>'category',
             'filter'=> Models::model()->getModelList('tire'),
             'value'=>'Item::model()->ModelName($data->category, "tire");'
         ),
-		//'password',	
-		//'date_birthday',
-		'active',
-
+		'main_string',
+		'price',
+        
 		array(
             'class' => 'CButtonColumn',
             'header' => 'Действия',

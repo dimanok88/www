@@ -32,6 +32,7 @@ Yii::app()->clientScript->registerScript(
 	<?php echo $form->fileField($model, 'file'); ?>
 	<?php echo $form->error($model, 'file'); ?>
     </div>
+    
     <div class="row buttons">
 	<?php echo CHtml::submitButton('Загрузить'); ?>
     </div>

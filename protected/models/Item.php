@@ -157,7 +157,7 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('color',$this->color,true);
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('active',$this->active);
-		$criteria->compare('date_add',$this->date_add,true);
+		$criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('category',$this->category,true);
 		$criteria->compare('date_modify',$this->date_modify,true);
 
@@ -224,7 +224,6 @@ class Item extends CActiveRecord implements IECartPosition
                 'category = '.$id,
                 '`price` > 0',
                 "`type` = 'tire'",
-                "`active` = 1",
             )
         );
         }
@@ -234,14 +233,20 @@ class Item extends CActiveRecord implements IECartPosition
             array(
                 '`price` > 0',
                 "`type` = 'tire'",
-                "`active` = 1",
             )
         );
         }
+        $criteria->order = 'active';
         $criteria->compare('`d`', $this->d);
+        $criteria->compare('`w`', $this->w);
+        $criteria->compare('`hw`', $this->hw);
+        $criteria->compare('`model`', $this->model, 'LIKE');
+        $criteria->compare('`type_item`', $this->model);
         $criteria->compare('`season`', $this->season);
         $criteria->compare('`category`', $this->category);
-        $criteria->compare('`price`', $this->price, 'LIKE');
+        $criteria->compare('`main_string`', $this->main_string, 'LIKE');
+        $criteria->compare('date_add',$this->date_add, 'LIKE');
+        $criteria->compare('`price`', $this->price, true);
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -266,7 +271,6 @@ class Item extends CActiveRecord implements IECartPosition
                 'category = '.$id,
                 '`price` > 0',
                 "`type` = 'disc'",
-                "`active` = 1",
             )
         );
         }
@@ -276,7 +280,6 @@ class Item extends CActiveRecord implements IECartPosition
             array(
                 '`price` > 0',
                 "`type` = 'disc'",
-                "`active` = 1",
             )
         );
         }
@@ -306,7 +309,6 @@ class Item extends CActiveRecord implements IECartPosition
                 'category = '.$id,
                 '`price` > 0',
                 "`type` = 'other'",
-                "`active` = 1",
             )
         );
         }
@@ -316,11 +318,10 @@ class Item extends CActiveRecord implements IECartPosition
             array(
                 '`price` > 0',
                 "`type` = 'other'",
-                "`active` = 1",
             )
         );
         }
-        $criteria->compare('`marka`', $this->d);
+        $criteria->compare('`marka`', $this->marka);
         $criteria->compare('`price`', $this->price, 'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);
 

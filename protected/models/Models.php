@@ -11,6 +11,7 @@
  */
 class Models extends CActiveRecord
 {
+    public $pic;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Model the static model class
@@ -40,6 +41,7 @@ class Models extends CActiveRecord
 			array('model', 'length', 'max'=>100),
 			array('activate', 'length', 'max'=>1),
 			array('type', 'length', 'max'=>10),
+            array('pic', 'file', 'types' => 'jpg, gif, png, jpeg', 'allowEmpty' => false, 'message'=>'Не правильный формат'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, model, activate, type', 'safe', 'on'=>'search'),
