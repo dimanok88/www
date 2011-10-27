@@ -42,10 +42,12 @@ class ParserController extends Controller
                                      $price = trim($row[1]);
                                      $season = '';
                                      $shipi = '';
+                                     $country = '';
                                 }
                                 else
                                 {
                                     $result = $parser_info->run($row[0]);
+                                    $country = $row[1];
                                     $price = trim($row[2]);
                                     $season = $row[4];
                                     $shipi = $row[5];
@@ -65,6 +67,7 @@ class ParserController extends Controller
                                         $item->season = $season;
                                         $item->shipi = $shipi;
                                         $item->type_item = $type_item;
+                                        $item->country = $country;
                                         if($result['type'] == 'tire') $item->category = $item->ModelIdTire($result['model']);
                                         elseif($result['type'] == 'disc') $item->category = $item->ModelIdDisc($result['model']);
                                         elseif($result['type'] == 'other') $item->category = $item->ModelIdOther($result['model']);

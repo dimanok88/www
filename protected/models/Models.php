@@ -69,6 +69,7 @@ class Models extends CActiveRecord
 			'model' => 'Модель',
 			'activate' => 'Активность',
 			'type' => 'Тип',
+            'pic'=>'Изображение',
 		);
 	}
 

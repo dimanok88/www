@@ -71,10 +71,10 @@ class Item extends CActiveRecord implements IECartPosition
 			array('stupica', 'length', 'max'=>30),
 			array('color', 'length', 'max'=>200),
 			array('model', 'length', 'max'=>100),
-            array('season, pic, descript, marka, shipi, category', 'default'),
+            array('season, pic, country,descript, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, price, type, type_item, season, d, w, hw, vilet,, category stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, price,country, type, type_item, season, d, w, hw, vilet,, category stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -126,7 +126,8 @@ class Item extends CActiveRecord implements IECartPosition
             'descript'=>'Описание',
             'marka'=>'Марка',
             'shipi'=>'Шипи',
-            'category'=>'Категория'
+            'category'=>'Категория',
+            'country'=>'Производитель',
 		);
 	}
 
@@ -159,6 +160,7 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('active',$this->active);
 		$criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('category',$this->category,true);
+        $criteria->compare('country',$this->country,'LIKE');
 		$criteria->compare('date_modify',$this->date_modify,true);
 
 		return new CActiveDataProvider($this, array(
