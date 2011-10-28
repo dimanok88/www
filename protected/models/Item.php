@@ -80,7 +80,7 @@ class Item extends CActiveRecord implements IECartPosition
             array('season, country,descript, pic, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, price,country, type, type_item, season, d, w, hw, vilet,, category stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
