@@ -49,9 +49,9 @@
 	</div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'pic'); ?>
-	    <?php echo $form->fileField($model, 'pic'); ?>
-	    <?php echo $form->error($model, 'pic'); ?>
+        <?php echo $form->labelEx($model, 'pictures'); ?>
+	    <?php echo $form->fileField($model, 'pictures'); ?>
+	    <?php echo $form->error($model, 'pictures'); ?>
     </div>
 
     <div class="row">
@@ -70,6 +70,12 @@
 		<?php echo $form->labelEx($model,'season'); ?>
 		<?php echo $form->dropDownList($model, 'season', Item::model()->getSeason()); ?>
 		<?php echo $form->error($model,'season'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'shipi'); ?>
+		<?php echo $form->CheckBox($model, 'shipi'); ?>
+		<?php echo $form->error($model,'shipi'); ?>
 	</div>
 
 	<div class="row">

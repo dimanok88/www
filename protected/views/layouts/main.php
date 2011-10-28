@@ -31,10 +31,10 @@
             array(
                 'items' => array(
                     array(
-                        'label' => 'Каталог',
+                        'label' => 'Разделы',
                         'items' => array(
-                            array('label'=>'Категории', 'url'=>array('category/admin')),
-                            array('label'=>'Позиции', 'url'=>array('item/admin')),
+                            array('label'=>'Общий раздел', 'url'=>array('item/')),
+                            array('label'=>'Парсер', 'url'=>array('parser/')),
                         ),
                     ),
                 ),

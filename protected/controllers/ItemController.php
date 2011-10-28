@@ -84,8 +84,10 @@ class ItemController extends Controller
 
             if($item->save())
             {
-                $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pic'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
-                $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pic'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
+                if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
+                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
+                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
+                }
 
                 Yii::app()->user->setFlash(
                     'addcategory',

@@ -19,15 +19,75 @@
 	</div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'pic'); ?>
-	    <?php echo $form->fileField($model, 'pic'); ?>
-	    <?php echo $form->error($model, 'pic'); ?>
+		<?php echo $form->labelEx($model,'category'); ?>
+		<?php echo $form->dropDownList($model, 'category', Models::model()->getModelList($type), array('empty'=>'-')); ?>
+		<?php echo $form->error($model,'category'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'main_string'); ?>
+		<?php echo $form->textField($model,'main_string', array('size'=>'40')); ?>
+		<?php echo $form->error($model,'main_string'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'d'); ?>
+		<?php echo $form->textField($model,'d'); ?>
+		<?php echo $form->error($model,'d'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'vilet'); ?>
+		<?php echo $form->textField($model,'vilet'); ?>
+		<?php echo $form->error($model,'vilet'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'w'); ?>
+		<?php echo $form->textField($model,'w'); ?>
+		<?php echo $form->error($model,'w'); ?>
+	</div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'pictures'); ?>
+	    <?php echo $form->fileField($model, 'pictures'); ?>
+	    <?php echo $form->error($model, 'pictures'); ?>
     </div>
 
+    <div class="row">
+		<?php echo $form->labelEx($model,'price'); ?>
+		<?php echo $form->textField($model,'price'); ?>
+		<?php echo $form->error($model,'price'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'type_item'); ?>
+		<?php echo $form->textField($model,'type_item'); ?>
+		<?php echo $form->error($model,'type_item'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'stupica'); ?>
+		<?php echo $form->textField($model,'stupica'); ?>
+		<?php echo $form->error($model,'stupica'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'krepezh'); ?>
+		<?php echo $form->textField($model,'krepezh'); ?>
+		<?php echo $form->error($model,'krepezh'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'color'); ?>
+		<?php echo $form->textField($model,'color'); ?>
+		<?php echo $form->error($model,'color'); ?>
+	</div>
+
 	<div class="row">
-		<?php echo $form->labelEx($model,'activate'); ?>
-		<?php echo $form->CheckBox($model, 'activate'); ?>
-		<?php echo $form->error($model,'activate'); ?>
+		<?php echo $form->labelEx($model,'active'); ?>
+		<?php echo $form->CheckBox($model, 'active'); ?>
+		<?php echo $form->error($model,'active'); ?>
 	</div>
 
 	<div class="row buttons">
