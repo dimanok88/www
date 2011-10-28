@@ -47,6 +47,63 @@ class ItemController extends Controller
 		));
     }
 
+    public function actionDelete()
+    {
+        if( Yii::app()->request->isPostRequest )
+		{
+			Item::model()->findbyPk($_GET['id'])->delete();
+            if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_small.jpg"))
+            {
+                unlink(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_small.jpg");
+                unlink(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_big.jpg");
+            }
+
+			if( !isset($_GET['ajax']) )
+            {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('item/'));
+            }
+		}
+		else
+        {
+			throw new CHttpException(400, 'Ошибка в запросе.');
+        }
+    }
+
+    public function actionUpnew($id = '', $type= '')
+    {
+        $item = new Item();
+        $imageHandler = new CImageHandler();
+
+        if(!empty($id)) $item = Item::model()->findByPk($id);
+
+        if(isset($_POST['Item']))
+        {
+            $item->attributes = $_POST[get_class($item)];
+            $item->type = $type;
+            //$category->pic = CUploadedFile::getInstance($category, 'pic');
+
+            if($item->save())
+            {
+                $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pic'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
+                $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pic'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
+
+                Yii::app()->user->setFlash(
+                    'addcategory',
+                    "Новый элемент <b>".$item->model."</b> добавлен!"
+                );
+                if(!empty($id)){
+                    Yii::app()->user->setFlash(
+                    'addcategory',
+                    "Элемент <b>".$item->model."</b> отредактирован! "
+                );
+                }
+                $this->redirect(array('item/'.$type));
+            }
+        }
+
+        $this->render('upnew', array('model'=>$item, 'type'=>$type));
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////Обозначения///////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////

@@ -33,6 +33,19 @@
             'class' => 'CButtonColumn',
             'header' => 'Действия',
             'template' => '{update} {delete}',
+            'buttons'=>array
+             (
+                'delete' => array
+                (
+                    'label'=>'Delete',
+                    'url'=>'Yii::app()->createUrl("item/delete", array("id"=>$data->id))',
+                ),
+                'update' => array
+                (
+                    'label'=>'Update',
+                    'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"tire"))',
+                ),
+            ),
         ),
 	),
 )); ?>

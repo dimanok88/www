@@ -29,6 +29,10 @@ class Item extends CActiveRecord implements IECartPosition
         const ITEM_TYPE_DISC = 'disc';
         const ITEM_TYPE_OTHER = 'other';
 
+        const ITEM_SEASON_LETO = '0';
+        const ITEM_SEASON_ZIMA = '1';
+        const ITEM_SEASON_VSESEASON = '2';
+
         public function getTypeList()
         {
             return array(
@@ -382,4 +386,20 @@ class Item extends CActiveRecord implements IECartPosition
         return $name['model'];
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////Получение массивов/////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+    public function getSeason()
+    {
+        return array(
+                self::ITEM_SEASON_LETO => 'Лето',
+                self::ITEM_SEASON_ZIMA => 'Зима',
+                self::ITEM_SEASON_VSESEASON => 'Всесезонка',
+            );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 }
