@@ -39,5 +39,20 @@ Yii::app()->clientScript->registerScript(
 
 <?php $this->endWidget(); ?>
 
+<?if(count($file)):?>
+    <?php $form=$this->beginWidget('CActiveForm', array(
+	'id' => 'pic-form',)); ?>
+
+    <div class="row buttons">
+       <?php echo CHtml::ajaxButton ("Обработать изображения",
+                              CController::createUrl('parser/resizePhoto'),
+                              array('update' => '#data'), array('id'=>'uploadphoto'));
+?>
+    </div>
+
+<?php $this->endWidget(); ?>
+
+    <div id="data"></div>
+<? endif;?>
 </div><!-- form -->
 

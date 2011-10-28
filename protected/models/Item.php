@@ -132,7 +132,7 @@ class Item extends CActiveRecord implements IECartPosition
             'pictures'=> 'Картинка',
             'descript'=>'Описание',
             'marka'=>'Марка',
-            'shipi'=>'Шипи',
+            'shipi'=>'Шипы',
             'category'=>'Категория',
             'country'=>'Производитель',
 		);
