@@ -68,7 +68,7 @@
 
     <div class="row">
 		<?php echo $form->labelEx($model,'season'); ?>
-		<?php echo $form->dropDownList($model, 'season', Item::model()->getSeason()); ?>
+		<?php echo $form->dropDownList($model, 'season', Item::model()->SeasonList()); ?>
 		<?php echo $form->error($model,'season'); ?>
 	</div>
 

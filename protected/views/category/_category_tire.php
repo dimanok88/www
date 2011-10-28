@@ -8,7 +8,11 @@
         'd',
         'model',
         'type_item',
-        'season',
+        'season'=>array(
+            'name'=>'season',
+            'filter'=> Item::model()->SeasonList(),
+            'value'=>'Item::model()->getSeason($data->season)'
+        ),
 		'main_string',
 		'price',
         //'date_add',

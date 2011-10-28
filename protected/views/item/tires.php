@@ -20,7 +20,11 @@
         'd',
         'model',
         'type_item',
-        'season',
+        'season'=>array(
+            'name'=>'season',
+            'filter'=> Item::model()->SeasonList(),
+            'value'=>'Item::model()->getSeason($data->season)'
+        ),
         'category'=>array(
             'name'=>'category',
             'filter'=> Models::model()->getModelList('tire'),

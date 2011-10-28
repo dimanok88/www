@@ -410,13 +410,19 @@ class Item extends CActiveRecord implements IECartPosition
     /////////////////////////Получение массивов/////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
 
-    public function getSeason()
+    public function SeasonList()
     {
         return array(
                 self::ITEM_SEASON_LETO => 'Лето',
                 self::ITEM_SEASON_ZIMA => 'Зима',
                 self::ITEM_SEASON_VSESEASON => 'Всесезонка',
             );
+    }
+
+    public function getSeason($s)
+    {
+        $season = $this->SeasonList();
+        return $season[$s];
     }
 
     ////////////////////////////////////////////////////////////////////////////
