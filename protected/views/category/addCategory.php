@@ -1,3 +1,12 @@
+<?php
+    $this->breadcrumbs = array(
+        'Общий раздел' => array('item/'),
+        "Предыдущий раздел" => array('item/'.$type),
+        'Категории'=>array('item/category', 'type'=>$type),
+        $model->model
+    );
+?>
+
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
