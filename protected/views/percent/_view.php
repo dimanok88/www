@@ -1,6 +1,6 @@
 <?
 $class = '';
-if($data->default == 1) $class = 'class="default_list"';
+if($data->def == 1) $class = 'class="default_list"';
 ?>
 <li <?= $class?>>
     <div style="float: right;">
