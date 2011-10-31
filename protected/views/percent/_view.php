@@ -1,4 +1,8 @@
-<li>
+<?
+$class = '';
+if($data->default == 1) $class = 'class="default_list"';
+?>
+<li <?= $class?>>
     <div style="float: right;">
         <?= CHtml::link('Изменить', array('create', 'id'=>$data->id))?><br/>
         <?= CHtml::ajaxLink('Удалить', array('delete', 'id'=>$data->id) ,

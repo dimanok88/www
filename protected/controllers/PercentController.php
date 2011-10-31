@@ -16,6 +16,10 @@ class PercentController extends Controller
 
 		if(isset($_POST['Percent']))
 		{
+            $v = $model->find('type=:t AND type_item=:t_i AND type_percent=:t_p',
+                                          array(':t'=>$type, ':t_i'=>$_POST['Percent']['type_item'], ':t_p'=>$_POST['Percent']['type_percent']));
+            if(count($v)) $model->updateByPk($v['id'], array('def'=>0));
+
 			$model->attributes=$_POST['Percent'];
             $model->type = $type;
 			if($model->save())

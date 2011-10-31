@@ -17,14 +17,25 @@
 	'columns'=>array(
 		'id',
 		'main_string',
-		'price',
 		'marka',
 		'category'=>array(
             'name'=>'category',
             'filter'=> Models::model()->getModelList('other'),
             'value'=>'Item::model()->ModelName($data->category, "other");'
         ),
-		'active',
+		'price',
+        array(
+            'header'=>'Цена, опт',
+            'value'=>'Percent::model()->getPercent("other",$data->type_item, "opt", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, VIP',
+            'value'=>'Percent::model()->getPercent("other",$data->type_item, "vip", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, роз',
+            'value'=>'Percent::model()->getPercent("other",$data->type_item, "roz", $data->price)',
+        ),
 
 		array(
             'class' => 'CButtonColumn',

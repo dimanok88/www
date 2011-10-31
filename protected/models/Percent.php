@@ -52,6 +52,11 @@ class Percent extends CActiveRecord
 		return 'percent';
 	}
 
+    public function beforeSave() {
+
+	    return parent::beforeSave();
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -61,11 +66,11 @@ class Percent extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('percent, type_item, type_percent', 'required'),
-			array('percent', 'numerical'),
+			array('percent, def', 'numerical'),
 			array('type, type_item', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, percent, type, type_percent, type_item', 'safe', 'on'=>'search'),
+			array('id, percent, type, def, type_percent, type_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -91,6 +96,7 @@ class Percent extends CActiveRecord
 			'type' => 'Тип',
             'type_percent'=>'Тип',
 			'type_item' => 'Тип предмета',
+            'def'=>'По умолчанию',
 		);
 	}
 
@@ -129,7 +135,19 @@ class Percent extends CActiveRecord
         $item = $this->find('type=:t AND type_item=:t_i AND type_percent=:t_p',
                             array(':t'=>$type, ':t_i'=>$type_item, ':t_p'=>$type_percent));
         $c = $item['percent']/100;
-        $result = $price * $c;
+        $result = $price + $price * $c;
+        if($result == $price)
+        {
+           $default = Percent::model()->find('type=:t AND type_item=:t_i AND type_percent=:t_p AND def=:d',
+                array(':t'=>$type, ':t_i'=>$type_item, ':t_p'=>$type_percent, ':d'=>'1')
+           );
+            if(count($default)> 0)
+            {
+                $c = $default['percent']/100;
+                $result = $price + $price * $c;
+            }
+            else $result = 0;
+        }
         return $result;
     }
 }

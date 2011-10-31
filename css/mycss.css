@@ -10,3 +10,4 @@
 
 .percent { margin: 0; padding: 0; list-style-type: none;}
 .percent li { margin: 7px 10px; padding: 10px; border: 1px #000000 dashed;}
+.percent li.default_list { background: #C9E0ED;}

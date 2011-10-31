@@ -27,6 +27,12 @@
 		<?php echo $form->error($model,'type_percent'); ?>
 	</div>
 
+    <div class="row">
+		<?php echo $form->labelEx($model,'def'); ?>
+		<?php echo $form->checkBox($model, 'def'); ?>
+		<?php echo $form->error($model,'def'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить'); ?>
 	</div>
