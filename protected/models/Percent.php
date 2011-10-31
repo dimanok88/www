@@ -123,4 +123,13 @@ class Percent extends CActiveRecord
         ));
         return $this;
     }
+
+    public function getPercent($type, $type_item, $type_percent, $price)
+    {
+        $item = $this->find('type=:t AND type_item=:t_i AND type_percent=:t_p',
+                            array(':t'=>$type, ':t_i'=>$type_item, ':t_p'=>$type_percent));
+        $c = $item['percent']/100;
+        $result = $price * $c;
+        return $result;
+    }
 }

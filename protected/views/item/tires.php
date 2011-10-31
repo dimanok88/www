@@ -34,6 +34,10 @@ $this->breadcrumbs = array(
         ),
 		'main_string',
 		'price',
+        array(
+            'header'=>'Цена, опт',
+            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "opt", $data->price)',
+        ),
         
 		array(
             'class' => 'CButtonColumn',
