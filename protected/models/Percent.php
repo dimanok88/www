@@ -1,6 +1,17 @@
 <?php
 
 /**
+ *
+ *
+CREATE TABLE IF NOT EXISTS `percent` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `percent` double NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `type_item` varchar(10) NOT NULL,
+  `type_percent` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+ *
  * This is the model class for table "percent".
  *
  * The followings are the available columns in table 'percent':
