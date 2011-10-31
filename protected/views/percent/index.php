@@ -12,7 +12,7 @@ $this->menu=array(
 
 <h1>Проценты</h1>
 
-
+<div>Выделенные элементы являются элементами по умолчанию</div>
 <?php
 $per = Percent::model()->getTypePerc();
 $this->widget('zii.widgets.CListView', array(
