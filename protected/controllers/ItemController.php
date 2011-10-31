@@ -181,7 +181,7 @@ class ItemController extends Controller
     public function actionCategory($type)
     {
         $criteria = new CDbCriteria();
-        $criteria->condition = "`type` = :type AND activate='1'";
+        $criteria->condition = "`type` = :type";
         $criteria->params = array(
             ':type' => $type,
         );

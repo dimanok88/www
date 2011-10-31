@@ -1,5 +1,7 @@
 <?php
-    $this->breadcrumbs = array(
+$t = Item::model()->getTypeList();
+echo $t['tire'];
+$this->breadcrumbs = array(
         'Общий раздел' => array('item/'),
         "Шины"
     );
