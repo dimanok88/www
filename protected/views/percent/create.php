@@ -9,4 +9,4 @@
 
 <h1><?= (!empty($_GET['id'])) ? $model->percent.' - '.$model->type_item : 'Добавить'?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'type'=>$type)); ?>

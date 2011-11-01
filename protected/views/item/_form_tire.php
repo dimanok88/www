@@ -62,7 +62,7 @@
 
     <div class="row">
 		<?php echo $form->labelEx($model,'type_item'); ?>
-		<?php echo $form->textField($model,'type_item'); ?>
+		<?php echo $form->dropDownList($model, 'type_item', Item::model()->getTypeItem($type)); ?>
 		<?php echo $form->error($model,'type_item'); ?>
 	</div>
 

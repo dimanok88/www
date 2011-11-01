@@ -250,7 +250,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`w`', $this->w);
         $criteria->compare('`hw`', $this->hw);
         $criteria->compare('`model`', $this->model, 'LIKE');
-        $criteria->compare('`type_item`', $this->model);
+        $criteria->compare('`type_item`', $this->type_item);
         $criteria->compare('`season`', $this->season);
         $criteria->compare('`category`', $this->category);
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
@@ -297,7 +297,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`w`', $this->w);
         $criteria->compare('`stupica`', $this->stupica);
         $criteria->compare('`model`', $this->model, 'LIKE');
-        $criteria->compare('`type_item`', $this->model);
+        $criteria->compare('`type_item`', $this->type_item);
         $criteria->compare('`krepezh`', $this->krepezh);
         $criteria->compare('`vilet`', $this->vilet);
         $criteria->compare('`category`', $this->category);
@@ -343,7 +343,7 @@ class Item extends CActiveRecord implements IECartPosition
         }
         $criteria->order = 'active DESC';
         $criteria->compare('`model`', $this->model, 'LIKE');
-        $criteria->compare('`type_item`', $this->model);
+        $criteria->compare('`type_item`', $this->type_item);
         $criteria->compare('`category`', $this->category);
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
@@ -425,7 +425,28 @@ class Item extends CActiveRecord implements IECartPosition
         return $season[$s];
     }
 
+    public function getTypeItem($type='tire')
+    {
+            $result = array();
+
+            $type_item = Yii::app()->db->createCommand()->select('id, name, title, type')->from('type_item')->where("type='".$type."'")->queryAll();
+
+            foreach($type_item as $val)
+            {
+                $result[$val['name']] = $val['title'];
+            }
+
+            return $result;
+    }
+
+    public function getTIA($type, $type_item)
+    {
+        $t_i = Yii::app()->db->createCommand()->select('id, name, title, type')->from('type_item')->where("type='".$type."' AND name='".$type_item."'")->queryRow();
+        return $t_i['title'];
+    }
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
+
+
 }
