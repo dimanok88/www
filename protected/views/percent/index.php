@@ -12,6 +12,7 @@ $this->menu=array(
 
 <h1>Проценты</h1>
 
+    <div>Выделенные цветом элементы - элементы по умолчанию</div>
 
 <?php
 $per = Percent::model()->getTypePerc();
