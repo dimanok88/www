@@ -24,6 +24,16 @@ class PercentController extends Controller
             $model->type = $type;
 			if($model->save())
             {
+                Yii::app()->user->setFlash(
+                    'addpercent',
+                    "Новый процент добавлен! "
+                );
+                if(!empty($id)){
+                    Yii::app()->user->setFlash(
+                    'addpercent',
+                    "Процент отредактирован! "
+                );
+                }
 				$this->redirect(array('percent/index', 'type'=>$type));
             }
 		}

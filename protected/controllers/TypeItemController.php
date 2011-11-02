@@ -25,7 +25,19 @@ class TypeItemController extends Controller
 			$model->attributes=$_POST['TypeItem'];
             $model->type = $type;
 			if($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'addtype',
+                    "Новый тип добавлен <b>".$model->title."</b>! "
+                );
+                if(!empty($id)){
+                    Yii::app()->user->setFlash(
+                    'addtype',
+                    "Тип <b>".$model->title."</b> отредактирован! "
+                );
+                }
 				$this->redirect(array('typeItem/index','type'=>$type));
+            }
 		}
 
 		$this->render('create',array(

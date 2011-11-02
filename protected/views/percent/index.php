@@ -12,6 +12,12 @@ $this->menu=array(
 
 <h1>Проценты</h1>
 
+    <?php if(Yii::app()->user->hasFlash('addpercent')): ?>
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('addpercent'); ?>
+        </div>
+    <?php endif; ?>
+
     <div>Выделенные цветом элементы - элементы по умолчанию</div>
 
 <?php
@@ -31,3 +37,8 @@ $this->widget('zii.widgets.CListView', array(
     ),
 
 )); ?>
+
+<script>
+    $(".flash-success").animate({opacity: 1.0}, 5000).fadeOut("slow");
+    $(".flash-error").animate({opacity: 1.0}, 5000).fadeOut("slow");
+</script>
