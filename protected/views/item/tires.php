@@ -21,7 +21,11 @@ $this->breadcrumbs = array(
         'hw',
         'd',
         'model',
-        'type_item',
+        'type_item'=>array(
+            'name'=>'type_item',
+            'filter'=> Item::model()->getTypeItem('tire'),
+            'value'=>'Item::model()->getTIA("tire", $data->type_item)'
+        ),
         'season'=>array(
             'name'=>'season',
             'filter'=> Item::model()->SeasonList(),

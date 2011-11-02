@@ -7,7 +7,11 @@
         'hw',
         'd',
         'model',
-        'type_item',
+        'type_item'=>array(
+            'name'=>'type_item',
+            'filter'=> Item::model()->getTypeItem($type),
+            'value'=>'Item::model()->getTIA("'.$type.'", $data->type_item)'
+        ),
         'season'=>array(
             'name'=>'season',
             'filter'=> Item::model()->SeasonList(),
@@ -15,7 +19,19 @@
         ),
 		'main_string',
 		'price',
-        //'date_add',
+        array(
+            'header'=>'Цена, опт',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "opt", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, VIP',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "vip", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, роз',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "roz", $data->price)',
+        ),
+        
 		array(
             'class' => 'CButtonColumn',
             'header' => 'Действия',

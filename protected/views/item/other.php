@@ -17,6 +17,11 @@
 	'columns'=>array(
 		'id',
 		'main_string',
+        'type_item'=>array(
+            'name'=>'type_item',
+            'filter'=> Item::model()->getTypeItem('other'),
+            'value'=>'Item::model()->getTIA("other", $data->type_item)'
+        ),
 		'marka',
 		'category'=>array(
             'name'=>'category',

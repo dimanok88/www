@@ -5,9 +5,25 @@
 	'columns'=>array(
         'id',
 		'main_string',
-		'price',
+        'type_item'=>array(
+            'name'=>'type_item',
+            'filter'=> Item::model()->getTypeItem($type),
+            'value'=>'Item::model()->getTIA("'.$type.'", $data->type_item)'
+        ),
 		'marka',
-		'active',
+		'price',
+        array(
+            'header'=>'Цена, опт',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "opt", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, VIP',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "vip", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, роз',
+            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "roz", $data->price)',
+        ),
 
 		array(
             'class' => 'CButtonColumn',

@@ -17,6 +17,11 @@
 	'columns'=>array(
 		'id',
 		'main_string',
+        'type_item'=>array(
+            'name'=>'type_item',
+            'filter'=> Item::model()->getTypeItem('disc'),
+            'value'=>'Item::model()->getTIA("disc", $data->type_item)'
+        ),
 		'd',
 		'category'=>array(
             'name'=>'category',
