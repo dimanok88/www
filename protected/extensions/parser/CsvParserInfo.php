@@ -188,11 +188,12 @@ class CsvParserInfo
 		}
 		return array();
 	}
-	
+
 	//185/75 R13C Б/К КАМА-231
+    //195/75 R16C Б/К NOKIAN HAKKA C CARGO
 	public function parsetire11($string, $type)
 	{
-		if( preg_match('!^(\d{3})/(\d{2})\pZ+R(\d{2}).\pZ+Б/К\pZ+(.*)(?:\pZ+@)?$!isUu', $string, $result) )
+		if( preg_match('!^(\d{3})/(\d{2})\pZ+R(\d{2})\pL\pZ+Б/К\pZ+(.*)(?:\pZ+@)?$!isUu', $string, $result) )
 		{
 			return array(
 				'type' => $type,
@@ -204,11 +205,12 @@ class CsvParserInfo
 		}
 		return array();
 	}
-	
+
 	//185/R14C Б/К Я-538
+    //185/R14C Б/К NOKIAN HAKKA C VAN
 	public function parsetire12($string, $type)
 	{
-		if( preg_match('!^(\d{3})/R(\d{2})(?:C)?\pZ+Б/К\pZ+(.*)(?:\pZ+@)?$!isUu', $string, $result) )
+		if( preg_match('!^(\d{3})/R(\d{2})\pL\pZ+Б/К\pZ+(.*)(?:\pZ+@)?$!isUu', $string, $result) )
 		{
 			return array(
 				'type' => $type,
@@ -219,7 +221,7 @@ class CsvParserInfo
 		}
 		return array();
 	}
-	
+
 	//215/90 R15C Я-192
 	public function parsetire13($string, $type)
 	{

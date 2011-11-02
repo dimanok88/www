@@ -30,9 +30,9 @@ class Item extends CActiveRecord implements IECartPosition
         const ITEM_TYPE_DISC = 'disc';
         const ITEM_TYPE_OTHER = 'other';
 
-        const ITEM_SEASON_LETO = '0';
-        const ITEM_SEASON_ZIMA = '1';
-        const ITEM_SEASON_VSESEASON = '2';
+        const ITEM_SEASON_LETO = 'leto';
+        const ITEM_SEASON_ZIMA = 'zima';
+        const ITEM_SEASON_VSESEASON = 'vsesez';
 
         public function getTypeList()
         {
@@ -72,7 +72,7 @@ class Item extends CActiveRecord implements IECartPosition
 			array('price, d, w, hw, vilet, krepezh', 'numerical'),
 			array('main_string', 'length', 'max'=>255),
 			array('type', 'length', 'max'=>10),
-			array('type_item', 'length', 'max'=>6),
+			array('type_item', 'length', 'max'=>10),
 			array('stupica', 'length', 'max'=>30),
 			array('color', 'length', 'max'=>200),
 			array('model', 'length', 'max'=>100),
