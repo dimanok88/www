@@ -17,6 +17,12 @@ $this->breadcrumbs = array(
 	'dataProvider'=>$model->tire(),
 	'filter'=>$model,
 	'columns'=>array(
+        'pic'=>array(
+            'name'=>'pic',
+            'type'=>'raw',
+            'filter'=>false,
+            'value'=>'Item::model()->getPic($data->id)',
+        ),
         'w',
         'hw',
         'd',

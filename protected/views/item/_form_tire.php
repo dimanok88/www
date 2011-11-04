@@ -52,6 +52,7 @@
         <?php echo $form->labelEx($model, 'pictures'); ?>
 	    <?php echo $form->fileField($model, 'pictures'); ?>
 	    <?php echo $form->error($model, 'pictures'); ?>
+        <?= Item::model()->getPic($model->id); ?>
     </div>
 
     <div class="row">

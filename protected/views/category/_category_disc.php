@@ -3,7 +3,12 @@
 	'dataProvider'=>$list->$type($id),
 	'filter'=>$list,
 	'columns'=>array(
-        'id',
+        'pic'=>array(
+            'name'=>'pic',
+            'type'=>'raw',
+            'filter'=>false,
+            'value'=>'Item::model()->getPic($data->id)',
+        ),
 		'main_string',
         'type_item'=>array(
             'name'=>'type_item',
