@@ -46,7 +46,7 @@ Yii::app()->clientScript->registerScript(
     <div class="row buttons">
        <?php echo CHtml::ajaxButton ("Обработать изображения",
                               CController::createUrl('parser/resizePhoto'),
-                              array('update' => '#data'), array('id'=>'uploadphoto'));
+                              array('update' => '#data', 'beforeSend'=>'function(){$("#data").html("Ждите...");}'), array('id'=>'uploadphoto'));
 ?>
     </div>
 

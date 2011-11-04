@@ -113,11 +113,12 @@ class ParserController extends Controller
 
                 foreach($files as $val)
                 {
-                    if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic']))
+                    if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic']) && !file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_big.jpg"))
                     {
                         $imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_big.jpg");
                         $imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_small.jpg");
                         $result[$val['id']] = $val['main_string'];
+                        set_time_limit(0);
                     }
                 }
             }
