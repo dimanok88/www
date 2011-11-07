@@ -67,6 +67,7 @@ class Percent extends CActiveRecord
 		return array(
 			array('percent, type_item, type_percent', 'required'),
 			array('percent, def', 'numerical'),
+            array('type, type_item', 'ext.MyValid.MyValidField'),
 			array('type, type_item', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
