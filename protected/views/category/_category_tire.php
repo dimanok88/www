@@ -1,43 +1,51 @@
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>$type.'s-grid',
+	'id'=>'tires-grid',
 	'dataProvider'=>$list->$type($id),
+    'rowCssClass' =>array('odd'),
 	'filter'=>$list,
+    'ajaxUpdate'=>false,
 	'columns'=>array(
         'pic'=>array(
             'name'=>'pic',
             'type'=>'raw',
             'filter'=>false,
             'value'=>'Item::model()->getPic($data->id)',
+            'htmlOptions'=>array('style'=>'text-align:center !important'),
         ),
-		'w',
+        'w',
         'hw',
         'd',
         'model',
         'type_item'=>array(
             'name'=>'type_item',
-            'filter'=> Item::model()->getTypeItem($type),
-            'value'=>'Item::model()->getTIA("'.$type.'", $data->type_item)'
+            'filter'=> Item::model()->getTypeItem('tire'),
+            'value'=>'Item::model()->getTIA("tire", $data->type_item)'
         ),
         'season'=>array(
             'name'=>'season',
             'filter'=> Item::model()->SeasonList(),
             'value'=>'Item::model()->getSeason($data->season)'
         ),
+        'category'=>array(
+            'name'=>'category',
+            'filter'=> Models::model()->getModelList('tire'),
+            'value'=>'Item::model()->ModelName($data->category, "tire");'
+        ),
 		'main_string',
 		'price',
         array(
-            'header'=>'Цена, опт',
-            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "opt", $data->price)',
-        ),
-        array(
             'header'=>'Цена, VIP',
-            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "vip", $data->price)',
+            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "vip", $data->price)',
         ),
         array(
-            'header'=>'Цена, роз',
-            'value'=>'Percent::model()->getPercent("'.$type.'",$data->type_item, "roz", $data->price)',
+            'header'=>'Цена, Опт',
+            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "opt", $data->price)',
         ),
-        
+        array(
+            'header'=>'Цена, Роз',
+            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "roz", $data->price)',
+        ),
+
 		array(
             'class' => 'CButtonColumn',
             'header' => 'Действия',
@@ -52,41 +60,32 @@
                 'update' => array
                 (
                     'label'=>'Update',
-                    'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"'.$type.'"))',
+                    'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"tire"))',
                 ),
             ),
         ),
 	),
 ));
 
-/*$this->widget('zii.widgets.jui.CJuiDatePicker',
-              array(
-                   'name' => 'date_add',
-                   'language' =>Yii::app()->getLanguage(),
-                    'options' => array(
-        	            'dateFormat'=>'yy-mm-dd',
-        	            // user will be able to change month and year
-        	            'changeMonth' => 'true',
-        	            'changeYear' => 'true',
-        	            // shows the button panel under the calendar (buttons like "today" and "done")
-        	            'showButtonPanel' => 'true',
-        	            // this is useful to allow only valid chars in the input field, according to dateFormat
-        	            'constrainInput' => 'false',
-        	            // speed at which the datepicker appears, time in ms or "slow", "normal" or "fast"
-        	            'duration'=>'fast',
-        	            // animation effect, see http://docs.jquery.com/UI/Effects
-        	            'showAnim' =>'slide',
-        	        ),
-              ), true);
-
-
-// declares a script binds the datepicker to fields you specify
 Yii::app()->clientScript->registerScript('live_date_picker', "
-                $('input[name=\"".CHtml::activeName($list, 'date_add')."\"]').live('focus', function(){
-                        $(this).datepicker({ dateFormat: 'yy-mm-dd' });
-        });
-        ");
-*/
+
+    $('.items tbody tr').live({
+         mouseenter: function() {
+             var index = $('.odd').index(this);
+             var image = $('.prev').eq(index).attr('prev');
+             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
+             return false;
+         },
+         mouseleave: function() {
+             var index = $('.odd').index(this);
+             $('.main_pic').hide();
+             return false;
+         },
+
+ });
+
+");
+
 
 ?>
 

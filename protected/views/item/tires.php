@@ -15,13 +15,16 @@ $this->breadcrumbs = array(
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tires-grid',
 	'dataProvider'=>$model->tire(),
+    'rowCssClass' =>array('odd'),
 	'filter'=>$model,
+    'ajaxUpdate'=>false,
 	'columns'=>array(
         'pic'=>array(
             'name'=>'pic',
             'type'=>'raw',
             'filter'=>false,
             'value'=>'Item::model()->getPic($data->id)',
+            'htmlOptions'=>array('style'=>'text-align:center !important'),
         ),
         'w',
         'hw',
@@ -45,15 +48,15 @@ $this->breadcrumbs = array(
 		'main_string',
 		'price',
         array(
-            'header'=>'Цена, опт',
-            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "opt", $data->price)',
-        ),
-        array(
             'header'=>'Цена, VIP',
             'value'=>'Percent::model()->getPercent("tire",$data->type_item, "vip", $data->price)',
         ),
         array(
-            'header'=>'Цена, роз',
+            'header'=>'Цена, Опт',
+            'value'=>'Percent::model()->getPercent("tire",$data->type_item, "opt", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, Роз',
             'value'=>'Percent::model()->getPercent("tire",$data->type_item, "roz", $data->price)',
         ),
         
@@ -76,4 +79,26 @@ $this->breadcrumbs = array(
             ),
         ),
 	),
-)); ?>
+));
+
+Yii::app()->clientScript->registerScript('live_date_picker', "
+
+    $('.items tbody tr').live({
+         mouseenter: function() {
+             var index = $('.odd').index(this);
+             var image = $('.prev').eq(index).attr('prev');
+             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
+             return false;
+         },
+         mouseleave: function() {
+             var index = $('.odd').index(this);
+             $('.main_pic').hide();
+             return false;
+         },
+
+ });
+
+");
+
+
+?>

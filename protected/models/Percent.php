@@ -149,6 +149,6 @@ class Percent extends CActiveRecord
             }
             else $result = 0;
         }
-        return $result;
+        return floor($result);
     }
 }

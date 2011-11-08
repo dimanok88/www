@@ -454,7 +454,8 @@ class Item extends CActiveRecord implements IECartPosition
         if(file_exists(Yii::app()->getBasePath().'/..'.'/resources/images/'.$id."_big.jpg"))
         {
             $link_img = '/resources/images/'.$id."_small.jpg";
-            $image = CHtml::image($link_img);
+            $link_icon = "/images/picture.png";
+            $image = "<div class='main_pic'></div>".CHtml::image($link_icon, '', array('prev'=>$link_img, 'class'=>'prev'));
         }
 
         return $image;

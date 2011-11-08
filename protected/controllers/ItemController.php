@@ -80,10 +80,12 @@ class ItemController extends Controller
         {
             $item->attributes = $_POST[get_class($item)];
             $item->type = $type;
+
             //$category->pic = CUploadedFile::getInstance($category, 'pic');
 
             if($item->save())
             {
+                $backUrl = $_POST['referrer'];
                 if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
                     $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
                     $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
@@ -99,7 +101,9 @@ class ItemController extends Controller
                     "Элемент <b>".$item->model."</b> отредактирован! "
                 );
                 }
-                $this->redirect(array('item/'.$type));
+                
+                //$this->redirect(array('item/'.$type));
+                Yii::app()->request->redirect($backUrl);
             }
         }
 
