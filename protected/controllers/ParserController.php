@@ -56,9 +56,9 @@ class ParserController extends Controller
                                 if(!empty($result))
                                 {
                                     $item = new Item();
-                                    $id_new = $item->NewPrice($main_string, $price);
+                                    $id_new = $item->NewPrice($main_string, $price, $country);
                                     
-                                    if($item->NewString($main_string))
+                                    if($item->NewString($main_string, $country))
                                     {
                                         $item->attributes=$result;
                                         $item->main_string = $main_string;
@@ -75,7 +75,9 @@ class ParserController extends Controller
                                         if( $item->save() )
                                         {
                                             continue;
+                                            echo $item->id."<br/>";
                                         }
+                                        else echo "false<br/>";
                                     }
                                     elseif($id_new != false)
                                     {
@@ -92,7 +94,7 @@ class ParserController extends Controller
                             );
                         }
 
-                        $this->redirect(array('index'));
+                        //$this->redirect(array('index'));
                     }
                 }
 

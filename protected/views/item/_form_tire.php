@@ -86,7 +86,7 @@
 		<?php echo $form->error($model,'active'); ?>
 	</div>
 
-    <?= CHtml::hiddenField('referrer', Yii::app()->request->urlReferrer);?>
+    <? CHtml::hiddenField('referrer', Yii::app()->request->urlReferrer);?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>

@@ -69,15 +69,14 @@ class Item extends CActiveRecord implements IECartPosition
 		return array(
 			array('main_string, price', 'required'),
 			array('active', 'numerical'),
-			array('price, d, w, hw, vilet, krepezh', 'numerical'),
+			array('price, d, w, hw, vilet, krepezh', 'default'),
 			array('main_string', 'length', 'max'=>255),
 			array('type', 'length', 'max'=>10),
-			array('type_item', 'length', 'max'=>10),
+			array('type_item', 'length', 'max'=>20),
 			array('stupica', 'length', 'max'=>30),
-			array('color', 'length', 'max'=>200),
-			array('model', 'length', 'max'=>100),
+			array('color', 'length', 'max'=>200),			
             array('pictures' , 'file', 'types'=>'jpg, gif, png, jpeg', 'allowEmpty' => true),
-            array('season, country,descript, pic, marka, shipi, category', 'default'),
+            array('season, model, country,descript, pic, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, main_string, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
@@ -197,9 +196,9 @@ class Item extends CActiveRecord implements IECartPosition
 
 
         //проверка на существование строки в базе если ее нет то функция возвращет true
-        public function NewString($string)
+        public function NewString($string, $country)
         {
-            $searchString = $this->count('main_string=:main', array(':main'=>$string));
+            $searchString = $this->count('main_string=:main AND country=:c', array(':main'=>$string, ":c"=>$country));
             if($searchString == 0)
             {
                 return true;
@@ -208,9 +207,9 @@ class Item extends CActiveRecord implements IECartPosition
         }
 
         // проверка цены у строк. Если цена обновилось у строки то возвращется ID этой строки
-        public function NewPrice($string, $price)
+        public function NewPrice($string, $price, $country)
         {
-            $searchString = $this->find('main_string=:main AND price!=:p', array(':main'=>$string, ':p'=>$price));
+            $searchString = $this->find('main_string=:main AND price!=:p AND country=:c', array(':main'=>$string, ':p'=>$price, ":c"=>$country));
             if(count($searchString) > 0)
             {
                 if($searchString->price == $price) return false;

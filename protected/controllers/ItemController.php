@@ -73,9 +73,16 @@ class ItemController extends Controller
     {
         $item = new Item();
         $imageHandler = new CImageHandler();
-
+        
         if(!empty($id)) $item = Item::model()->findByPk($id);
 
+        $_SESSION['url'][] = Yii::app()->request->urlReferrer;
+
+        if(count($_SESSION['url']) > 3)
+            $c = count($_SESSION['url']) - 3;
+        else $c = 0;
+
+        //print_r($_SESSION['url']);
         if(isset($_POST['Item']))
         {
             $item->attributes = $_POST[get_class($item)];
@@ -85,7 +92,6 @@ class ItemController extends Controller
 
             if($item->save())
             {
-                $backUrl = $_POST['referrer'];
                 if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
                     $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
                     $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
@@ -103,7 +109,7 @@ class ItemController extends Controller
                 }
                 
                 //$this->redirect(array('item/'.$type));
-                Yii::app()->request->redirect($backUrl);
+                Yii::app()->request->redirect($_SESSION['url'][$c]);
             }
         }
 
