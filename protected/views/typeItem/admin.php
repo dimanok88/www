@@ -12,12 +12,6 @@ $this->menu=array(
 
 <h1>Типы</h1>
 
-    <?php if(Yii::app()->user->hasFlash('addtype')): ?>
-        <div class="flash-success">
-            <?php echo Yii::app()->user->getFlash('addtype'); ?>
-        </div>
-    <?php endif; ?>
-
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'type-item-grid',
 	'dataProvider'=>$model->search(),
@@ -44,8 +38,3 @@ $this->menu=array(
 		),
 	),
 )); ?>
-
-<script>
-    $(".flash-success").animate({opacity: 1.0}, 5000).fadeOut("slow");
-    $(".flash-error").animate({opacity: 1.0}, 5000).fadeOut("slow");
-</script>

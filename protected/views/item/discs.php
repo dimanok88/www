@@ -13,7 +13,9 @@
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'discs-grid',
 	'dataProvider'=>$model->disc(),
+	'rowCssClass' =>array('odd'),
 	'filter'=>$model,
+    'ajaxUpdate'=>false,
 	'columns'=>array(
 		'pic'=>array(
             'name'=>'pic',
@@ -21,30 +23,36 @@
             'filter'=>false,
             'value'=>'Item::model()->getPic($data->id)',
         ),
-		'main_string',
+        'w',
+        'd',
+        'vilet',
+        'stupica',
+        'krepezh',
+        'model',
+        'color',
         'type_item'=>array(
             'name'=>'type_item',
             'filter'=> Item::model()->getTypeItem('disc'),
             'value'=>'Item::model()->getTIA("disc", $data->type_item)'
         ),
-		'd',
-		'category'=>array(
+        'category'=>array(
             'name'=>'category',
             'filter'=> Models::model()->getModelList('disc'),
             'value'=>'Item::model()->ModelName($data->category, "disc");'
         ),
+        'main_string',
 		'price',
         array(
-            'header'=>'Цена, опт',
-            'value'=>'Percent::model()->getPercent("other",$data->type_item, "opt", $data->price)',
-        ),
-        array(
             'header'=>'Цена, VIP',
-            'value'=>'Percent::model()->getPercent("other",$data->type_item, "vip", $data->price)',
+            'value'=>'Percent::model()->getPercent("disc",$data->type_item, "vip", $data->price)',
         ),
         array(
-            'header'=>'Цена, роз',
-            'value'=>'Percent::model()->getPercent("other",$data->type_item, "roz", $data->price)',
+            'header'=>'Цена, Опт',
+            'value'=>'Percent::model()->getPercent("disc",$data->type_item, "opt", $data->price)',
+        ),
+        array(
+            'header'=>'Цена, Роз',
+            'value'=>'Percent::model()->getPercent("disc" ,$data->type_item, "roz", $data->price)',
         ),
 
 		array(

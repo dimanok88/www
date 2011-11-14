@@ -2,7 +2,6 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'category-form',
-    'action'=>NULL,
 	'enableAjaxValidation'=>false,
     'htmlOptions' => array(
         'enctype' => 'multipart/form-data',
@@ -85,8 +84,6 @@
 		<?php echo $form->CheckBox($model, 'active'); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div>
-
-    <? CHtml::hiddenField('referrer', Yii::app()->request->urlReferrer);?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>

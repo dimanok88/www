@@ -12,14 +12,15 @@ $this->menu=array(
 
 <h1>Проценты</h1>
 
-<div>Выделенные элементы являются элементами по умолчанию</div>
+    <div>Выделенные цветом элементы - элементы по умолчанию</div>
+
 <?php
 $per = Percent::model()->getTypePerc();
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
     'id'=>'percent',
-    'viewData'=>array('per'=>$per),
+    'viewData'=>array('per'=>$per, 'type'=>$type),
     'ajaxUpdate'=>true,
     'itemsTagName' => 'ul',
     'itemsCssClass' =>'percent',

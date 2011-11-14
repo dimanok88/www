@@ -14,7 +14,7 @@ $cs->scriptMap=array(
     <?php echo CGoogleApi::init(); ?>
 
     <?php echo CHtml::script(
-        CGoogleApi::load('jquery')
+        CGoogleApi::load('jquery', '1.5.0')
     ); ?>
 
 
@@ -71,3 +71,26 @@ $cs->scriptMap=array(
 
 </body>
 </html>
+
+<?
+
+Yii::app()->clientScript->registerScript('disc', "
+
+    $('.items tbody tr').live({
+         mouseenter: function() {
+             var index = $('.odd').index(this);
+             var image = $('.prev').eq(index).attr('prev');
+             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
+             return false;
+         },
+         mouseleave: function() {
+             var index = $('.odd').index(this);
+             $('.main_pic').hide();
+             return false;
+         },
+
+ });
+
+");
+
+?>

@@ -81,24 +81,4 @@ $this->breadcrumbs = array(
 	),
 ));
 
-Yii::app()->clientScript->registerScript('live_date_picker', "
-
-    $('.items tbody tr').live({
-         mouseenter: function() {
-             var index = $('.odd').index(this);
-             var image = $('.prev').eq(index).attr('prev');
-             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
-             return false;
-         },
-         mouseleave: function() {
-             var index = $('.odd').index(this);
-             $('.main_pic').hide();
-             return false;
-         },
-
- });
-
-");
-
-
 ?>

@@ -73,21 +73,13 @@ class ItemController extends Controller
     {
         $item = new Item();
         $imageHandler = new CImageHandler();
-        
+
         if(!empty($id)) $item = Item::model()->findByPk($id);
 
-        $_SESSION['url'][] = Yii::app()->request->urlReferrer;
-
-        if(count($_SESSION['url']) > 3)
-            $c = count($_SESSION['url']) - 3;
-        else $c = 0;
-
-        //print_r($_SESSION['url']);
         if(isset($_POST['Item']))
         {
             $item->attributes = $_POST[get_class($item)];
             $item->type = $type;
-
             //$category->pic = CUploadedFile::getInstance($category, 'pic');
 
             if($item->save())
@@ -107,9 +99,7 @@ class ItemController extends Controller
                     "Элемент <b>".$item->model."</b> отредактирован! "
                 );
                 }
-                
-                //$this->redirect(array('item/'.$type));
-                Yii::app()->request->redirect($_SESSION['url'][$c]);
+                $this->redirect(array('item/'.$type));
             }
         }
 
