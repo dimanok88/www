@@ -2,6 +2,7 @@
 	'id'=>$type.'s-grid',
 	'dataProvider'=>$list->$type($id),
 	'filter'=>$list,
+'ajaxUpdate'=>false,
 	'columns'=>array(
         'pic'=>array(
             'name'=>'pic',
@@ -44,7 +45,7 @@
                 'update' => array
                 (
                     'label'=>'Update',
-                    'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"'.$type.'"))',
+                   'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"'.$type.'", "model_id"=>'.$_GET['id'].'))',
                 ),
             ),
         ),

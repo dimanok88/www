@@ -12,6 +12,8 @@ class ItemController extends Controller
     public function actionTire()
     {
         $model=new Item('tire'); //загрузка модели с возможностью поиска по шинам
+$url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
+		Yii::app()->user->setState('url_get', $url);
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$model->attributes=$_GET['Item'];
@@ -25,6 +27,8 @@ class ItemController extends Controller
     public function actionDisc()
     {
         $model=new Item('disc');//загрузка модели с возможностью поиска по диска
+$url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
+		Yii::app()->user->setState('url_get', $url);
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$model->attributes=$_GET['Item'];
@@ -38,6 +42,8 @@ class ItemController extends Controller
     public function actionOther()
     {
         $model=new Item('other');//загрузка модели с возможностью поиска по разному
+$url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
+		Yii::app()->user->setState('url_get', $url);
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$model->attributes=$_GET['Item'];
@@ -69,9 +75,10 @@ class ItemController extends Controller
         }
     }
 
-    public function actionUpnew($id = '', $type= '')
+    public function actionUpnew($id = '', $type= '', $model_id= '')
     {
         $item = new Item();
+        $url = Yii::app()->user->getState('url_get');
         $imageHandler = new CImageHandler();
 
         if(!empty($id)) $item = Item::model()->findByPk($id);
@@ -99,7 +106,7 @@ class ItemController extends Controller
                     "Элемент <b>".$item->model."</b> отредактирован! "
                 );
                 }
-                $this->redirect(array('item/'.$type));
+                $this->redirect($url);
             }
         }
 

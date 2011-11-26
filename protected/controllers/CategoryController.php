@@ -4,6 +4,8 @@ class CategoryController extends Controller
     public function actionListItem($id='', $type= '')
     {
         $list = new Item($type);
+$url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
+		Yii::app()->user->setState('url_get', $url);
         $list->unsetAttributes();  // clear any default values
 		if(isset($_GET['Item']))
 			$list->attributes=$_GET['Item'];
