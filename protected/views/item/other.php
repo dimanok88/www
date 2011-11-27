@@ -8,7 +8,6 @@
 <?= $this->renderPartial('_menu'); ?>
 
 <h2>Разное</h2>
-<?= CHtml::image('/images/sotra.jpg'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'other-grid',
@@ -46,6 +45,7 @@
             'header'=>'Цена, роз',
             'value'=>'Percent::model()->getPercent("other",$data->type_item, "roz", $data->price)',
         ),
+        'country',
 
 		array(
             'class' => 'CButtonColumn',

@@ -38,6 +38,7 @@
             'header'=>'Цена, Роз',
             'value'=>'Percent::model()->getPercent("tire",$data->type_item, "roz", $data->price)',
         ),
+        'country',
         
 		array(
             'class' => 'CButtonColumn',

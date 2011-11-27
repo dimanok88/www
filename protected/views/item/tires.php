@@ -10,12 +10,12 @@ $this->breadcrumbs = array(
 <?= $this->renderPartial('_menu'); ?>
 
 <h2>Шины</h2>
-<?= CHtml::image('/images/shini.png'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tires-grid',
 	'dataProvider'=>$model->tire(),
     'rowCssClass' =>array('odd'),
+    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd selected" : "odd" ',
 	'filter'=>$model,
     'ajaxUpdate'=>false,
 	'columns'=>array(
@@ -59,6 +59,8 @@ $this->breadcrumbs = array(
             'header'=>'Цена, Роз',
             'value'=>'Percent::model()->getPercent("tire",$data->type_item, "roz", $data->price)',
         ),
+        'country',
+        'pic',
         
 		array(
             'class' => 'CButtonColumn',

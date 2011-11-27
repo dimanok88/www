@@ -57,6 +57,13 @@ class ParserController extends Controller
                                 {
                                     $item = new Item();
                                     $id_new = $item->NewPrice($main_string, $price, $country);
+
+                                    if(!isset($_SESSION['new_price']))
+                                    {
+                                        $_SESSION['new_price'] = 'new';
+                                        echo $_SESSION['new_price'];
+                                        $item->updateAll(array('new_price'=>'0'), 'type=:t', array(':t'=>$result['type']));
+                                    }
                                     
                                     if($item->NewString($main_string, $country))
                                     {
@@ -81,7 +88,7 @@ class ParserController extends Controller
                                     }
                                     elseif($id_new != false)
                                     {
-                                        $item->updateByPk($id_new, array('price'=>$price, 'date_modify'=> new CDbExpression('NOW()')));
+                                        $item->updateByPk($id_new, array('price'=>$price, 'new_price'=>'1', 'date_modify'=> new CDbExpression('NOW()')));
                                     }
                                     set_time_limit(0);
                                 }
@@ -93,6 +100,7 @@ class ParserController extends Controller
                                 "Новый прайс загружен и обновлен! ".CHtml::link('Перейти в раздел.', array('item/'))
                             );
                         }
+                        unset($_SESSION['new_price']);
 
                         //$this->redirect(array('index'));
                     }

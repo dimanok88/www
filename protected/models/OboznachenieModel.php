@@ -38,6 +38,7 @@ class OboznachenieModel extends CActiveRecord
 		return array(
 			array('oboznach, model_id', 'required'),
 			array('model_id', 'numerical', 'integerOnly'=>true),
+            array('oboznach+type', 'application.extensions.uniqueMultiColumnValidator'),
 			array('oboznach', 'length', 'max'=>50),
 			array('type', 'length', 'max'=>10),
 			// The following rule is used by search().
@@ -66,7 +67,7 @@ class OboznachenieModel extends CActiveRecord
 			'id' => 'ID',
 			'oboznach' => 'Обозначение',
 			'model_id' => 'Модель',
-			'type' => 'Type',
+			'type' => 'Тип',
 		);
 	}
 

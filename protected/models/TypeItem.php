@@ -38,6 +38,7 @@ class TypeItem extends CActiveRecord
 		return array(
 			array('name, title, type', 'required'),
 			array('name', 'length', 'max'=>50),
+            array('name+type', 'application.extensions.uniqueMultiColumnValidator'),
 			array('title', 'length', 'max'=>150),
 			array('type', 'length', 'max'=>6),
 			// The following rule is used by search().

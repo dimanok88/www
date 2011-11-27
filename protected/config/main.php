@@ -15,8 +15,9 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-        	'application.extensions.shoppingCart.*',
-        	'application.extensions.categorytree.*',
+        'application.extensions.PHPExcel4Yii.*',
+        'application.extensions.shoppingCart.*',
+        'application.extensions.categorytree.*',
 		'application.extensions.parser.*',
 	),
 
@@ -29,6 +30,10 @@ return array(
         'cache' => array(
             'class' => 'system.caching.CFileCache',
         ),
+
+        'excel'=>array(
+	          'class'=>'application.extensions.PHPExcel4Yii.PHPExcel',
+	    ),
 
 		/*
 		'urlManager'=>array(

@@ -68,7 +68,7 @@ class Item extends CActiveRecord implements IECartPosition
 		// will receive user inputs.
 		return array(
 			array('main_string, price', 'required'),
-			array('active', 'numerical'),
+			array('active, new_price', 'numerical'),
 			array('price, d, w, hw, vilet, krepezh', 'default'),
 			array('main_string', 'length', 'max'=>255),
 			array('type', 'length', 'max'=>10),
@@ -79,7 +79,7 @@ class Item extends CActiveRecord implements IECartPosition
             array('season, model, country,descript, pic, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, new_price, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,6 +96,7 @@ class Item extends CActiveRecord implements IECartPosition
 
 
     public function beforeSave() {
+        $this->new_price = 1;
 	    if ($this->isNewRecord) {
 	        $this->date_add = new CDbExpression('NOW()');
 	    }
@@ -167,7 +168,9 @@ class Item extends CActiveRecord implements IECartPosition
 		$criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('category',$this->category,true);
         $criteria->compare('country',$this->country,'LIKE');
+        $criteria->compare('pic',$this->pic,'LIKE');
 		$criteria->compare('date_modify',$this->date_modify,true);
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -244,7 +247,7 @@ class Item extends CActiveRecord implements IECartPosition
             )
         );
         }
-        $criteria->order = 'active DESC';
+        $criteria->order = 'new_price DESC';
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`w`', $this->w);
         $criteria->compare('`hw`', $this->hw);
@@ -255,6 +258,9 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('`price`', $this->price, true);
+        $criteria->compare('country',$this->country,'LIKE');
+        $criteria->compare('pic',$this->pic,'LIKE');
+        $criteria->compare('`new_price`', $this->new_price);
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -304,6 +310,8 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('`price`', $this->price, true);
+        $criteria->compare('country',$this->country,'LIKE');
+        $criteria->compare('pic',$this->pic,'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -348,6 +356,8 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('date_add',$this->date_add, 'LIKE');
         $criteria->compare('`price`', $this->price, true);
         $criteria->compare('`marka`', $this->marka, 'LIKE');
+        $criteria->compare('country',$this->country,'LIKE');
+        $criteria->compare('pic',$this->pic,'LIKE');
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -421,6 +431,7 @@ class Item extends CActiveRecord implements IECartPosition
     public function getSeason($s)
     {
         $season = $this->SeasonList();
+        if(empty($season[$s])) return '';
         return $season[$s];
     }
 

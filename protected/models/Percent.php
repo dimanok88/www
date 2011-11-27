@@ -66,6 +66,7 @@ class Percent extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('percent, type_item, type_percent', 'required'),
+            array('type_item+type_percent', 'application.extensions.uniqueMultiColumnValidator'),
 			array('percent, def', 'numerical'),
 			array('type, type_item', 'length', 'max'=>10),
 			// The following rule is used by search().

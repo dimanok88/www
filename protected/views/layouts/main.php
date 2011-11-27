@@ -49,6 +49,35 @@ $cs->scriptMap=array(
                         'items' => array(
                             array('label'=>'Общий раздел', 'url'=>array('item/')),
                             array('label'=>'Парсер', 'url'=>array('parser/')),
+                    ),
+                    ),
+                    array(
+                        'label' => 'Список',
+                        'items'=>array(
+                            array('label'=>'Шины', 'url'=>array('item/tire'),
+                            'items'=>array(
+                                array('label' => 'Обозначения', 'url' => array('item/oboznach', 'type'=>'tire')),
+                                array('label' => 'Раздел категорий', 'url' => array('item/category', 'type'=>'tire')),
+                                array('label' => 'Проценты', 'url' => array('percent/index', 'type'=>'tire')),
+                                array('label' => 'Типы', 'url' => array('typeItem/index', 'type'=>'tire')),
+                            ),
+                    ),
+                    array('label'=>'Диски', 'url'=>array('item/disc'),
+                        'items'=>array(
+                                array('label' => 'Обозначения', 'url' => array('item/oboznach', 'type'=>'disc')),
+                                array('label' => 'Раздел категорий', 'url' => array('item/category', 'type'=>'disc')),
+                                array('label' => 'Проценты', 'url' => array('percent/index', 'type'=>'disc')),
+                                array('label' => 'Типы', 'url' => array('typeItem/index', 'type'=>'disc')),
+                            ),
+                    ),
+                    array('label'=>'Разное', 'url'=>array('item/other'),
+                        'items'=>array(
+                                array('label' => 'Обозначения', 'url' => array('item/oboznach', 'type'=>'other')),
+                                array('label' => 'Раздел категорий', 'url' => array('item/category', 'type'=>'other')),
+                                array('label' => 'Проценты', 'url' => array('percent/index', 'type'=>'other')),
+                                array('label' => 'Типы', 'url' => array('typeItem/index', 'type'=>'other')),
+                            ),
+                    ),
                         ),
                     ),
                 ),
@@ -56,9 +85,11 @@ $cs->scriptMap=array(
         );
     ?>
 
-	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?>
+	<?php //$this->widget('zii.widgets.CBreadcrumbs', array(
+		//'links'=>$this->breadcrumbs,
+	//));
+
+    ?>
 
 	<?php echo $content; ?>
 
@@ -80,7 +111,7 @@ Yii::app()->clientScript->registerScript('disc', "
          mouseenter: function() {
              var index = $('.odd').index(this);
              var image = $('.prev').eq(index).attr('prev');
-             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
+             $('.main_pic').eq(index).show().html('<img src=\"'+image+'\">');
              return false;
          },
          mouseleave: function() {
