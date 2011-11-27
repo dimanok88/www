@@ -66,12 +66,12 @@ class Percent extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('percent, type_item, type_percent', 'required'),
-            array('type_item+type_percent', 'application.extensions.uniqueMultiColumnValidator'),
-			array('percent, def', 'numerical'),
+            array('type_item+type_percent+ot+do', 'application.extensions.uniqueMultiColumnValidator'),
+			array('percent, ot, do', 'numerical'),
 			array('type, type_item', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, percent, type, def, type_percent, type_item', 'safe', 'on'=>'search'),
+			array('id, percent, type, ot, do, type_percent, type_item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,7 +97,8 @@ class Percent extends CActiveRecord
 			'type' => 'Тип',
             'type_percent'=>'Тип',
 			'type_item' => 'Тип предмета',
-            'def'=>'По умолчанию',
+            'ot'=>'От',
+            'do'=>'До',
 		);
 	}
 
@@ -133,22 +134,44 @@ class Percent extends CActiveRecord
 
     public function getPercent($type, $type_item, $type_percent, $price)
     {
-        $item = $this->find('type=:t AND type_item=:t_i AND type_percent=:t_p',
+        $items = $this->findAll('type=:t AND type_item=:t_i AND type_percent=:t_p',
                             array(':t'=>$type, ':t_i'=>$type_item, ':t_p'=>$type_percent));
-        $c = $item['percent']/100;
-        $result = $price + $price * $c;
-        if($result == $price)
-        {
-           $default = Percent::model()->find('type=:t AND type_item=:t_i AND type_percent=:t_p AND def=:d',
-                array(':t'=>$type, ':t_i'=>$type_item, ':t_p'=>$type_percent, ':d'=>'1')
-           );
-            if(count($default)> 0)
+        //echo count($items);
+        foreach($items as $item){
+            $c = $item['percent']/100;
+            $ot = $item['ot'];
+            $do = $item['do'];
+
+            if($ot > 0 && $do > 0)
             {
-                $c = $default['percent']/100;
-                $result = $price + $price * $c;
+                if($ot <= $price && $do >= $price)
+                {
+                    $result = $price + $price * $c;
+                    return floor($result)." <b>".$item['percent']."</b>";
+                }
             }
-            else $result = 0;
+            elseif($ot > 0 && $do == 0)
+            {
+                if($ot <= $price)
+                {
+                    $result = $price + $price * $c;
+                    return floor($result)." <b>".$item['percent']."</b>";
+                }
+            }
+            elseif($ot == 0 && $do > 0)
+            {
+                if($do >= $price)
+                {
+                    $result = $price + $price * $c;
+                    return floor($result)." <b>".$item['percent']."</b>";
+                }
+            }
+            else
+            {
+                $result = $price + $price * $c;
+                return floor($result)." <b>".$item['percent']."</b>";
+            }
         }
-        return floor($result);
+                
     }
 }

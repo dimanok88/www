@@ -9,7 +9,7 @@
 
 
 .percent { margin: 0; padding: 0; list-style-type: none;}
-.percent li { margin: 7px 10px; padding: 10px; border: 1px #000000 dashed;}
+.percent li { margin: 7px 10px; padding: 10px; border: 1px #000000 dashed; display: inline-block; width: 230px;}
 .percent li.default_list { background: #C9E0ED;}
 
 .main_pic {position: absolute; margin: -30px 0 0 -100px;

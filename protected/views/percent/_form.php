@@ -28,9 +28,13 @@
 	</div>
 
     <div class="row">
-		<?php echo $form->labelEx($model,'def'); ?>
-		<?php echo $form->checkBox($model, 'def'); ?>
-		<?php echo $form->error($model,'def'); ?>
+		<?php echo $form->labelEx($model,'ot'); ?>
+		<?php echo $form->textField($model, 'ot'); ?>
+		<?php echo $form->error($model,'ot'); ?>
+
+        <?php echo $form->labelEx($model,'do'); ?>
+		<?php echo $form->textField($model, 'do'); ?>
+		<?php echo $form->error($model,'do'); ?>
 	</div>
 
 	<div class="row buttons">

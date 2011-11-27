@@ -34,7 +34,7 @@ Yii::app()->clientScript->registerScript(
     </div>
     
     <div class="row buttons">
-	<?php echo CHtml::submitButton('Загрузить'); ?>
+	<?php echo CHtml::submitButton('Загрузить'); ?> <?php echo CHtml::link('Выгрузить прайс', array('parser/excelSave')); ?>
     </div>
 
 <?php $this->endWidget(); ?>

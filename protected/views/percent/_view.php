@@ -23,5 +23,9 @@ if($data->def == 1) $class = 'class="default_list"';
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('type_percent')); ?>:</b>
 	<?php echo $per[$data->type_percent]; ?>
+    <br/>
+
+    <b><?php echo CHtml::encode($data->getAttributeLabel('type_percent')); ?>:</b>
+	<?php echo $per[$data->type_percent]; ?>
 
 </li>
