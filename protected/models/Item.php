@@ -497,7 +497,7 @@ class Item extends CActiveRecord implements IECartPosition
            $data[$t] = $command->queryAll();
         }
 
-        return print_r($data);
+        return $data;
     }
 
 }
