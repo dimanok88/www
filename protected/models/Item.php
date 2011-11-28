@@ -247,7 +247,7 @@ class Item extends CActiveRecord implements IECartPosition
             )
         );
         }
-        $criteria->order = 'new_price DESC';
+        $criteria->order = 'new_price DESC, active DESC';
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`w`', $this->w);
         $criteria->compare('`hw`', $this->hw);
@@ -297,7 +297,7 @@ class Item extends CActiveRecord implements IECartPosition
             )
         );
         }
-        $criteria->order = 'active DESC';
+        $criteria->order = 'new_price DESC, active DESC';
         $criteria->compare('`d`', $this->d);
         $criteria->compare('`w`', $this->w);
         $criteria->compare('`stupica`', $this->stupica);
@@ -348,7 +348,7 @@ class Item extends CActiveRecord implements IECartPosition
             )
         );
         }
-        $criteria->order = 'active DESC';
+        $criteria->order = 'new_price DESC, active DESC';
         $criteria->compare('`model`', $this->model, 'LIKE');
         $criteria->compare('`type_item`', $this->type_item);
         $criteria->compare('`category`', $this->category);
@@ -460,8 +460,8 @@ class Item extends CActiveRecord implements IECartPosition
 
     public function getPic($id)
     {
-$link_icon = "/images/picture_no.png";
-         $image = "<div class='main_pic'></div>".CHtml::image($link_icon, '', array('prev'=>'', 'class'=>'prev'));
+        $link_icon = "/images/picture_no.png";
+        $image = "<div class='main_pic'></div>".CHtml::image($link_icon, '', array('prev'=>'', 'class'=>'prev'));
         if(file_exists(Yii::app()->getBasePath().'/..'.'/resources/images/'.$id."_big.jpg"))
         {
             $link_img = '/resources/images/'.$id."_small.jpg";
@@ -473,5 +473,31 @@ $link_icon = "/images/picture_no.png";
         return $image;
     }
 
+    public function AllItems($type = '', $type_item = '', $new_price = '', $season = '')
+    {
+        $data = array();
+        foreach($type as $t){
+           $criteria=new CDbCriteria;
+
+           $criteria->compare('type', $t);
+           $criteria->compare('active', 1);
+
+           if(array_key_exists($t,$type_item) == 1){
+               if(count($type_item[$t]) > 0) $criteria->addInCondition('type_item', $type_item[$t]);
+           }
+           if(array_key_exists($t,$new_price) == 1){
+               if(count($new_price[$t]) > 0) $criteria->addInCondition('new_price', $new_price[$t]);
+           }
+           if(array_key_exists($t,$season) == 1){
+               if(count($season[$t]) > 0) $criteria->addInCondition('season', $season[$t]);
+           }
+
+           $builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
+           $command = $builder->createFindCommand('item', $criteria);
+           $data[$t] = $command->queryAll();
+        }
+
+        return print_r($data);
+    }
 
 }

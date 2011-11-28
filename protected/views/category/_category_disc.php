@@ -2,7 +2,9 @@
 	'id'=>$type.'s-grid',
 	'dataProvider'=>$list->$type($id),
 	'filter'=>$list,
-'ajaxUpdate'=>false,
+    'ajaxUpdate'=>false,
+    'rowCssClass' =>array('odd'),
+    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd selected" : "odd" ',
 	'columns'=>array(
         'pic'=>array(
             'name'=>'pic',

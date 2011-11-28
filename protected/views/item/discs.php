@@ -13,6 +13,7 @@
 	'id'=>'discs-grid',
 	'dataProvider'=>$model->disc(),
 	'rowCssClass' =>array('odd'),
+    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd selected" : "odd" ',
 	'filter'=>$model,
     'ajaxUpdate'=>false,
 	'columns'=>array(

@@ -147,7 +147,7 @@ class Percent extends CActiveRecord
                 if($ot <= $price && $do >= $price)
                 {
                     $result = $price + $price * $c;
-                    return floor($result)." <b>".$item['percent']."</b>";
+                    return floor($result);
                 }
             }
             elseif($ot > 0 && $do == 0)
@@ -155,7 +155,7 @@ class Percent extends CActiveRecord
                 if($ot <= $price)
                 {
                     $result = $price + $price * $c;
-                    return floor($result)." <b>".$item['percent']."</b>";
+                    return floor($result);
                 }
             }
             elseif($ot == 0 && $do > 0)
@@ -163,13 +163,13 @@ class Percent extends CActiveRecord
                 if($do >= $price)
                 {
                     $result = $price + $price * $c;
-                    return floor($result)." <b>".$item['percent']."</b>";
+                    return floor($result);
                 }
             }
             else
             {
                 $result = $price + $price * $c;
-                return floor($result)." <b>".$item['percent']."</b>";
+                return floor($result);
             }
         }
                 

@@ -146,32 +146,59 @@ class ParserController extends Controller
 
     public function actionExcelSave()
     {
-        $objPHPExcel = Yii::app()->excel;
-        $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Параметры')
-            ->setCellValue('B1', 'Производитель')
-            ->setCellValue('C1', 'Цена');
+        //print_r($_POST);
+        if(isset($_POST['type'])){
+            //$objPHPExcel = Yii::app()->excel;
+            $type = $_POST['type'];
 
-      // Miscellaneous glyphs, UTF-8
-     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A4', 'Miscellaneous glyphs')
-            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
+            $type_item = array();
+            if (isset($_POST['type_item'])) $type_item = $_POST['type_item'];
+            $new_price = array();
+            if (isset($_POST['new_price'])) $new_price = $_POST['new_price'];
+            
+            $season = array();
+            if (isset($_POST['season'])) $season = $_POST['season'];
 
-      // Rename sheet
-      $objPHPExcel->getActiveSheet()->setTitle('Price');
+            $data = Item::model()->AllItems($type, $type_item, $new_price, $season);
 
-      // Set active sheet index to the first sheet,
-      // so Excel opens this as the first sheet
-     $objPHPExcel->setActiveSheetIndex(0);
+            echo $data;
 
-      // Redirect output to a client’s web browser (Excel2007)
-      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      header('Content-Disposition: attachment;filename="'.date('Y.m.d').'.xlsx"');
-      header('Cache-Control: max-age=0');
+            /*$objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A1', 'Параметры')
+                ->setCellValue('B1', 'Производитель')
+                ->setCellValue('C1', 'Цена');
 
-      $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-      $objWriter->save('php://output');
-      Yii::app()->end();
+              // Rename sheet
+              $objPHPExcel->getActiveSheet()->setTitle('Price');
+
+              // Set active sheet index to the first sheet,
+              // so Excel opens this as the first sheet
+             $objPHPExcel->setActiveSheetIndex(0);
+
+              // Redirect output to a client’s web browser (Excel2007)
+              header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+              header('Content-Disposition: attachment;filename="'.date('Y.m.d').'.xlsx"');
+              header('Cache-Control: max-age=0');
+
+              $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+              $objWriter->save('php://output');*/
+              Yii::app()->end();
+        }
+
+        $this->render('excel');
         //$objPHPExcel->saveExcel2007($objPHPExcel,"./resources/ss.xlsx");
+    }
+
+    public function actionNextFilter($type)
+    {
+        $type = explode(',', $type);
+        $list = '';
+        if(count($type) > 0 && $type[0] != '')
+        {
+            foreach($type as $val){
+                $list[$val] = TypeItem::model()->type($val)->findAll();
+            }
+        }
+        $this->renderPartial('_filterType', array('list'=>$list), false, true);
     }
 }
