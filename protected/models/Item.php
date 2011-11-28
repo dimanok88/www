@@ -479,6 +479,7 @@ class Item extends CActiveRecord implements IECartPosition
         foreach($type as $t){
            $criteria=new CDbCriteria;
 
+           $criteria->order = 'price DESC, model ASC';
            $criteria->compare('type', $t);
            $criteria->compare('active', 1);
 

@@ -148,40 +148,60 @@ class ParserController extends Controller
     {
         //print_r($_POST);
         if(isset($_POST['type'])){
-            //$objPHPExcel = Yii::app()->excel;
+            $objPHPExcel = Yii::app()->excel;
             $type = $_POST['type'];
 
             $type_item = array();
             if (isset($_POST['type_item'])) $type_item = $_POST['type_item'];
             $new_price = array();
             if (isset($_POST['new_price'])) $new_price = $_POST['new_price'];
-            
             $season = array();
             if (isset($_POST['season'])) $season = $_POST['season'];
+            $pr = '';
+            if(isset($_POST['price'])) $pr = $_POST['price'];
 
             $data = Item::model()->AllItems($type, $type_item, $new_price, $season);
 
-            echo $data;
+            $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn('A')->setAutoSize(true);
+            $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn(1)->setAutoSize(true);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', 'Параметры');
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1', 'Производитель');
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', 'Цена');
+            $i = 2;
 
-            /*$objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A1', 'Параметры')
-                ->setCellValue('B1', 'Производитель')
-                ->setCellValue('C1', 'Цена');
+            $type_obj = Item::model()->getTypeList();
 
-              // Rename sheet
-              $objPHPExcel->getActiveSheet()->setTitle('Price');
+            foreach($data as $item)
+            {
+                foreach($item as $key=>$value){
+                    $string = $value['w']."/".$value['hw']." R".$value['d']." ".$value['model'];
+                    $price = $value['price'];
+                    if($pr != '' && (array_key_exists($value['type'],$pr) && $pr[$value['type']] != 'ob')) $price = Percent::model()->getPercent($value['type'], $value['type_item'], $pr[$value['type']], $value['price']);
+                    $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A'.$i, $string)
+                    ->setCellValue('B'.$i, $value['country'])
+                    ->setCellValue('C'.$i, $price)
+                    ->setCellValue('D'.$i, $type_obj[$value['type']]);
+
+                    $i++;
+                }
+            }
+
+            // Rename sheet
+            $objPHPExcel->getActiveSheet()->setTitle('Price');
 
               // Set active sheet index to the first sheet,
               // so Excel opens this as the first sheet
              $objPHPExcel->setActiveSheetIndex(0);
 
               // Redirect output to a client’s web browser (Excel2007)
-              header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-              header('Content-Disposition: attachment;filename="'.date('Y.m.d').'.xlsx"');
-              header('Cache-Control: max-age=0');
+              //header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+              //header('Content-Disposition: attachment;filename="'.date('Y.m.d').'.xlsx"');
+              //header('Cache-Control: max-age=0');
 
               $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-              $objWriter->save('php://output');*/
+              $objWriter->save('./resources/excel/'.date('Y.m.d').'.xlsx');
+              echo CHtml::link('Скачать прайс', './resources/excel/'.date('Y.m.d').'.xlsx');
               Yii::app()->end();
         }
 

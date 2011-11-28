@@ -1,12 +1,12 @@
 <div class="filterPrice">
     <?= CHtml::beginForm();?>
+        <div id="needForm"></div>
         <div class="row">
 		    <?php echo CHtml::checkBoxList('type', '', array('tire'=>'Шины', 'disc'=>'Диски', 'other'=>'Разное'), array('separator'=>' ', 'class'=>'formFilter')); ?>
 	    </div>
     <div class="next_filter"></div>
     <?= CHtml::endForm();?>
 </div>
-<div id="needForm"></div>
 
 
 <?
