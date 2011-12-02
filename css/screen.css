@@ -233,3 +233,7 @@ hr.space {background:#fff;color:#fff;visibility:hidden;}
 .clearfix:after, .container:after {content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 .clearfix, .container {display:block;}
 .clear {clear:both;}
+
+
+.items { width: 900px !important; }
+table.items tbody { overflow-x: hidden; overflow-y: auto; height: 600px; }

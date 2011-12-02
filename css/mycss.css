@@ -23,9 +23,7 @@
     box-shadow: 6px 4px 6px 1px rgba(0, 0, 0, 0.3);
     display: none;}
 
-.items { width: 900px !important; }
-.items tbody { overflow-x: hidden; overflow-y: auto; height: 600px; }
-#type-item-grid .items tbody { overflow: hidden; height: auto !important; }
-
+.items { max-width: 1000px !important; width: 900px !important;}
+.select{ background: none repeat scroll 0 0 #ccccff !important; }
 .next_filter fieldset { border: 1px dashed #000000; padding: 5px;  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;}
 .next_filter fieldset legend { font-weight: bold; margin: 0 2px;}

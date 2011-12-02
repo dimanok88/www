@@ -15,12 +15,13 @@ $this->breadcrumbs = array(
 	'id'=>'tires-grid',
 	'dataProvider'=>$model->tire(),
     'rowCssClass' =>array('odd'),
-    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd selected" : "odd" ',
+    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'filter'=>$model,
+    'selectableRows'=>2,
     'ajaxUpdate'=>false,
 	'columns'=>array(
         'pic'=>array(
-            'name'=>'pic',
+            'name'=>'pictures',
             'type'=>'raw',
             'filter'=>false,
             'value'=>'Item::model()->getPic($data->id)',
@@ -61,6 +62,16 @@ $this->breadcrumbs = array(
         ),
         'country',
         'pic',
+        'link'=>array(
+            'name'=>'link',
+            'type'=>'raw',
+            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+        ),
+        array(
+           'name' => 'id',
+           'class' => 'CCheckBoxColumn',
+           'value'=>'$data->id',
+        ),
         
 		array(
             'class' => 'CButtonColumn',

@@ -15,7 +15,7 @@
 	'filter'=>$model,
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
-    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd selected" : "odd" ',
+    'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
 		'pic'=>array(
             'name'=>'pic',
@@ -49,6 +49,12 @@
             'value'=>'Percent::model()->getPercent("other",$data->type_item, "roz", $data->price)',
         ),
         'country',
+        'pic',
+        'link'=>array(
+            'name'=>'link',
+            'type'=>'raw',
+            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+        ),
 
 		array(
             'class' => 'CButtonColumn',

@@ -11,7 +11,9 @@
 	<p class="note">Поля, помеченные <span class="required">*</span>, являются обязательными для заполнения.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
+    <table>
+    <tr>
+    <td>
 	<div class="row">
 		<?php echo $form->labelEx($model,'model'); ?>
 		<?php echo $form->textField($model,'model'); ?>
@@ -26,10 +28,12 @@
 
     <div class="row">
 		<?php echo $form->labelEx($model,'main_string'); ?>
-		<?php echo $form->textField($model,'main_string', array('size'=>'40')); ?>
+		<?php echo $form->textField($model,'main_string', array('size'=>'50')); ?>
 		<?php echo $form->error($model,'main_string'); ?>
 	</div>
+    </td>
 
+    <td>
     <div class="row">
 		<?php echo $form->labelEx($model,'d'); ?>
 		<?php echo $form->textField($model,'d'); ?>
@@ -47,7 +51,11 @@
 		<?php echo $form->textField($model,'w'); ?>
 		<?php echo $form->error($model,'w'); ?>
 	</div>
+    </td>
+    </tr>
 
+    <tr>
+    <td>
     <div class="row">
         <?php echo $form->labelEx($model, 'pictures'); ?>
 	    <?php echo $form->fileField($model, 'pictures'); ?>
@@ -68,9 +76,23 @@
 	</div>
 
     <div class="row">
+		<?php echo $form->labelEx($model,'pic'); ?>
+		<?php echo $form->textField($model, 'pic'); ?>
+		<?php echo $form->error($model,'pic'); ?>
+	</div>
+    </td>
+
+    <td>
+    <div class="row">
 		<?php echo $form->labelEx($model,'season'); ?>
 		<?php echo $form->dropDownList($model, 'season', Item::model()->SeasonList()); ?>
 		<?php echo $form->error($model,'season'); ?>
+	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'link'); ?>
+		<?php echo $form->textField($model,'link'); ?>
+		<?php echo $form->error($model,'link'); ?>
 	</div>
 
     <div class="row">
@@ -84,6 +106,7 @@
 		<?php echo $form->CheckBox($model, 'active'); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div>
+    </td></tr></table>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
