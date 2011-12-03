@@ -1,9 +1,14 @@
+<?= CHtml::beginForm(array('item/act'));?>
+
+<?= $this->renderPartial('/item/_formAction');?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>$type.'s-grid',
 	'dataProvider'=>$list->$type($id),
 	'filter'=>$list,
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
+    'selectableRows'=>2,
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
         'pic'=>array(
@@ -45,7 +50,14 @@
         'link'=>array(
             'name'=>'link',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+            'value'=>'Item::model()->getLink($data->link)',
+        ),
+        array(
+           'class' => 'CCheckBoxColumn',
+           'name' => 'id',
+           'id'=>'item_check',
+           'value'=>'$data->id',
+           'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
         
 		array(
@@ -69,36 +81,8 @@
 	),
 ));
 
-/*$this->widget('zii.widgets.jui.CJuiDatePicker',
-              array(
-                   'name' => 'date_add',
-                   'language' =>Yii::app()->getLanguage(),
-                    'options' => array(
-        	            'dateFormat'=>'yy-mm-dd',
-        	            // user will be able to change month and year
-        	            'changeMonth' => 'true',
-        	            'changeYear' => 'true',
-        	            // shows the button panel under the calendar (buttons like "today" and "done")
-        	            'showButtonPanel' => 'true',
-        	            // this is useful to allow only valid chars in the input field, according to dateFormat
-        	            'constrainInput' => 'false',
-        	            // speed at which the datepicker appears, time in ms or "slow", "normal" or "fast"
-        	            'duration'=>'fast',
-        	            // animation effect, see http://docs.jquery.com/UI/Effects
-        	            'showAnim' =>'slide',
-        	        ),
-              ), true);
-
-
-// declares a script binds the datepicker to fields you specify
-Yii::app()->clientScript->registerScript('live_date_picker', "
-                $('input[name=\"".CHtml::activeName($list, 'date_add')."\"]').live('focus', function(){
-                        $(this).datepicker({ dateFormat: 'yy-mm-dd' });
-        });
-        ");
-*/
-
 ?>
+<?= CHtml::endForm();?>
 
 
  

@@ -9,12 +9,17 @@
 
 <h2>Разное</h2>
 
+<?= CHtml::beginForm(array('item/act'));?>
+
+<?= $this->renderPartial('_formAction');?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'other-grid',
+	'id'=>'grid',
 	'dataProvider'=>$model->other(),
 	'filter'=>$model,
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
+    'selectableRows'=>2,
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
 		'pic'=>array(
@@ -53,7 +58,14 @@
         'link'=>array(
             'name'=>'link',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+            'value'=>'Item::model()->getLink($data->link)',
+        ),
+        array(
+           'class' => 'CCheckBoxColumn',
+           'name' => 'id',
+           'id'=>'item_check',
+           'value'=>'$data->id',
+           'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
 
 		array(
@@ -76,22 +88,6 @@
         ),
 	),
 )); 
-Yii::app()->clientScript->registerScript('live_date_picker', "
-
-    $('.items tbody tr').live({
-         mouseenter: function() {
-             var index = $('.odd').index(this);
-             var image = $('.prev').eq(index).attr('prev');
-             $('.main_pic').eq(index).show('slow').html('<img src=\"'+image+'\">');
-             return false;
-         },
-         mouseleave: function() {
-             var index = $('.odd').index(this);
-             $('.main_pic').hide();
-             return false;
-         },
-
- });
-
-");
 ?>
+
+<?= CHtml::endForm();?>

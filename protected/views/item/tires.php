@@ -11,8 +11,12 @@ $this->breadcrumbs = array(
 
 <h2>Шины</h2>
 
+<?= CHtml::beginForm(array('item/act'));?>
+
+<?= $this->renderPartial('_formAction');?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'tires-grid',
+	'id'=>'grid',
 	'dataProvider'=>$model->tire(),
     'rowCssClass' =>array('odd'),
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
@@ -65,12 +69,14 @@ $this->breadcrumbs = array(
         'link'=>array(
             'name'=>'link',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+            'value'=>'Item::model()->getLink($data->link)',
         ),
         array(
-           'name' => 'id',
            'class' => 'CCheckBoxColumn',
+           'name' => 'id',
+           'id'=>'item_check',
            'value'=>'$data->id',
+           'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
         
 		array(
@@ -95,3 +101,4 @@ $this->breadcrumbs = array(
 ));
 
 ?>
+<?= CHtml::endForm();?>

@@ -506,4 +506,11 @@ class Item extends CActiveRecord implements IECartPosition
         return $data;
     }
 
+    public function getLink($link)
+    {
+        $l = CHtml::link("Ссылка",$link, array("target"=>"_blank"));
+        if(empty($link)) return '';
+        return $l;
+    }
+
 }

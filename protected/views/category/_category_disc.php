@@ -1,9 +1,13 @@
+<?= CHtml::beginForm(array('item/act'));?>
+
+<?= $this->renderPartial('/item/_formAction');?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>$type.'s-grid',
 	'dataProvider'=>$list->$type($id),
 	'filter'=>$list,
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
+    'selectableRows'=>2,
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
         'pic'=>array(
@@ -48,7 +52,14 @@
         'link'=>array(
             'name'=>'link',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+            'value'=>'Item::model()->getLink($data->link)',
+        ),
+        array(
+           'class' => 'CCheckBoxColumn',
+           'name' => 'id',
+           'id'=>'item_check',
+           'value'=>'$data->id',
+           'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
 
 		array(
@@ -71,4 +82,5 @@
         ),
 	),
 )); ?>
+<?= CHtml::endForm();?>
  

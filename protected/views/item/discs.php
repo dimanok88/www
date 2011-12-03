@@ -9,13 +9,18 @@
 
 <h2>Диски</h2>
 
+<?= CHtml::beginForm(array('item/act'));?>
+
+<?= $this->renderPartial('_formAction');?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'discs-grid',
+	'id'=>'grid',
 	'dataProvider'=>$model->disc(),
 	'rowCssClass' =>array('odd'),
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'filter'=>$model,
     'ajaxUpdate'=>false,
+    'selectableRows'=>2,
 	'columns'=>array(
 		'pic'=>array(
             'name'=>'pic',
@@ -59,7 +64,14 @@
         'link'=>array(
             'name'=>'link',
             'type'=>'raw',
-            'value'=>'CHtml::link($data->link,$data->link, array("target"=>"_blank"))',
+            'value'=>'Item::model()->getLink($data->link)',
+        ),
+        array(
+           'class' => 'CCheckBoxColumn',
+           'name' => 'id',
+           'id'=>'item_check',
+           'value'=>'$data->id',
+           'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
 
 		array(
@@ -82,3 +94,5 @@
         ),
 	),
 )); ?>
+
+<?= CHtml::endForm();?>

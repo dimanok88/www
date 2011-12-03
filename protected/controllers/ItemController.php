@@ -206,6 +206,28 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
+
+    public function actionAct()
+    {
+        $url = Yii::app()->user->getState('url_get');
+        if(isset($_POST['action']))
+        {
+            $act = $_POST['action'];
+            $id = $_POST['item_check'];
+            switch($act){
+                case 'del':
+                    Item::model()->deleteByPk($id);
+                break;
+                case 'on':
+                    Item::model()->updateByPk($id, array('active'=>'1'));
+                break;
+                case 'off':
+                    Item::model()->updateByPk($id, array('active'=>'0'));
+                break;
+            }
+        }
+        $this->redirect($url);
+    }
 }
 ?>
  
