@@ -24,7 +24,7 @@ return array(
 	'components'=>array(
 		'user'=>array(
 			'allowAutoLogin' => true,
-            'loginUrl' => array('profile/login'),
+            'loginUrl' => array('users/login'),
 		),
 
         'cache' => array(

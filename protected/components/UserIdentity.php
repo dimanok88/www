@@ -6,14 +6,14 @@ class UserIdentity extends CUserIdentity
 
 	public function authenticate()
 	{
-        if( $this->username === 'admin' )
+        if( $this->username === 'roma' )
         {
-            $optionAdmin = Options::model()->find('name = :name', array(':name' => 'admin'));
+            $optionAdmin = Users::model()->find('login = :login AND role=:role', array(':login' => 'roma', ':role'=>'admin'));
             if( is_null($optionAdmin) )
             {
                 $this->errorCode = self::ERROR_USERNAME_INVALID;
             }
-            if( md5($this->password) == $optionAdmin->value )
+            if( crypt($this->password, substr($this->password, 0, 2)) == $optionAdmin->password )
             {
                 $this->errorCode = self::ERROR_NONE;
             }
@@ -25,23 +25,18 @@ class UserIdentity extends CUserIdentity
             return !$this->errorCode;
         }
 
-        $user = Users::model()->find(
-            '`email` = :email',
-            array(
-                ':email' => $this->username,
-            )
-        );
+        $user = Users::model()->find('`login` = :login', array(':login' => $this->username,));
 		if( is_null($user) )
         {
 			$this->errorCode = self::ERROR_USERNAME_INVALID;
         }
-		else if( $user->password !== md5($this->password) )
+		else if( $user->password !== crypt($this->password, substr($this->password, 0, 2)) )
         {
 			$this->errorCode = self::ERROR_PASSWORD_INVALID;
         }
 		else
         {
-            $this->_id = $user->user_id;
+            $this->_id = $user->id;
 			$this->errorCode = self::ERROR_NONE;
         }
 
