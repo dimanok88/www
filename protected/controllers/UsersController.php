@@ -16,7 +16,7 @@ class UsersController extends MainController {
 
     public function actionLogin()
 	{
-		$model=new Users();
+		$model=new LoginForm();
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
@@ -26,11 +26,11 @@ class UsersController extends MainController {
 		}
 
 		// collect user input data
-		if(isset($_POST['Users']))
+		if(isset($_POST['LoginForm']))
 		{
-			$model->attributes=$_POST['Users'];
+			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate(false) && $model->login())
+			if($model->validate() && $model->login())
             {
 				$this->redirect(Yii::app()->user->returnUrl);
             }

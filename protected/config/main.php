@@ -23,6 +23,7 @@ return array(
 
 	'components'=>array(
 		'user'=>array(
+            'class' => 'WebUser',
 			'allowAutoLogin' => true,
             'loginUrl' => array('users/login'),
 		),
@@ -34,6 +35,13 @@ return array(
         'excel'=>array(
 	          'class'=>'application.extensions.PHPExcel4Yii.PHPExcel',
 	    ),
+
+        'authManager' => array(
+            // Будем использовать свой менеджер авторизации
+            'class' => 'PhpAuthManager',
+            // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
+            'defaultRoles' => array('guest'),
+        ),
 
 		/*
 		'urlManager'=>array(

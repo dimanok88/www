@@ -6,7 +6,7 @@ class UserIdentity extends CUserIdentity
 
 	public function authenticate()
 	{
-        if( $this->username === 'roma' )
+        if( $this->username == 'roma' )
         {
             $optionAdmin = Users::model()->find('login = :login AND role=:role', array(':login' => 'roma', ':role'=>'admin'));
             if( is_null($optionAdmin) )
@@ -15,6 +15,8 @@ class UserIdentity extends CUserIdentity
             }
             if( crypt($this->password, substr($this->password, 0, 2)) == $optionAdmin->password )
             {
+                $this->_id = $optionAdmin->id;
+                $this->username = $optionAdmin->name;
                 $this->errorCode = self::ERROR_NONE;
             }
             else
@@ -37,6 +39,7 @@ class UserIdentity extends CUserIdentity
 		else
         {
             $this->_id = $user->id;
+            $this->username = $user->name;
 			$this->errorCode = self::ERROR_NONE;
         }
 

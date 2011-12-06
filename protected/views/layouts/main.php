@@ -38,7 +38,7 @@ $cs->scriptMap=array(
 	<div id="header">
 		<div id="logo">Панель управления сайтом</div>
 	</div>
-
+<?= Yii::app()->user->role; ?>
     <?php
         $this->widget(
             'application.extensions.mbmenu.MbMenu',
@@ -80,6 +80,7 @@ $cs->scriptMap=array(
                     ),
                         ),
                     ),
+                    array('label'=>'Выйти', 'url'=>array('users/logout'), 'visible'=>!Yii::app()->user->isGuest),
                 ),
             )
         );

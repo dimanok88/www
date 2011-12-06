@@ -1,9 +1,12 @@
 <?php
-    $this->pageTitle = "Ошибка {$code} - " . Yii::app()->name;
+$this->pageTitle=Yii::app()->name . ' - Error';
+$this->breadcrumbs=array(
+	'Error',
+);
 ?>
 
-<h1>Ошибка <?php echo $code; ?></h1>
+<h2>Error <?php echo $code; ?></h2>
 
 <div class="error">
-    <?php echo CHtml::encode($message); ?>
+<?php echo CHtml::encode($message); ?>
 </div>

@@ -15,9 +15,6 @@
 class Users extends CActiveRecord
 {
     public $password_req;
-    public $rememberMe;
-
-    private $_identity;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Users the static model class
@@ -60,7 +57,6 @@ class Users extends CActiveRecord
 			array('password_req', 'compare', 'compareAttribute' => 'password'),
 			array('email', 'length', 'max'=>40),
 			array('role', 'length', 'max'=>15),
-            array('rememberMe', 'boolean'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, login, password, email, name, role, active', 'safe', 'on'=>'search'),
@@ -92,7 +88,6 @@ class Users extends CActiveRecord
 			'role' => 'Роль',
 			'active' => 'Вкл.',
             'password_req'=>'Повторите пароль',
-            'rememberMe'=>'Запомнить меня',
 		);
 	}
 
@@ -118,39 +113,5 @@ class Users extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
-
-    public function authenticate($attribute,$params)
-	{
-		if(!$this->hasErrors())
-		{
-            echo crypt($this->password, substr($this->password, 0, 2));
-			$this->_identity=new UserIdentity($this->username,$this->password);
-			if(!$this->_identity->authenticate())
-				$this->addError('password','Не верный логин или пароль или ваш аккаунт не активирован');
-		}
-	}
-
-	/**
-	 * Logs in the user using the given username and password in the model.
-	 * @return boolean whether login is successful
-	 */
-	public function login()
-	{
-        echo '1';
-		if($this->_identity===null)
-		{
-            echo '2';
-			$this->_identity=new UserIdentity($this->username,$this->password);
-			$this->_identity->authenticate();
-		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
-		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
-			return true;
-		}
-		else
-			return false;
 	}
 }
