@@ -480,27 +480,32 @@ class Item extends CActiveRecord implements IECartPosition
 
     public function AllItems($type = '', $type_item = '', $new_price = '', $season = '')
     {
-        $data = array();
-        foreach($type as $t){
-           $criteria=new CDbCriteria;
+        $data=Yii::app()->cache->get('dt');
+        if($data==false)
+        {
+            $data = array();
+            foreach($type as $t){
+               $criteria=new CDbCriteria;
 
-           $criteria->order = 'price DESC, model ASC';
-           $criteria->compare('type', $t);
-           $criteria->compare('active', 1);
+               $criteria->order = 'price DESC, model ASC';
+               $criteria->compare('type', $t);
+               $criteria->compare('active', 1);
 
-           if(array_key_exists($t,$type_item) == 1){
-               if(count($type_item[$t]) > 0) $criteria->addInCondition('type_item', $type_item[$t]);
-           }
-           if(array_key_exists($t,$new_price) == 1){
-               if(count($new_price[$t]) > 0) $criteria->addInCondition('new_price', $new_price[$t]);
-           }
-           if(array_key_exists($t,$season) == 1){
-               if(count($season[$t]) > 0) $criteria->addInCondition('season', $season[$t]);
-           }
+               if(array_key_exists($t,$type_item) == 1){
+                   if(count($type_item[$t]) > 0) $criteria->addInCondition('type_item', $type_item[$t]);
+               }
+               if(array_key_exists($t,$new_price) == 1){
+                   if(count($new_price[$t]) > 0) $criteria->addInCondition('new_price', $new_price[$t]);
+               }
+               if(array_key_exists($t,$season) == 1){
+                   if(count($season[$t]) > 0) $criteria->addInCondition('season', $season[$t]);
+               }
 
-           $builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
-           $command = $builder->createFindCommand('item', $criteria);
-           $data[$t] = $command->queryAll();
+               $builder = new CDbCommandBuilder(Yii::app()->db->getSchema());
+               $command = $builder->createFindCommand('item', $criteria);
+               $data[$t] = $command->queryAll();
+            }
+            Yii::app()->cache->set('dt',$data, 3600);
         }
 
         return $data;

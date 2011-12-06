@@ -208,7 +208,7 @@ class ParserController extends Controller
               $objWriter->save('./resources/excel/'.date('Y.m.d').'.xlsx');
               echo CHtml::link('Скачать прайс', './resources/excel/'.date('Y.m.d').'.xlsx');
               echo "Отработало за ".sprintf('%0.5f',Yii::getLogger()->getExecutionTime())." с. Скушано памяти: ".round(memory_get_peak_usage()/(1024*1024),2)."MB";
-              //Yii::app()->end();
+              Yii::app()->end();
         }
         else $this->render('excel');
         //$objPHPExcel->saveExcel2007($objPHPExcel,"./resources/ss.xlsx");

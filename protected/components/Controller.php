@@ -33,7 +33,7 @@ class Controller extends CController
                 'roles'=>array('admin'),
             ),
             array('allow',
-                'actions'=>array('tire', 'disc', 'other', 'index', 'oboznach', 'category', 'listItem', 'NextFilter'),
+                'actions'=>array('tire', 'disc', 'other', 'ExcelSave','index', 'oboznach', 'category', 'listItem', 'NextFilter'),
                 'roles'=>array('moderator'),
             ),
             array('deny',
