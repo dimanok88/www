@@ -1,5 +1,8 @@
 <?= CHtml::beginForm(array('item/act'));?>
+
+<? if (Yii::app()->user->checkAccess('admin')):?>
 <?= $this->renderPartial('/item/_formAction');?>
+<? endif; ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>$type.'s-grid',

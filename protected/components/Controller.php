@@ -29,15 +29,15 @@ class Controller extends CController
     public function accessRules()
     {
         return array(
-            array('deny',
-                'actions'=>array('delete', 'upnew'),
-                'roles'=>array('moderator'),
-            ),
             array('allow',
                 'roles'=>array('admin'),
             ),
             array('allow',
-                'actions'=>array('tire', 'disc', 'other', 'index', 'oboznach', 'category'),
+                'actions'=>array('tire', 'disc', 'other', 'index', 'oboznach', 'category', 'listItem', 'NextFilter'),
+                'roles'=>array('moderator'),
+            ),
+            array('deny',
+                'actions'=>array('delete', 'upnew'),
                 'roles'=>array('moderator'),
             ),
             array('deny',

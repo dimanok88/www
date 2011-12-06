@@ -13,7 +13,9 @@ $this->breadcrumbs = array(
 
 <?= CHtml::beginForm(array('item/act'));?>
 
+<? if (Yii::app()->user->checkAccess('admin')):?>
 <?= $this->renderPartial('_formAction');?>
+<? endif; ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'grid',
