@@ -148,7 +148,12 @@ class ParserController extends Controller
     {
         //print_r($_POST);
         if(isset($_POST['type'])){
-            $objPHPExcel = Yii::app()->excel;
+            $objPHPExcel=Yii::app()->cache->get('excel');
+            if($objPHPExcel===false)
+            {
+                $objPHPExcel = Yii::app()->excel;
+                Yii::app()->cache->set('excel',$objPHPExcel, 3600);
+            }
             $type = $_POST['type'];
 
             $type_item = array();
@@ -202,10 +207,10 @@ class ParserController extends Controller
               $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
               $objWriter->save('./resources/excel/'.date('Y.m.d').'.xlsx');
               echo CHtml::link('Скачать прайс', './resources/excel/'.date('Y.m.d').'.xlsx');
-              Yii::app()->end();
+              echo "Отработало за ".sprintf('%0.5f',Yii::getLogger()->getExecutionTime())." с. Скушано памяти: ".round(memory_get_peak_usage()/(1024*1024),2)."MB";
+              //Yii::app()->end();
         }
-
-        $this->render('excel');
+        else $this->render('excel');
         //$objPHPExcel->saveExcel2007($objPHPExcel,"./resources/ss.xlsx");
     }
 

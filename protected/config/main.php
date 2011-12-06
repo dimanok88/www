@@ -60,6 +60,9 @@ return array(
 			'username' => 'root',
 			'password' => '123',
 			'charset' => 'utf8',
+            'queryCachingDuration'=>true,
+            'autoConnect' => false,
+            'schemaCachingDuration' => 3600,
 		),
 		
 		'errorHandler'=>array(

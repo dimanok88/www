@@ -1,5 +1,5 @@
 <div class="filterPrice">
-    <?= CHtml::beginForm();?>
+    <?= CHtml::beginForm('', 'POST');?>
         <div id="needForm"></div>
         <div class="row">
 		    <?php echo CHtml::checkBoxList('type', '', array('tire'=>'Шины', 'disc'=>'Диски', 'other'=>'Разное'), array('separator'=>' ', 'class'=>'formFilter')); ?>

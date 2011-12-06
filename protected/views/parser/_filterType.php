@@ -38,11 +38,11 @@ if(!empty($list)){
     ));
 
     echo CHtml::ajaxSubmitButton('Экспорт', array('parser/excelSave'), array(
-        'type' => 'POST',
+        //'type' => 'POST',
         'update' => '#needForm',
     ),
        array(
-       'type' => 'submit',
+       //'type' => 'submit',
        'id' => 'myButton',
        'name' => 'myButton'
     ));

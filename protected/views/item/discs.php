@@ -15,7 +15,8 @@
 <?= $this->renderPartial('_formAction');?>
 <? endif; ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'grid',
 	'dataProvider'=>$model->disc(),
 	'rowCssClass' =>array('odd'),
