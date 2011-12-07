@@ -147,6 +147,8 @@ class ParserController extends Controller
     public function actionExcelSave()
     {
         //print_r($_POST);
+
+        if (Yii::app()->request->isAjaxRequest) {
         if(isset($_POST['type'])){
             $objPHPExcel=Yii::app()->cache->get('excel');
             if($objPHPExcel===false)
@@ -210,7 +212,8 @@ class ParserController extends Controller
               echo "Отработало за ".sprintf('%0.5f',Yii::getLogger()->getExecutionTime())." с. Скушано памяти: ".round(memory_get_peak_usage()/(1024*1024),2)."MB";
               Yii::app()->end();
         }
-        else $this->render('excel');
+        }
+        $this->render('excel');
         //$objPHPExcel->saveExcel2007($objPHPExcel,"./resources/ss.xlsx");
     }
 
