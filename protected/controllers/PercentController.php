@@ -58,22 +58,26 @@ class PercentController extends Controller
 	 */
 	public function actionIndex($type = 'tire')
 	{
-        $criteria = new CDbCriteria();
-        $criteria->condition = "`type` = :type";
-        $criteria->params = array(
-            ':type' => $type,
-        );
-        
-		$dataProvider=new CActiveDataProvider('Percent',
-            array(
-                 'criteria' => $criteria,
-                 'pagination' => array(
-                    'pageSize' => Yii::app()->params['countItemsByPage'],
-                 )
-            )
-        );
+        $t_p = Percent::model()->getTypePerc();
+
+        foreach($t_p as $k=>$v){
+            $criteria[$k] = new CDbCriteria();
+            $criteria[$k]->condition = "`type` = :type AND type_percent='".$k."'";
+            $criteria[$k]->params = array(
+                ':type' => $type,
+            );
+
+            $dataProvider[$k]=new CActiveDataProvider('Percent',
+                array(
+                     'criteria' => $criteria[$k],
+                     'pagination' => array(
+                        'pageSize' => Yii::app()->params['countItemsByPage'],
+                     )
+                )
+            );
+        }
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider, 'type'=>$type,
+			'dataProvider'=>$dataProvider, 'type'=>$type, 't_p'=>$t_p,
 		));
 	}
 

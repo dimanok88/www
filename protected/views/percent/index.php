@@ -1,5 +1,6 @@
 <?php
-    $this->breadcrumbs = array(
+$tabs = array();
+$this->breadcrumbs = array(
         'Общий раздел' => array('item/'),
         "Предыдущий раздел" => array('item/'.$type),
         'Проценты',
@@ -12,22 +13,35 @@ $this->menu=array(
 
 <h1>Проценты</h1>
 
-    <div>Выделенные цветом элементы - элементы по умолчанию</div>
-
 <?php
 $per = Percent::model()->getTypePerc();
-$this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-    'id'=>'percent',
-    'viewData'=>array('per'=>$per, 'type'=>$type),
-    'ajaxUpdate'=>true,
-    'itemsTagName' => 'ul',
-    'itemsCssClass' =>'percent',
-    'sortableAttributes'=>array(
-            'percent',
-            'type_item',
-            'type_percent',
-    ),
 
-)); ?>
+ foreach($t_p as $k=>$v){
+    $this->beginWidget('system.web.widgets.CClipWidget', array('id'=>$v));
+        $this->widget('zii.widgets.CListView', array(
+            'dataProvider'=>$dataProvider[$k],
+            'itemView'=>'_view',
+            'id'=>'percent',
+            'viewData'=>array('per'=>$per, 'type'=>$type),
+            'ajaxUpdate'=>true,
+            'itemsTagName' => 'ul',
+            'itemsCssClass' =>'percent',
+            /*'sortableAttributes'=>array(
+                    'percent',
+                    'type_item',
+                    'type_percent',
+         ),*/));
+    $this->endWidget();
+    //print_r($this->clips);
+    $tabs = $this->clips;
+ }
+
+
+$this->widget('zii.widgets.jui.CJuiTabs', array(
+        'tabs'=>$tabs,
+        // additional javascript options for the tabs plugin
+        'options'=>array(
+            'collapsible'=>true,
+        ),
+    ));
+ ?>

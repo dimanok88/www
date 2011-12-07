@@ -24,7 +24,7 @@
     display: none;}
 
 .items { max-width: 1000px !important; width: 900px !important;}
-.items tbody { overflow-x: hidden; overflow-y: auto; height: 600px; }
+.items tbody { overflow-x: hidden; overflow-y: auto; height: 600px;}
 #type-item-grid .items tbody { overflow: hidden; height: auto !important; }
 
 .select{ background: none repeat scroll 0 0 #ccccff !important; }
