@@ -81,10 +81,21 @@
                     'label'=>'Delete',
                     'url'=>'Yii::app()->createUrl("item/delete", array("id"=>$data->id))',
                 ),
-                'update' => array
-                (
-                    'label'=>'Update',
-                    'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"other"))',
+                'update'=>array(
+                   'label'=>'Update',
+                   'url'=>'Yii::app()->createUrl("item/upnew", array("id"=>$data->id, "type"=>"other"))',
+                   'options'=>array(  // this is the 'html' array but we specify the 'ajax' element
+                     'ajax'=>array(
+                       'type'=>'GET',
+                       'url'=>"js:$(this).attr('href')", // ajax post will use 'url' specified above
+                       'update'=>'#dial',
+                       'success'=>"function( e ){
+                            $('#dial').html(e);
+                            $( '#edit_dialog' )
+                              .dialog( { title: 'Редактировать' } )
+                              .dialog( 'open' ); }",
+                     ),
+                   ),
                 ),
             ),
         ),

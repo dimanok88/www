@@ -259,7 +259,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`category`', $this->category);
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
-        $criteria->compare('`price`', $this->price, true);
+        $criteria->compare('`price`', $this->price);
         $criteria->compare('country',$this->country,'LIKE');
         $criteria->compare('pic',$this->pic,'LIKE');
         $criteria->compare('`new_price`', $this->new_price);
@@ -312,7 +312,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`color`', $this->color, 'LIKE');
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
-        $criteria->compare('`price`', $this->price, true);
+        $criteria->compare('`price`', $this->price);
         $criteria->compare('country',$this->country,'LIKE');
         $criteria->compare('pic',$this->pic,'LIKE');
         $criteria->compare('link',$this->link,'LIKE');
@@ -358,7 +358,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('`category`', $this->category);
         $criteria->compare('`main_string`', $this->main_string, 'LIKE');
         $criteria->compare('date_add',$this->date_add, 'LIKE');
-        $criteria->compare('`price`', $this->price, true);
+        $criteria->compare('`price`', $this->price);
         $criteria->compare('`marka`', $this->marka, 'LIKE');
         $criteria->compare('country',$this->country,'LIKE');
         $criteria->compare('pic',$this->pic,'LIKE');
