@@ -50,7 +50,6 @@ class LoginForm extends CFormModel
 	{
 		if(!$this->hasErrors())
 		{
-            echo crypt($this->password, substr($this->password, 0, 2));
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			if(!$this->_identity->authenticate())
 				$this->addError('password','Не верный логин или пароль или ваш аккаунт не активирован');

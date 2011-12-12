@@ -100,6 +100,25 @@ $cs->scriptMap=array(
 
 </div>
 
+<?
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id'=>'edit_dialog',
+    // additional javascript options for the dialog plugin
+    'options'=>array(
+        //'title'=>'',
+        'resizable'=>true,
+        'draggable'=>true,
+        'autoOpen'=>false,
+        'modal'=>true,
+        'width'=>'800px',
+    ),
+));
+
+    echo '<div id="dial"></div>';
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
+
 </body>
 </html>
 

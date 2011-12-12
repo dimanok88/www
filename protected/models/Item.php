@@ -480,14 +480,11 @@ class Item extends CActiveRecord implements IECartPosition
 
     public function AllItems($type = '', $type_item = '', $new_price = '', $season = '')
     {
-        $data=Yii::app()->cache->get('dt');
-        if($data==false)
-        {
             $data = array();
             foreach($type as $t){
                $criteria=new CDbCriteria;
 
-               $criteria->order = 'price DESC, model ASC';
+               $criteria->order = 'season ASC, price DESC, model ASC';
                $criteria->compare('type', $t);
                $criteria->compare('active', 1);
 
@@ -505,9 +502,6 @@ class Item extends CActiveRecord implements IECartPosition
                $command = $builder->createFindCommand('item', $criteria);
                $data[$t] = $command->queryAll();
             }
-            Yii::app()->cache->set('dt',$data, 3600);
-        }
-
         return $data;
     }
 

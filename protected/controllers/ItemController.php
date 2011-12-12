@@ -106,11 +106,27 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
                     "Элемент <b>".$item->model."</b> отредактирован! "
                 );
                 }
+                if(Yii::app()->request->isAjaxRequest)
+                {
+                    echo '<script>
+                        $( "#edit_dialog" ).dialog( "close" );
+                        $.fn.yiiGridView.update("itemGrid");
+                        //return false;
+                    </script>';
+                    Yii::app()->end;
+                }
                 $this->redirect($url);
             }
         }
 
-        $this->render('upnew', array('model'=>$item, 'type'=>$type));
+        if(Yii::app()->request->isAjaxRequest)
+        {
+            $this->renderPartial('upnew',array('model'=>$item, 'type'=>$type), false, true);
+        }
+        else {
+            $this->render('upnew', array('model'=>$item, 'type'=>$type));
+        }
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
