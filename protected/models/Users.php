@@ -15,6 +15,11 @@
 class Users extends CActiveRecord
 {
     public $password_req;
+
+    const ITEM_TYPE_ADMIN = 'admin';
+    const ITEM_TYPE_MODERATOR = 'moderator';
+    const ITEM_TYPE_GUEST = 'guest';
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Users the static model class
@@ -33,9 +38,9 @@ class Users extends CActiveRecord
 	}
 
     public function beforeSave() {
-	    if ($this->isNewRecord) {
-	        $this->password = crypt($this->password, substr($$this->password, 0, 2));;
-	    }
+	    /*if ($this->isNewRecord) {
+	        $this->password = crypt($this->password, substr($$this->password, 0, 2));
+	    }*/
 
 	    return parent::beforeSave();
 	}
@@ -103,7 +108,7 @@ class Users extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('login',$this->login,true);
+		$criteria->compare('login',$this->login,'LIKE');
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('name',$this->name,true);
@@ -114,4 +119,20 @@ class Users extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getActive($act)
+    {
+        if($act == 1) return 'Да';
+        return 'Нет';
+
+    }
+
+    public function AllRoles()
+    {
+        return array(
+            self::ITEM_TYPE_ADMIN => 'Админ',
+            self::ITEM_TYPE_MODERATOR => 'Модератор',
+            self::ITEM_TYPE_GUEST => 'Пользователь',
+        );
+    }
 }

@@ -11,6 +11,9 @@ class UsersController extends MainController {
 
     public function actionIndex()
     {
+        if (!Yii::app()->user->isGuest){
+            $this->redirect(array('item/'));
+        }
         $this->redirect(array('users/login'));
     }
 
@@ -47,5 +50,68 @@ class UsersController extends MainController {
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+    public function actionListUsers(){
+        $model=new Users('search'); //загрузка модели с возможностью поиска по шинам
+
+        $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
+		Yii::app()->user->setState('url_get', $url);
+
+		$model->unsetAttributes();  // clear any default values
+		if( isset($_GET[get_class($model)]) )
+        {
+			$model->attributes = $_GET[get_class($model)];
+        }
+        $this->render('listUsers', array('model'=>$model));
+    }
+
+    public function actionNewed($id='')
+    {
+        $model = new Users();
+
+        $url = Yii::app()->user->getState('url_get');
+
+        if(!empty($id)) $model = Users::model()->findByPk($id);
+
+        if(isset($_POST['Users']))
+        {
+            if($id != '') $pass = $model->password;
+            
+            $model->attributes = $_POST[get_class($model)];
+            if(empty($_POST[get_class($model)]['password']) && $id != '')
+            {
+                $model->password = $pass;
+                $model->password_req = $model->password;
+            }
+            else
+            {
+                $model->password = crypt($_POST[get_class($model)]['password'], substr($_POST[get_class($model)]['password'], 0, 2));
+                $model->password_req = crypt($_POST[get_class($model)]['password_req'], substr($_POST[get_class($model)]['password_req'], 0, 2));
+            }
+            if($model->save())
+            {                              
+                $this->redirect($url);
+            }
+        }
+
+        $this->render('newed', array('model'=>$model));
+    }
+
+    public function actionDelete()
+    {
+        if( Yii::app()->request->isPostRequest )
+		{
+			Users::model()->findbyPk($_GET['id'])->delete();
+
+			if( !isset($_GET['ajax']) )
+            {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('users/listUsers'));
+            }
+		}
+		else
+        {
+			throw new CHttpException(400, 'Ошибка в запросе.');
+        }
+    }
 
 }

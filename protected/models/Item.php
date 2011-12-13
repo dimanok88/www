@@ -512,4 +512,6 @@ class Item extends CActiveRecord implements IECartPosition
         return $l;
     }
 
+
+
 }

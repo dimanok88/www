@@ -27,13 +27,6 @@ return array(
 			'allowAutoLogin' => true,
             'loginUrl' => array('users/login'),
 		),
-
-         'clientScript' => array(
-            'scriptMap' => array(
-             'jquery-ui.css' => './css/jui/jquery-ui.css',
-            ),
-          ),
-
         'cache' => array(
             'class' => 'system.caching.CFileCache',
         ),

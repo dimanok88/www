@@ -78,6 +78,7 @@ $cs->scriptMap=array(
                     ),
                         ),
                     ),
+                    array('label'=>'Пользователи', 'url'=>array('users/listUsers')),
                     array('label'=>'Выйти', 'url'=>array('users/logout'), 'visible'=>!Yii::app()->user->isGuest),
                 ),
             )

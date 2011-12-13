@@ -22,6 +22,7 @@
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
     'selectableRows'=>2,
+    'template'=>"{pager}<br/>{items}{pager}",
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
 		'pic'=>array(
@@ -89,8 +90,8 @@
                        'type'=>'GET',
                        'url'=>"js:$(this).attr('href')", // ajax post will use 'url' specified above
                        'update'=>'#dial',
-                       'success'=>"function( e ){
-                            $('#dial').html(e);
+                       'success'=>"function( data ){
+                            $('#dial').html(data);
                             $( '#edit_dialog' )
                               .dialog( { title: 'Редактировать' } )
                               .dialog( 'open' ); }",

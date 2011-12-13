@@ -24,6 +24,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'filter'=>$model,
     'ajaxUpdate'=>false,
     'selectableRows'=>2,
+    'template'=>"{pager}<br/>{items}{pager}",
 	'columns'=>array(
 		'pic'=>array(
             'name'=>'pic',
@@ -96,8 +97,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
                        'type'=>'GET',
                        'url'=>"js:$(this).attr('href')", // ajax post will use 'url' specified above
                        'update'=>'#dial',
-                       'success'=>"function( e ){
-                            $('#dial').html(e);
+                       'success'=>"function( data ){
+                            $('#dial').html(data);
                             $( '#edit_dialog' )
                               .dialog( { title: 'Редактировать' } )
                               .dialog( 'open' ); }",

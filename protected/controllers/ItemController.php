@@ -110,7 +110,7 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
                 {
                     echo '<script>
                         $( "#edit_dialog" ).dialog( "close" );
-                        $.fn.yiiGridView.update("itemGrid");
+                        $.fn.yiiGridView.update("itemGrid",{data:data});
                         //return false;
                     </script>';
                     Yii::app()->end;

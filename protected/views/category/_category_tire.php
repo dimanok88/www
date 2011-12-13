@@ -11,6 +11,7 @@
     'ajaxUpdate'=>false,
     'rowCssClass' =>array('odd'),
     'selectableRows'=>2,
+    'template'=>"{pager}<br/>{items}{pager}",
     'rowCssClassExpression'=>'($data->new_price == "1") ? "odd select" : "odd" ',
 	'columns'=>array(
         'pic'=>array(
