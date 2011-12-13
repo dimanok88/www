@@ -43,14 +43,14 @@ $cs->scriptMap=array(
             array(
                 'items' => array(
                     array(
-                        'label' => 'Разделы',
+                        'label' => 'Разделы', 'visible'=>!Yii::app()->user->isGuest,
                         'items' => array(
                             array('label'=>'Общий раздел', 'url'=>array('item/')),
                             array('label'=>'Парсер', 'url'=>array('parser/')),
                     ),
                     ),
                     array(
-                        'label' => 'Список',
+                        'label' => 'Список', 'visible'=>!Yii::app()->user->isGuest,
                         'items'=>array(
                             array('label'=>'Шины', 'url'=>array('item/tire'),
                             'items'=>array(
@@ -60,7 +60,7 @@ $cs->scriptMap=array(
                                 array('label' => 'Типы', 'url' => array('typeItem/index', 'type'=>'tire')),
                             ),
                     ),
-                    array('label'=>'Диски', 'url'=>array('item/disc'),
+                    array('label'=>'Диски', 'url'=>array('item/disc'), 'visible'=>!Yii::app()->user->isGuest,
                         'items'=>array(
                                 array('label' => 'Обозначения', 'url' => array('item/oboznach', 'type'=>'disc')),
                                 array('label' => 'Раздел категорий', 'url' => array('item/category', 'type'=>'disc')),
@@ -68,7 +68,7 @@ $cs->scriptMap=array(
                                 array('label' => 'Типы', 'url' => array('typeItem/index', 'type'=>'disc')),
                             ),
                     ),
-                    array('label'=>'Разное', 'url'=>array('item/other'),
+                    array('label'=>'Разное', 'url'=>array('item/other'), 'visible'=>!Yii::app()->user->isGuest,
                         'items'=>array(
                                 array('label' => 'Обозначения', 'url' => array('item/oboznach', 'type'=>'other')),
                                 array('label' => 'Раздел категорий', 'url' => array('item/category', 'type'=>'other')),
@@ -78,8 +78,9 @@ $cs->scriptMap=array(
                     ),
                         ),
                     ),
-                    array('label'=>'Пользователи', 'url'=>array('users/listUsers')),
+                    array('label'=>'Пользователи', 'url'=>array('users/listUsers'), 'visible'=>!Yii::app()->user->isGuest),
                     array('label'=>'Выйти', 'url'=>array('users/logout'), 'visible'=>!Yii::app()->user->isGuest),
+                    array('label'=>'Войти', 'url'=>array('users/login'), 'visible'=>Yii::app()->user->isGuest),
                 ),
             )
         );

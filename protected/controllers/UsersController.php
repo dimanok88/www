@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
  
-class UsersController extends MainController {
+class UsersController extends Controller {
 
     public function actionIndex()
     {
