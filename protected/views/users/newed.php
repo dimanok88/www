@@ -1,6 +1,12 @@
-<h1><?= (!empty($_GET['id'])) ? $model->login.' '.$model->email : 'Добавить'?></h1>
+<h1><?= (!empty($_GET['id'])) ? $model->login.' '.$model->email : 'Добавить пользователя'?></h1>
 
 <div class="form">
+<? if(!empty($_GET['id'])):?>
+    <div class="flash-notice">
+         Чтобы сменить пароль надо заполнить поля "Пароль" и "Повторить пароль".<br/>
+         <b>Если Вы не хотите менять пароль, то поле следует оставить пустым.</b>
+    </div>
+<? endif;?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'percent-form',
