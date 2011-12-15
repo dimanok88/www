@@ -47,6 +47,23 @@ $autocompleteConfig = array(
 </div>
 <?php $this->endWidget(); ?>
 
+<?php
+$this->widget('zii.widgets.jui.CJuiButton', array(
+    'buttonType'=>'link',
+    'name'=>'btnStop',
+    'caption'=>'Stop',
+    'options'=>array('icons'=>'js:{primary:"ui-icon-gear",secondary:"ui-icon-triangle-1-s"}'),
+    'onclick'=>'js:function(){alert("Button Stop clicked."); this.blur(); return false;}',
+));
+$this->widget('zii.widgets.jui.CJuiButton', array(
+    'buttonType'=>'link',
+    'name'=>'btnGo',
+    'caption'=>'Go',
+    'options'=>array('icons'=>'js:{primary:"ui-icon-newwin"}'),
+    'onclick'=>'js:function(){alert("Button Go clicked."); this.blur(); return false;}',
+));
+?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'users',
 	'dataProvider'=>$model->search(),

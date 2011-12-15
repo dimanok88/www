@@ -35,6 +35,12 @@ return array(
 	          'class'=>'application.extensions.PHPExcel4Yii.PHPExcel',
 	    ),
 
+        'clienscript'=>array(
+          'scriptMap'=>array(
+             'jquery.js'=>'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js',
+          )
+        ),
+
         'authManager' => array(
             // Будем использовать свой менеджер авторизации
             'class' => 'PhpAuthManager',

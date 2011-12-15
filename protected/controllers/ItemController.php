@@ -151,7 +151,7 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
     {
         $oboznach = new OboznachenieModel();
         //echo $_GET['id'];
-        if(!empty($id)) $oboznach = OboznachenieModel::model()->findByPk($id);
+        if(!empty($id)) $oboznach = OboznachenieModel::model()->cache(3600)->findByPk($id);
 
         if(isset($_POST['OboznachenieModel']))
         {
@@ -181,7 +181,7 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
     {
         if( Yii::app()->request->isPostRequest )
 		{
-			OboznachenieModel::model()->findbyPk($_GET['id'])->delete();
+			OboznachenieModel::model()->cache(3600)->findbyPk($_GET['id'])->delete();
 
 			if( !isset($_GET['ajax']) )
             {

@@ -388,7 +388,7 @@ class Item extends CActiveRecord implements IECartPosition
 	    preg_match_all($pattern, $ModelName, $model_id);
 		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
-        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='tire'", array(':ob'=>$name));
+        if(!empty($name)) $oboz = OboznachenieModel::model()->cache(3600)->find("oboznach=:ob AND type='tire'", array(':ob'=>$name));
 
         return $oboz['model_id'];
     }
@@ -398,7 +398,7 @@ class Item extends CActiveRecord implements IECartPosition
 	    preg_match_all($pattern, $ModelName, $model_id);
 		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
-        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='disc'", array(':ob'=>$name));
+        if(!empty($name)) $oboz = OboznachenieModel::model()->cache(3600)->find("oboznach=:ob AND type='disc'", array(':ob'=>$name));
 
         return $oboz['model_id'];
     }
@@ -408,7 +408,7 @@ class Item extends CActiveRecord implements IECartPosition
 	    preg_match_all($pattern, $ModelName, $model_id);
 		$name = (isset($model_id[1][0])) ? $model_id[1][0] : '';
         $oboz['model_id'] = 0;
-        if(!empty($name)) $oboz = OboznachenieModel::model()->find("oboznach=:ob AND type='other'", array(':ob'=>$name));
+        if(!empty($name)) $oboz = OboznachenieModel::model()->cache(3600)->find("oboznach=:ob AND type='other'", array(':ob'=>$name));
 
         return $oboz['model_id'];
     }
@@ -416,7 +416,7 @@ class Item extends CActiveRecord implements IECartPosition
     //получаем имя нужной нам модели по ее id
     public function ModelName($id_model, $type)
     {
-        $name = Models::model()->find("id=:id AND type=:t", array(':id'=>$id_model, ':t'=>$type));
+        $name = Models::model()->cache(3600)->find("id=:id AND type=:t", array(':id'=>$id_model, ':t'=>$type));
         return $name['model'];
     }
 
