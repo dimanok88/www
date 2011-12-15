@@ -52,6 +52,10 @@ class UsersController extends Controller {
 	}
 
     public function actionListUsers(){
+
+        CVarDumper::dump($_POST, 10, true);
+        CVarDumper::dump($_GET, 10, true);
+
         $model=new Users('search'); //загрузка модели с возможностью поиска по шинам
 
         $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();

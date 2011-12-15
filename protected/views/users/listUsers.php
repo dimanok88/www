@@ -27,7 +27,7 @@ $autocompleteConfig = array(
             // устанавливается в значение выбранного пункта
             this.value = ui.item.label;
             // устанавливаем значения скрытого поля
-            $("#Order_customer_id").val(ui.item.id);
+            $("#ids").val(ui.item.id);
             return false;
         }',
     ),
@@ -43,7 +43,7 @@ $autocompleteConfig = array(
 <div class="row">
     <?php echo $form->label($model,'name'); ?>
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', $autocompleteConfig); ?>
-    <?php echo $form->hiddenField($model,'id', array('style'=>'display: none;')); ?>
+    <?php echo CHtml::hiddenField('ids'); ?>
 </div>
 <?php $this->endWidget(); ?>
 
