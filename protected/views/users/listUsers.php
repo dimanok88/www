@@ -6,6 +6,47 @@ $this->menu = array(
     );
 ?>
 
+
+<?
+$autocompleteConfig = array(
+    'model'=>$model, // модель
+    'name'=>'term',
+    // "источник" данных для выборки
+    // может быть url, который возвращает JSON, массив
+    // или функция JS('js: alert("Hello!");')
+    'source' =>Yii::app()->createUrl('users/autocomplete'),
+    // параметры, подробнее можно посмотреть на сайте
+    // http://jqueryui.com/demos/autocomplete/
+    'options'=>array(
+        // минимальное кол-во символов, после которого начнется поиск
+        'minLength'=>'2',
+        'showAnim'=>'fold',
+        // обработчик события, выбор пункта из списка
+        'select' =>'js: function(event, ui) {
+            // действие по умолчанию, значение текстового поля
+            // устанавливается в значение выбранного пункта
+            this.value = ui.item.label;
+            // устанавливаем значения скрытого поля
+            $("#Order_customer_id").val(ui.item.id);
+            return false;
+        }',
+    ),
+    'htmlOptions' => array(
+        'maxlength'=>50,
+    ),
+);
+?>
+
+<?php $form = $this->beginWidget('CActiveForm', array(
+    'id'=>'order-form',
+)); ?>
+<div class="row">
+    <?php echo $form->label($model,'name'); ?>
+    <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', $autocompleteConfig); ?>
+    <?php echo $form->hiddenField($model,'id', array('style'=>'display: none;')); ?>
+</div>
+<?php $this->endWidget(); ?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'users',
 	'dataProvider'=>$model->search(),

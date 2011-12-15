@@ -229,7 +229,8 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
         if(isset($_POST['action']))
         {
             $act = $_POST['action'];
-            $id = $_POST['item_check'];
+            $id = '';
+            if(isset($_POST['item_check'])) $id = $_POST['item_check'];
             switch($act){
                 case 'del':
                     Item::model()->deleteByPk($id);

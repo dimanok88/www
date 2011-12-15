@@ -40,6 +40,7 @@ return array(
             'class' => 'PhpAuthManager',
             // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
             'defaultRoles' => array('guest'),
+            'showErrors' => YII_DEBUG,
         ),
 
 		/*
@@ -75,10 +76,10 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
-				
-                /*array(
-					'class'=>'CWebLogRoute',
-				),*/
+                array(
+                    'class' => 'CWebLogRoute',
+                    'showInFireBug' => true, // firefox & chrome
+                ), 
 			),
 		),
 
