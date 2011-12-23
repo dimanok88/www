@@ -34,8 +34,11 @@ class ParserController extends Controller
                                 $totalRows++;
                                 //echo $row[1]."\n";
                                 $main_string= $row[0];
-                                $type_item = $row[7];
-                                $pic = $row[6];
+                                if(empty($row[7])) $type_item = '';
+                                else $type_item = $row[7];
+                                if(empty($row[6])) $pic = '';
+                                else $pic = $row[6];
+                                if(empty($row[3])) $row[3] = '';
                                 if($row[3] == 'other')
                                 {
                                      $result = $parser_other->run($row[0]);
@@ -49,8 +52,10 @@ class ParserController extends Controller
                                     $result = $parser_info->run($row[0]);
                                     $country = $row[1];
                                     $price = trim($row[2]);
-                                    $season = $row[4];
-                                    $shipi = $row[5];
+                                    if(empty($row[4])) $season = '';
+                                    else $season = $row[4];
+                                    if(empty($row[5])) $shipi = '';
+                                    else $shipi = $row[5];
                                 }
                                 //if(!empty($result)) echo $result['type']."<br>";
                                 if(!empty($result))

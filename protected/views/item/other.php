@@ -9,6 +9,12 @@
 
 <h2>Разное</h2>
 
+<div class="search-form">
+<?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
+</div><!-- search-form -->
+
 <?= CHtml::beginForm(array('item/act'));?>
 
 <? if (Yii::app()->user->checkAccess('admin')):?>
