@@ -57,12 +57,13 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
     {
         if( Yii::app()->request->isPostRequest )
 		{
-			Item::model()->findbyPk($_GET['id'])->delete();
-            if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_small.jpg"))
+            $it = Item::model()->findbyPk($_GET['id']);
+			$it->delete();
+            /*if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $it['pic']."_small.jpg"))
             {
                 unlink(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_small.jpg");
                 unlink(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $_GET['id']."_big.jpg");
-            }
+            }*/
 
 			if( !isset($_GET['ajax']) )
             {
@@ -87,13 +88,16 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
         {
             $item->attributes = $_POST[get_class($item)];
             $item->type = $type;
+            if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
+                $item->pic = $_FILES ['Item'] ['name'] ['pictures'];
+            }
             //$category->pic = CUploadedFile::getInstance($category, 'pic');
 
             if($item->save())
             {
                 if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
-                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_big.jpg");
-                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $item->id."_small.jpg");
+                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/upload/' . $_FILES ['Item'] ['name'] ['pictures']);
+                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' .$_FILES ['Item'] ['name'] ['pictures']."_small.jpg");
                 }
 
                 Yii::app()->user->setFlash(
