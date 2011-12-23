@@ -123,15 +123,15 @@ class ParserController extends Controller
             if(count($file) > 0)
             {
                 $model = new Item();
-                $files = $model->findAll('pic != ""');
+                $files = $model->findAll('pic != "" GROUP BY pic');
                 $imageHandler = new CImageHandler();
 
                 foreach($files as $val)
                 {
-                    if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic']) && !file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_big.jpg"))
+                    if(file_exists(Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic']) && !file_exists(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['pic']."_small.jpg"))
                     {
-                        $imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_big.jpg");
-                        $imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_small.jpg");
+                        //$imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['id']."_big.jpg");
+                        $imageHandler->load (Yii::app()->getBasePath() . '/..'.'/resources/upload/'.$val['pic'])->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' . $val['pic']."_small.jpg");
                         $result[$val['id']] = $val['main_string'];
                         //sleep(1);
                         set_time_limit(0);
