@@ -36,7 +36,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name'=>'pic',
             'type'=>'raw',
             'filter'=>false,
-            'value'=>'Item::model()->getPic($data->id)',
+            'value'=>'Item::model()->getPic($data->pic)',
         ),
         'w',
         'd',

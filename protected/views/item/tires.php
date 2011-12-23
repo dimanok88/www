@@ -37,7 +37,7 @@ $this->breadcrumbs = array(
             'name'=>'pictures',
             'type'=>'raw',
             'filter'=>false,
-            'value'=>'Item::model()->getPic($data->id)',
+            'value'=>'Item::model()->getPic($data->pic)',
             'htmlOptions'=>array('style'=>'text-align:center !important'),
         ),
         'w',
