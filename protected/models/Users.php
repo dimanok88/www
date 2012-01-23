@@ -41,9 +41,10 @@ class Users extends CActiveRecord
 	}
 
     public function beforeSave() {
-	    /*if ($this->isNewRecord) {
-	        $this->password = crypt($this->password, substr($$this->password, 0, 2));
-	    }*/
+	    if ($this->isNewRecord) {
+	        $this->date_reg = new CDbExpression('NOW()');
+            $this->code_active = 
+	    }
 
 	    return parent::beforeSave();
 	}
@@ -56,18 +57,19 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password, email, name, role', 'required'),
-			array('active', 'numerical', 'integerOnly'=>true),
-            array('login, email', 'unique'),
+			array('login, password, email, name, role, phone', 'required'),
+			array('active, id_user_reg, org_type_user, type_user', 'numerical', 'integerOnly'=>true),
+            array('login, email, code_active', 'unique'),
 			array('login, name', 'length', 'max'=>30),
 			array('password', 'length', 'max'=>60),
             array('password_req', 'length', 'max'=>60),
 			array('password_req', 'compare', 'compareAttribute' => 'password'),
 			array('email', 'length', 'max'=>40),
+            array('organization, address, info, inn, kpp, bik, bank, r-s, k-s', 'default'),
 			array('role', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, login, password, email, name, role, active', 'safe', 'on'=>'search'),
+			array('id, login, password, email, info, inn, kpp, bik, bank, r-s, k-s, org_type_user, type_user, address, date_reg, phone, id_user_reg, code_active, name, role, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -145,5 +147,10 @@ class Users extends CActiveRecord
             self::USER_TYPE_FIZ => 'Физическое лицо',
             self::USER_TYPE_UR => 'Юридическое лицо',
         );
+    }
+
+    public function GenerateCode()
+    {
+        //$code = date();
     }
 }
