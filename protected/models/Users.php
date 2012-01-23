@@ -19,6 +19,9 @@ class Users extends CActiveRecord
     const ITEM_TYPE_ADMIN = 'admin';
     const ITEM_TYPE_MODERATOR = 'moderator';
     const ITEM_TYPE_GUEST = 'guest';
+
+    const USER_TYPE_FIZ = 'fiz';
+    const USER_TYPE_UR = 'ur';
     
 	/**
 	 * Returns the static model of the specified AR class.
@@ -133,6 +136,14 @@ class Users extends CActiveRecord
             self::ITEM_TYPE_ADMIN => 'Админ',
             self::ITEM_TYPE_MODERATOR => 'Модератор',
             self::ITEM_TYPE_GUEST => 'Пользователь',
+        );
+    }
+
+    public function OrgTypeUser()
+    {
+        return array(
+            self::USER_TYPE_FIZ => 'Физическое лицо',
+            self::USER_TYPE_UR => 'Юридическое лицо',
         );
     }
 }
