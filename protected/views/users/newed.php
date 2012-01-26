@@ -1,3 +1,5 @@
+<?php $this->widget('application.extensions.email.Debug'); ?>
+
 <h1><?= (!empty($_GET['id'])) ? $model->login.' '.$model->email : 'Добавить пользователя'?></h1>
 
 <div class="form">
@@ -28,7 +30,12 @@
 
                  <div class="row">
                     <?php echo $form->labelEx($model,'phone'); ?>
-                    <?php echo $form->textField($model, 'phone'); ?>
+                    <?php $this->widget('CMaskedTextField', array(
+                    'model' => $model,
+                    'attribute' => 'phone',
+                    'mask' => '(999)999-99-99',
+                    'htmlOptions' => array('size' => 10)
+                    )); ?>
                     <?php echo $form->error($model,'phone'); ?>
                 </div>
 

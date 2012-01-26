@@ -93,7 +93,7 @@ class UsersController extends Controller {
                 $model->password_req = crypt($_POST[get_class($model)]['password_req'], substr($_POST[get_class($model)]['password_req'], 0, 2));
             }
             if($model->save())
-            {                              
+            {
                 $this->redirect($url);
             }
         }

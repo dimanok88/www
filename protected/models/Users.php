@@ -23,7 +23,7 @@ class Users extends CActiveRecord
 
     const USER_TYPE_FIZ = 'fiz';
     const USER_TYPE_UR = 'ur';
-    
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Users the static model class
@@ -44,16 +44,19 @@ class Users extends CActiveRecord
     public function beforeSave() {
 	    if ($this->isNewRecord) {
 	        $this->date_reg = new CDbExpression('NOW()');
-            $this->code_active = $this->GenerateCode();
-
-            $email = Yii::app()->email;
-            $email->to = 'dimanok88@mail.ru';
-            $email->subject = 'Hello';
-            $email->message = 'Hello bro!';
-            $email->send();
+            $this->id_user_reg = Yii::app()->user->id;
+            if($this->id_user_reg == 0)
+                $this->code_active = $this->GenerateCode();
+            $this->SendMail();
 	    }
 
 	    return parent::beforeSave();
+	}
+
+    public function beforeValidate() {
+        $this->phone = str_replace(array('(',')','-'), '', $this->phone);
+
+        return parent::beforeValidate();
 	}
 
 	/**
@@ -65,14 +68,14 @@ class Users extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('login, password, email, name, role, phone', 'required'),
-			array('active, id_user_reg, org_type_user, send_mail,type_user', 'numerical', 'integerOnly'=>true),
+			array('active, id_user_reg, send_mail', 'numerical', 'integerOnly'=>true),
             array('login, email, code_active', 'unique'),
 			array('login, name', 'length', 'max'=>30),
 			array('password', 'length', 'max'=>60),
             array('password_req', 'length', 'max'=>60),
 			array('password_req', 'compare', 'compareAttribute' => 'password'),
 			array('email', 'length', 'max'=>40),
-            array('organization, address, info, inn, kpp, bik, bank, r-s, k-s', 'default'),
+            array('organization, address, info, phone, org_type_user, type_user, inn, kpp, bik, bank, r-s, k-s', 'default'),
 			array('role', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -159,7 +162,7 @@ class Users extends CActiveRecord
     public function AllRoles()
     {
         return array(
-            self::ITEM_TYPE_ADMIN => 'Админ',
+            //self::ITEM_TYPE_ADMIN => 'Админ',
             self::ITEM_TYPE_MODERATOR => 'Модератор',
             self::ITEM_TYPE_GUEST => 'Пользователь',
         );
@@ -175,8 +178,17 @@ class Users extends CActiveRecord
 
     public function GenerateCode()
     {
-        $time = time();
-        $code = md5($time.$this->email);
+        $code = md5($this->email);
         return $code;
+    }
+
+    public function SendMail()
+    {
+        $email = Yii::app()->email;
+        $email->to = $this->email;
+        $email->subject = 'Регистрация на сайте мобиль36.рф';
+        $email->view = 'regUser';
+        $email->viewVars = array('login'=>$this->login,'phone'=>$this->phone);
+        $email->send();
     }
 }
