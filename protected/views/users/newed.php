@@ -133,11 +133,13 @@
                     <?php echo $form->error($model,'active'); ?>
                 </div>
 
+                <? if($model->isNewRecord) {?>
                 <div class="row">
                     <?php echo $form->labelEx($model,'send_mail'); ?>
                     <?php echo $form->checkBox($model, 'send_mail'); ?>
                     <?php echo $form->error($model,'send_mail'); ?>
                 </div>
+                <? } ?>
             </td>
             <td valign="top">
                 <div class="row">

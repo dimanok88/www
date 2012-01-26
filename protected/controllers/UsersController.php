@@ -122,6 +122,7 @@ class UsersController extends Controller {
     //Просмотр данных пользователя найденых через autoComplete
     public function actionViewUser($id)
     {
-        $this->render('viewUser');
+        $user = Users::model()->findByPk($id);
+        $this->render('viewUser', array('user'));
     }
 }
