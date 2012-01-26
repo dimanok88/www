@@ -15,7 +15,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-        'application.extensions.PHPExcel4Yii.*',
+        //'application.extensions.email.*',
         'application.extensions.shoppingCart.*',
         'application.extensions.categorytree.*',
 		'application.extensions.parser.*',
@@ -31,9 +31,11 @@ return array(
             'class' => 'system.caching.CFileCache',
         ),
 
-        'excel'=>array(
-	          'class'=>'application.extensions.PHPExcel4Yii.PHPExcel',
-	    ),
+        'email'=>array(
+            'class'=>'application.extensions.email.Email',
+            'delivery'=>'php', //Will use the php mailing function.
+            //May also be set to 'debug' to instead dump the contents of the email into the view
+        ),
 
         'clienscript'=>array(
           'scriptMap'=>array(

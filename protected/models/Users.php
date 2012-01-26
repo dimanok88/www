@@ -15,6 +15,7 @@
 class Users extends CActiveRecord
 {
     public $password_req;
+    public $send_mail;
 
     const ITEM_TYPE_ADMIN = 'admin';
     const ITEM_TYPE_MODERATOR = 'moderator';
@@ -43,7 +44,13 @@ class Users extends CActiveRecord
     public function beforeSave() {
 	    if ($this->isNewRecord) {
 	        $this->date_reg = new CDbExpression('NOW()');
-            $this->code_active = 
+            $this->code_active = $this->GenerateCode();
+
+            $email = Yii::app()->email;
+            $email->to = 'dimanok88@mail.ru';
+            $email->subject = 'Hello';
+            $email->message = 'Hello bro!';
+            $email->send();
 	    }
 
 	    return parent::beforeSave();
@@ -58,7 +65,7 @@ class Users extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('login, password, email, name, role, phone', 'required'),
-			array('active, id_user_reg, org_type_user, type_user', 'numerical', 'integerOnly'=>true),
+			array('active, id_user_reg, org_type_user, send_mail,type_user', 'numerical', 'integerOnly'=>true),
             array('login, email, code_active', 'unique'),
 			array('login, name', 'length', 'max'=>30),
 			array('password', 'length', 'max'=>60),
@@ -69,7 +76,7 @@ class Users extends CActiveRecord
 			array('role', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, login, password, email, info, inn, kpp, bik, bank, r-s, k-s, org_type_user, type_user, address, date_reg, phone, id_user_reg, code_active, name, role, active', 'safe', 'on'=>'search'),
+			array('id, login, send_mail, password, email, info, inn, kpp, bik, bank, r-s, k-s, org_type_user, type_user, address, date_reg, phone, id_user_reg, code_active, name, role, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,7 +104,24 @@ class Users extends CActiveRecord
 			'name' => 'Имя',
 			'role' => 'Роль',
 			'active' => 'Вкл.',
+            'org_type_user'=>'Тип пользователя',
+            'type_user'=>'Цена пользователя',
+            'send_mail' => 'Отправить уведомление',
             'password_req'=>'Повторите пароль',
+            'info'=>'Дополнительная Информация',
+            'inn'=>'ИНН',
+            'kpp'=>'КПП',
+            'bik'=>'БИК',
+            'bank'=>'Банк',
+            'r-s'=>'Р\С',
+            'k-s'=>'К\С',
+            'address'=>'Адрес доставки',
+            'date_reg'=>'Дата регистрации',
+            'phone'=>'Телефон',
+            'id_user_reg'=>'Регистратор',
+            'code_active'=>'Код активации',
+            'organization'=>'Организация',
+            'date_modify'=>'Дата модификации',
 		);
 	}
 
@@ -151,6 +175,8 @@ class Users extends CActiveRecord
 
     public function GenerateCode()
     {
-        //$code = date();
+        $time = time();
+        $code = md5($time.$this->email);
+        return $code;
     }
 }
