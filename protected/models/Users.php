@@ -47,7 +47,8 @@ class Users extends CActiveRecord
             $this->id_user_reg = Yii::app()->user->id;
             if($this->id_user_reg == 0)
                 $this->code_active = $this->GenerateCode();
-            $this->SendMail();
+            if($this->send_mail == 1)
+                $this->SendMail();
 	    }
 
 	    return parent::beforeSave();

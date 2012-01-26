@@ -8,13 +8,14 @@ $this->menu = array(
 
 
 <?
+// конфиурация для autocomplete
 $autocompleteConfig = array(
     'model'=>$model, // модель
     'name'=>'term',
     // "источник" данных для выборки
     // может быть url, который возвращает JSON, массив
     // или функция JS('js: alert("Hello!");')
-    'source' =>Yii::app()->createUrl('users/autocomplete'),
+    'source' =>Yii::app()->createUrl('ajax/autocomplete'),
     // параметры, подробнее можно посмотреть на сайте
     // http://jqueryui.com/demos/autocomplete/
     'options'=>array(
@@ -46,23 +47,6 @@ $autocompleteConfig = array(
     <?php echo CHtml::hiddenField('ids'); ?>
 </div>
 <?php $this->endWidget(); ?>
-
-<?php
-$this->widget('zii.widgets.jui.CJuiButton', array(
-    'buttonType'=>'link',
-    'name'=>'btnStop',
-    'caption'=>'Stop',
-    'options'=>array('icons'=>'js:{primary:"ui-icon-gear",secondary:"ui-icon-triangle-1-s"}'),
-    'onclick'=>'js:function(){alert("Button Stop clicked."); this.blur(); return false;}',
-));
-$this->widget('zii.widgets.jui.CJuiButton', array(
-    'buttonType'=>'link',
-    'name'=>'btnGo',
-    'caption'=>'Go',
-    'options'=>array('icons'=>'js:{primary:"ui-icon-newwin"}'),
-    'onclick'=>'js:function(){alert("Button Go clicked."); this.blur(); return false;}',
-));
-?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'users',

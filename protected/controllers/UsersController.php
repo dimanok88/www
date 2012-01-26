@@ -51,11 +51,8 @@ class UsersController extends Controller {
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
+    // Список пользователей 
     public function actionListUsers(){
-
-        CVarDumper::dump($_POST, 10, true);
-        CVarDumper::dump($_GET, 10, true);
-
         $model=new Users('search'); //загрузка модели с возможностью поиска по шинам
 
         $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
@@ -68,7 +65,9 @@ class UsersController extends Controller {
         }
         $this->render('listUsers', array('model'=>$model));
     }
+    ////////////////////////////////////////////
 
+    //Добавление и редактирование пользователя. Если id = '' тогда новый пользователь иначе происходит редактирование
     public function actionNewed($id='')
     {
         $model = new Users();
@@ -100,7 +99,9 @@ class UsersController extends Controller {
 
         $this->render('newed', array('model'=>$model));
     }
+    ////////////////////////////////////////////
 
+    //Удаление пользователя
     public function actionDelete()
     {
         if( Yii::app()->request->isPostRequest )
@@ -118,26 +119,9 @@ class UsersController extends Controller {
         }
     }
 
-    public function actionAutocomplete() {
-        $term = Yii::app()->getRequest()->getParam('term');
-
-        if(Yii::app()->request->isAjaxRequest && $term) {
-            $criteria = new CDbCriteria;
-            // формируем критерий поиска
-            $criteria->addSearchCondition('name', $term, true, 'OR');
-            $criteria->addSearchCondition('login', $term, true, 'OR');
-            $criteria->addSearchCondition('email', $term, true, 'OR');
-            $customers = Users::model()->findAll($criteria);
-            // обрабатываем результат
-            $result = array();
-            foreach($customers as $customer) {
-                $lable = '№'.$customer['id'].' '.$customer['name'];
-                $result[] = array('id'=>$customer['id'], 'label'=>$lable, 'value'=>$lable);
-            }
-            echo CJSON::encode($result);
-            Yii::app()->end();
-        }
+    //Просмотр данных пользователя найденых через autoComplete
+    public function actionViewUser($id)
+    {
+        $this->render('viewUser');
     }
-
-
 }
