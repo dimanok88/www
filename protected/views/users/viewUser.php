@@ -1,5 +1,6 @@
 <h1>Просмотр Профиля <?= $user->name?>(<?= $user->login;?>)</h1>
 
+    <?= CHtml::link('Назад', array('users/listUsers'), array('class'=>'edit_user_left'))?>
     <?= CHtml::link('Редактировать', array('users/newed', 'id'=>$user->id), array('class'=>'edit_user'))?>
 
     <?php $this->widget('zii.widgets.CDetailView', array(

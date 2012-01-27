@@ -8,6 +8,8 @@
     </div>
 <? endif;?>
 
+    <?= CHtml::link('Назад', array('users/listUsers'), array('class'=>'edit_user'))?>
+
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'percent-form',
 	'enableAjaxValidation'=>false,

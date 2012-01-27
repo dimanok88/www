@@ -25,7 +25,7 @@ class AjaxController extends Controller{
             $criteria->addSearchCondition('bank', $term, true, 'OR');
             $criteria->addSearchCondition('bik', $term, true, 'OR');
             $criteria->addSearchCondition('info', $term, true, 'OR');
-            $customers = Users::model()->findAll($criteria);
+            $customers = Users::model()->cache(1000)->findAll($criteria);
             // обрабатываем результат
             $result = array();
             foreach($customers as $customer) {
