@@ -359,3 +359,8 @@ div.form .inline-label label {
 div.form .inline-label label.block-label {
     display: block;
 }
+
+.edit_user { border: 1px solid black; border-radius: 5px; padding: 10px; margin: 0 0 15px 0; text-decoration: none;  font-size: 16px; font-weight: bold; background: #d0e5f5; color: black; -moz-box-shadow: 7px 7px 3px #888;
+-webkit-box-shadow: 7px 7px 3px #888;
+box-shadow: 7px 7px 3px #888; float: right;}
+.edit_user:hover { background: #efefde; color: #00008b;}

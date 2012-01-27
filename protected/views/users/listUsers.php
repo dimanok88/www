@@ -40,11 +40,14 @@ $autocompleteConfig = array(
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id'=>'order-form',
+    'method'=>'get',
+    'action'=>array('users/viewUser'),
 )); ?>
 <div class="row">
     <?php echo $form->label($model,'name'); ?>
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', $autocompleteConfig); ?>
     <?php echo CHtml::hiddenField('ids'); ?>
+    <?= CHtml::submitButton('Найти')?>
 </div>
 <?php $this->endWidget(); ?>
 

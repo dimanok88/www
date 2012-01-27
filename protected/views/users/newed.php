@@ -1,5 +1,3 @@
-<?php $this->widget('application.extensions.email.Debug'); ?>
-
 <h1><?= (!empty($_GET['id'])) ? $model->login.' '.$model->email : 'Добавить пользователя'?></h1>
 
 <div class="form">
@@ -95,15 +93,15 @@
                     </div>
 
                     <div class="row">
-                        <?php echo $form->labelEx($model,'r-s'); ?>
-                        <?php echo $form->textField($model, 'r-s'); ?>
-                        <?php echo $form->error($model,'r-s'); ?>
+                        <?php echo $form->labelEx($model,'r_s'); ?>
+                        <?php echo $form->textField($model, 'r_s'); ?>
+                        <?php echo $form->error($model,'r_s'); ?>
                     </div>
 
                     <div class="row">
-                        <?php echo $form->labelEx($model,'k-s'); ?>
-                        <?php echo $form->textField($model, 'k-s'); ?>
-                        <?php echo $form->error($model,'k-s'); ?>
+                        <?php echo $form->labelEx($model,'k_s'); ?>
+                        <?php echo $form->textField($model, 'k_s'); ?>
+                        <?php echo $form->error($model,'k_s'); ?>
                     </div>
             </td>
         </tr>

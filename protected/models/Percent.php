@@ -34,6 +34,11 @@ class Percent extends CActiveRecord
             self::PERC_VIP => 'VIP',
         );
     }
+    public function getType($t)
+    {
+        $type = $this->getTypePerc();
+        return $type[$t];
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.
