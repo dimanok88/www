@@ -18,6 +18,13 @@ class AjaxController extends Controller{
             $criteria->addSearchCondition('name', $term, true, 'OR');
             $criteria->addSearchCondition('login', $term, true, 'OR');
             $criteria->addSearchCondition('email', $term, true, 'OR');
+            $criteria->addSearchCondition('inn', $term, true, 'OR');
+            $criteria->addSearchCondition('organization', $term, true, 'OR');
+            $criteria->addSearchCondition('phone', $term, true, 'OR');
+            $criteria->addSearchCondition('address', $term, true, 'OR');
+            $criteria->addSearchCondition('bank', $term, true, 'OR');
+            $criteria->addSearchCondition('bik', $term, true, 'OR');
+            $criteria->addSearchCondition('info', $term, true, 'OR');
             $customers = Users::model()->findAll($criteria);
             // обрабатываем результат
             $result = array();
