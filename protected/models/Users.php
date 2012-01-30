@@ -220,6 +220,7 @@ class Users extends CActiveRecord
     public function SendMail()
     {
         $email = Yii::app()->email;
+        
         $email->from = 'admin@мобиль36.рф';
         $email->language = "ru";
         $email->contentType = 'utf8';
