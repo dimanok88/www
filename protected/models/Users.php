@@ -24,6 +24,9 @@ class Users extends CActiveRecord
     const USER_TYPE_FIZ = 'fiz';
     const USER_TYPE_UR = 'ur';
 
+    const USER_NAL= 'nal';
+    const USER_BEZNAL = 'beznal';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Users the static model class
@@ -76,11 +79,11 @@ class Users extends CActiveRecord
             array('password_req', 'length', 'max'=>60),
 			array('password_req', 'compare', 'compareAttribute' => 'password'),
 			array('email', 'length', 'max'=>40),
-            array('organization, address, info, phone, org_type_user, type_user, inn, kpp, bik, bank, r_s, k_s', 'default'),
+            array('organization, address, info, pay,phone, org_type_user, type_user, inn, kpp, bik, bank, r_s, k_s', 'default'),
 			array('role', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, login, send_mail, password, email, info, inn, kpp, bik, bank, r_s, k_s, org_type_user, type_user, address, date_reg, phone, id_user_reg, code_active, name, role, active', 'safe', 'on'=>'search'),
+			array('id, login, send_mail, password, email, pay, info, inn, kpp, bik, bank, r_s, k_s, org_type_user, type_user, address, date_reg, phone, id_user_reg, code_active, name, role, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -125,6 +128,7 @@ class Users extends CActiveRecord
             'id_user_reg'=>'Регистратор',
             'code_active'=>'Код активации',
             'organization'=>'Организация',
+            'pay'=>'Способ оплаты',
             'date_modify'=>'Дата модификации',
 		);
 	}
@@ -158,6 +162,7 @@ class Users extends CActiveRecord
         $criteria->compare('inn',$this->inn,true);
 		$criteria->compare('r_s',$this->r_s,true);
 		$criteria->compare('k_s',$this->k_s);
+        $criteria->compare('pay',$this->pay);
         $criteria->compare('org_type_user',$this->org_type_user);
         $criteria->compare('type_user',$this->type_user);
         $criteria->compare('info',$this->info);
@@ -204,9 +209,20 @@ class Users extends CActiveRecord
         return $code;
     }
 
+    public function PayUser()
+    {
+        return array(
+            self::USER_NAL => 'Наличный расчет',
+            self::USER_BEZNAL => 'Безналичный расчет',
+        );
+    }
+
     public function SendMail()
     {
         $email = Yii::app()->email;
+        $email->from = 'admin@мобиль36.рф';
+        $email->language = "ru";
+        $email->contentType = 'utf8';
         $email->to = $this->email;
         $email->subject = 'Регистрация на сайте мобиль36.рф';
         $email->view = 'regUser';
