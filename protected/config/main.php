@@ -39,7 +39,7 @@ return array(
 
         'clienscript'=>array(
           'scriptMap'=>array(
-             'jquery.js'=>'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js',
+                //'jquery.js'=>'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js',
           )
         ),
 

@@ -63,7 +63,7 @@ class ParserController extends Controller
                                     $item = new Item();
                                     $id_new = $item->NewPrice($main_string, $price, $country);
 
-                                    if(!isset($_SESSION['new_price']))
+                                    if(!isset($_SESSION['new_price']) && $id_new != false)
                                     {
                                         $_SESSION['new_price'] = 'new';
                                         echo $_SESSION['new_price'];
