@@ -125,4 +125,13 @@ class UsersController extends Controller {
         $user = Users::model()->findByPk($ids);
         $this->render('viewUser', array('user'=>$user));
     }
+
+    public function actionAuth()
+    {
+        $obj = CurlAuth::init() ->login('http://www.autoshinavrn.ru/index.php')->load('http://www.autoshinavrn.ru/setuser.php?user=romachu');
+        echo $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=1002000201')->content;
+
+    }
+
+
 }
