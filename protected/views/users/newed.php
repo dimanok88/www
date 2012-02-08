@@ -116,6 +116,12 @@
                 </div>
 
                 <div class="row">
+                    <?php echo $form->labelEx($model,'pay'); ?>
+                    <?php echo $form->dropDownList($model, 'pay', Users::model()->PayUser()); ?>
+                    <?php echo $form->error($model,'pay'); ?>
+                </div>
+
+                <div class="row">
                     <?php echo $form->labelEx($model,'org_type_user'); ?>
                     <?php echo $form->dropDownList($model, 'org_type_user', Users::model()->OrgTypeUser()); ?>
                     <?php echo $form->error($model,'org_type_user'); ?>

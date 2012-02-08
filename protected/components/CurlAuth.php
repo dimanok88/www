@@ -9,8 +9,8 @@ class CurlAuth {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.12011-10-16 20:23:00'); // Юзер-агент
-		curl_setopt($ch, CURLOPT_COOKIEJAR, $base.'cookie.txt'); // Cookie
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $base.'cookie.txt'); // Cookie
+		curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt'); // Cookie
+		curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt'); // Cookie
 		if (is_array($headers))
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // Обработка всех Location на автомате

@@ -126,11 +126,28 @@ class UsersController extends Controller {
         $this->render('viewUser', array('user'=>$user));
     }
 
+
     public function actionAuth()
     {
+        Yii::import('application.vendors.*');
+        require_once('Zend/Dom/Query.php');
+        
         $obj = CurlAuth::init() ->login('http://www.autoshinavrn.ru/index.php')->load('http://www.autoshinavrn.ru/setuser.php?user=romachu');
-        echo $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=1002000201')->content;
+        $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=1002000201')->content;
+        //echo $result;
 
+        $dom = new Zend_Dom_Query($result,'utf8');
+        
+        $results = $dom->query('table.tbl-border tr');
+
+        $count = count($results); // получение числа соответствий: 4
+        foreach ($results as $res) {
+            CVarDumper::dump($res, 10, true);
+           /*foreach($res->childNodes as $ch)
+           {
+               echo $ch->nodeValue."<br/>";
+           }*/
+        }
     }
 
 
