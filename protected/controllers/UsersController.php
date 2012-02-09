@@ -138,15 +138,19 @@ class UsersController extends Controller {
 
         $dom = new Zend_Dom_Query($result,'utf8');
         
-        $results = $dom->query('table.tbl-border tr');
+        $results = $dom->query('//table.tbl-border/tr[position() = 1]');
 
+        echo $results->count();
         $i = 0;
         $ar = array();
         foreach ($results as $res) {
-               foreach($res->childNodes as $ch)
+                $k = 0;
+                
+               /*foreach($res->query('td.tbl-border') as $ch)
                {
-                  $ar[] = $ch->nodeValue;
-               }
+                  $ar[$i][$k] = $ch->nodeValue;
+                  $k++;
+               }*/
             $i++;
         }
 
