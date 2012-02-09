@@ -140,14 +140,17 @@ class UsersController extends Controller {
         
         $results = $dom->query('table.tbl-border tr');
 
-        $count = count($results); // получение числа соответствий: 4
+        $i = 0;
+        $ar = array();
         foreach ($results as $res) {
-            CVarDumper::dump($res, 10, true);
-           /*foreach($res->childNodes as $ch)
-           {
-               echo $ch->nodeValue."<br/>";
-           }*/
+               foreach($res->childNodes as $ch)
+               {
+                  $ar[] = $ch->nodeValue;
+               }
+            $i++;
         }
+
+        CVarDumper::dump($ar,10, true);
     }
 
 
