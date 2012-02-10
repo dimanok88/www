@@ -136,25 +136,36 @@ class UsersController extends Controller {
         $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=1002000201')->content;
         //echo $result;
 
-        $dom = new Zend_Dom_Query($result,'utf8');
+        $dom = new Zend_Dom_Query($result);
         
-        $results = $dom->query('//table.tbl-border/tr[position() = 1]');
-
-        echo $results->count();
+        $results = $dom->query('//table.tbl-border/tr');
+        
         $i = 0;
         $ar = array();
         foreach ($results as $res) {
+            if(($i != 0 && $i != 1) && $i != count($results)-1 && $i != count($results)-2){
                 $k = 0;
-                
-               /*foreach($res->query('td.tbl-border') as $ch)
+               foreach($res->childNodes as $ch)
                {
-                  $ar[$i][$k] = $ch->nodeValue;
-                  $k++;
-               }*/
+                   if($k == 0 || $k == 2 || $k == 4){
+                       $string = rtrim(preg_replace('/\\s+$/i','', $ch->nodeValue));
+                       if($k == 0){
+                           $s = trim(mb_convert_encoding(preg_replace('/\(Остаток.*$/i','',str_replace(" «фото»", "", $string)), 'windows-1251', 'utf-8'));
+                           preg_match_all("!(.*)\s+(.*?)$!i", $s, $r);
+                           print_r($r);
+                           //$ar[$i][$k] = $r;
+                       }
+                       else $ar[$i][$k] = $string;
+                   }
+                   $k++;
+               }
+            }
             $i++;
         }
 
-        CVarDumper::dump($ar,10, true);
+
+
+        CVarDumper::dump($ar,10,true);
     }
 
 
