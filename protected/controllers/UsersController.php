@@ -132,7 +132,7 @@ class UsersController extends Controller {
         Yii::import('application.vendors.*');
         require_once('Zend/Dom/Query.php');
 
-        $page= array();
+        $page= array('0'=>'1');
         
         $obj = CurlAuth::init() ->login('http://www.autoshinavrn.ru/index.php')->load('http://www.autoshinavrn.ru/setuser.php?user=romachu');
         $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=1002000201')->content;
@@ -147,15 +147,14 @@ class UsersController extends Controller {
                $page[] = $p->nodeValue;
         }
 
-        $i = 0;
+        $ar = array();
         foreach($page as $p_n){
+            if($p_n > 3) break;
             $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=100200020'.$p_n)->content;
             $dom = new Zend_Dom_Query($result);
             $results = $dom->query('//table.tbl-border/tr');
 
             $i = 0;
-            $ar = array();
-            $mas2 = array();
             foreach ($results as $res) {
                 if(($i != 0 && $i != 1) && $i != count($results)-1 && $i != count($results)-2){
                     $k = 0;
@@ -173,27 +172,18 @@ class UsersController extends Controller {
                                //$t = iconv('UTF-8','WINDOWS-1251', $t);
                                $t =  trim(mb_convert_encoding($t, 'koi8-r', 'utf-8'));
                                preg_match_all("!(.*)\s+(.*?)$!i", $t, $r);
-                               $ar[$i][$k] = $r[1][0];
-                               $ar[$i]['country'] = $r[2][0];
+                               $ar[$p_n][$i][$k] = $r[1][0];
+                               $ar[$p_n][$i]['country'] = $r[2][0];
                            }
-                           else $ar[$i][$k] = trim($string);
+                           else $ar[$p_n][$i][$k] = trim($string);
                        }
                        $k++;
                    }
                 }
                 $i++;
-                $mas2  = array_merge($ar
-                //echo $i."<br/>";
             }
-            
-
-            /*foreach($ar as $its)
-            {
-
-            }*/
-            if($p_n >3) break;
         }
-        CVarDumper::dump($mas2, 10,true);
+        CVarDumper::dump($ar, 10,true);
 
     }
 
