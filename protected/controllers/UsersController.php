@@ -148,6 +148,7 @@ class UsersController extends Controller {
         }
 
         $ar = array();
+        $mas2 = array();
         foreach($page as $p_n){
             if($p_n > 3) break;
             $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms=100200020'.$p_n)->content;
@@ -163,6 +164,7 @@ class UsersController extends Controller {
                        if($k == 0 || $k == 2 || $k == 4){
                            $string = rtrim(preg_replace('/\\s+$/i','', $ch->nodeValue));
                            if($k == 0){
+
                                $s = trim(preg_replace('/\(Остаток.*$/i','',str_replace(" «фото»", "", $string)));
                                //preg_match_all("!(.*)\s+(.*?)$!i", $s, $r);
                                //print_r($r);
@@ -175,6 +177,10 @@ class UsersController extends Controller {
                                $ar[$p_n][$i][$k] = $r[1][0];
                                $ar[$p_n][$i]['country'] = $r[2][0];
                            }
+                           elseif($k==2)
+                           {
+                               $ar[$p_n][$i][$k] = str_replace(' ', '',preg_replace('/\(.*$/i','', $string));
+                           }
                            else $ar[$p_n][$i][$k] = trim($string);
                        }
                        $k++;
@@ -182,8 +188,9 @@ class UsersController extends Controller {
                 }
                 $i++;
             }
+                $mas2 = array_merge($ar[$p_n], $mas2);
         }
-        CVarDumper::dump($ar, 10,true);
+        CVarDumper::dump($mas2, 10,true);
 
     }
 
