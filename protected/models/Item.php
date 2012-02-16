@@ -76,10 +76,10 @@ class Item extends CActiveRecord implements IECartPosition
 			array('stupica', 'length', 'max'=>30),
 			array('color', 'length', 'max'=>200),			
             array('pictures' , 'file', 'types'=>'jpg, gif, png, jpeg', 'allowEmpty' => true),
-            array('season, model, country,descript, pic, marka, shipi, category', 'default'),
+            array('season, ost, model, country,descript, pic, marka, shipi, category', 'default'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, main_string, new_price, link, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
+			array('id, main_string, ost, new_price, link, price,country, type, type_item, season, d, w, hw, vilet, category, stupica, shipi, krepezh, color, model, active, date_add, date_modify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -136,6 +136,7 @@ class Item extends CActiveRecord implements IECartPosition
             'category'=>'Категория',
             'country'=>'Производитель',
             'link'=>'Ссылка',
+            'ost'=>'Остаток',
 		);
 	}
 
@@ -172,6 +173,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('pic',$this->pic,'LIKE');
 		$criteria->compare('date_modify',$this->date_modify,true);
         $criteria->compare('link',$this->link,'LIKE');
+        $criteria->compare('ost',$this->ost);
 
 
 		return new CActiveDataProvider($this, array(
@@ -212,13 +214,13 @@ class Item extends CActiveRecord implements IECartPosition
         }
 
         // проверка цены у строк. Если цена обновилось у строки то возвращется ID этой строки
-        public function NewPrice($string, $price, $country)
+        public function NewPrice($string, $price, $country, $ost)
         {
-            $searchString = $this->find('main_string=:main AND price!=:p AND country=:c', array(':main'=>$string, ':p'=>$price, ":c"=>$country));
+            $searchString = $this->find('(main_string=:main AND country=:c AND price!=:p) OR (main_string=:main AND country=:c AND ost!=:ost)', array(':main'=>$string, ':p'=>$price, ":c"=>$country, ':ost'=>$ost));
             if(count($searchString) > 0)
             {
-                if($searchString->price == $price) return false;
-                else return $searchString->id;
+                if($searchString->price == $price && $searchString->ost == $ost) return false;
+                return $searchString->id;
             }
             return false;
         }
@@ -264,6 +266,8 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('pic',$this->pic,'LIKE');
         $criteria->compare('`new_price`', $this->new_price);
         $criteria->compare('link',$this->link,'LIKE');
+        $criteria->compare('ost',$this->ost);
+        
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -316,6 +320,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('country',$this->country,'LIKE');
         $criteria->compare('pic',$this->pic,'LIKE');
         $criteria->compare('link',$this->link,'LIKE');
+        $criteria->compare('ost',$this->ost);
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(
@@ -363,6 +368,7 @@ class Item extends CActiveRecord implements IECartPosition
         $criteria->compare('country',$this->country,'LIKE');
         $criteria->compare('pic',$this->pic,'LIKE');
         $criteria->compare('link',$this->link,'LIKE');
+        $criteria->compare('ost',$this->ost);
         //$criteria->addSearchCondition('`name`', $this->name);
 
         return new CActiveDataProvider(

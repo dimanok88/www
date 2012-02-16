@@ -35,8 +35,9 @@
             'name'=>'pic',
             'type'=>'raw',
             'filter'=>false,
-            'value'=>'Item::model()->getPic($data->pic)',
+            'value'=>'Item::model()->getPic($data->id)',
         ),
+        'ost',
 		'main_string',
         'type_item'=>array(
             'name'=>'type_item',

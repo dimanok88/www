@@ -34,6 +34,10 @@ class ParserController extends Controller
                                 $totalRows++;
                                 //echo $row[1]."\n";
                                 $main_string= $row[0];
+
+                                if(empty($row[8])) $ost = '';
+                                else $ost = $row[8];
+
                                 if(empty($row[7])) $type_item = '';
                                 else $type_item = $row[7];
                                 if(empty($row[6])) $pic = '';
@@ -61,23 +65,25 @@ class ParserController extends Controller
                                 if(!empty($result))
                                 {
                                     $item = new Item();
-                                    $id_new = $item->NewPrice($main_string, $price, $country);
+                                    $id_new = $item->NewPrice($main_string, $price, $country, $ost);
 
                                     if(!isset($_SESSION['new_price']) && $id_new != false)
                                     {
                                         $_SESSION['new_price'] = 'new';
-                                        echo $_SESSION['new_price'];
+                                        //echo $_SESSION['new_price'];
                                         $item->updateAll(array('new_price'=>'0'), 'type=:t', array(':t'=>$result['type']));
                                     }
                                     
                                     if($item->NewString($main_string, $country))
                                     {
+                                        //echo 1;
                                         $item->attributes=$result;
                                         $item->main_string = $main_string;
                                         $item->price = $price;
                                         $item->pic = $pic;
                                         $item->season = $season;
                                         $item->shipi = $shipi;
+                                        $item->ost = $ost;
                                         $item->type_item = $type_item;
                                         $item->country = $country;
                                         if($result['type'] == 'tire') $item->category = $item->ModelIdTire($result['model']);
@@ -86,14 +92,16 @@ class ParserController extends Controller
 
                                         if( $item->save() )
                                         {
+                                            //echo $item->id."<br/>";
                                             continue;
-                                            echo $item->id."<br/>";
                                         }
                                         else echo "false<br/>";
                                     }
                                     elseif($id_new != false)
                                     {
-                                        $item->updateByPk($id_new, array('price'=>$price, 'new_price'=>'1', 'date_modify'=> new CDbExpression('NOW()')));
+                                        //echo $id_new."<br/>";
+                                        $item->updateByPk($id_new,
+                                                          array('price'=>$price, 'ost'=>$ost, 'new_price'=>'1', 'date_modify'=> new CDbExpression('NOW()')));
                                     }
                                     set_time_limit(0);
                                 }
@@ -112,7 +120,7 @@ class ParserController extends Controller
                 }
 
         $file = Item::model()->find('pic != ""');
-
+        Yii::app()->cache->flush();
 		$this->render('index', array('model'=>$model, 'file'=>$file));
 	}
 
