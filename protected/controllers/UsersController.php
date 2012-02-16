@@ -133,9 +133,9 @@ class UsersController extends Controller {
         require_once('Zend/Dom/Query.php');
 
         $link_param = array(
-            '0'=>'100200020',
-            '1'=>'200000020',
-            '2'=>'400000020',
+            '0'=>'102200020',
+            //'1'=>'200000020',
+            //'2'=>'400000020',
         );
 
         foreach($link_param as $link_p){
@@ -157,7 +157,8 @@ class UsersController extends Controller {
             $ar = array();
             $mas2 = array();
             foreach($page as $p_n){
-                if($p_n > 3) break;
+                //echo $p_n."<br/>";
+                //if($p_n > 3) break;
                 $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms='.$link_p.$p_n)->content;
                 $dom = new Zend_Dom_Query($result);
                 $results = $dom->query('//table.tbl-border/tr');
@@ -203,7 +204,7 @@ class UsersController extends Controller {
             }
 
             $name = '';
-            if($link_p == '100200020') $name = 'tire';
+            if($link_p == '102200020') $name = 'tire';
             elseif($link_p == '200000020') $name = 'disc';
             elseif($link_p == '400000020') $name = 'gruz';
 
