@@ -191,6 +191,7 @@ class UsersController extends Controller {
                            $k++;
                        }
                     }
+                    set_time_limit(0);
                     $i++;
                 }
                 $mas2 = array_merge($ar[$p_n], $mas2);
