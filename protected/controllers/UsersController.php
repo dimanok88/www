@@ -1,4 +1,6 @@
 <?php
+
+define('CSV_DELIMITER', ';');
 /**
  * Created by JetBrains PhpStorm.
  * User: nike
@@ -134,8 +136,8 @@ class UsersController extends Controller {
 
         $link_param = array(
             '0'=>'102200020',
-            //'1'=>'200000020',
-            //'2'=>'400000020',
+            '1'=>'200000020',
+            '2'=>'400000020',
         );
 
         foreach($link_param as $link_p){
@@ -158,7 +160,7 @@ class UsersController extends Controller {
             $mas2 = array();
             foreach($page as $p_n){
                 //echo $p_n."<br/>";
-                //if($p_n > 3) break;
+                if($p_n > 1) break;
                 $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms='.$link_p.$p_n)->content;
                 $dom = new Zend_Dom_Query($result);
                 $results = $dom->query('//table.tbl-border/tr');
@@ -210,9 +212,124 @@ class UsersController extends Controller {
             elseif($link_p == '400000020') $name = 'gruz';
 
             file_put_contents('./resources/excel/'.date('Y.m.d').'_'.$name.'.csv', $new_str);
+            $this->upload_price(date('Y.m.d').'_'.$name.'.csv');
         }
-    
+
     }
 
+    public function upload_price($file)
+	{
+		$model = new PriceForm();
+                if(file_exists(Yii::app()->getBasePath() . '/../resources/excel/'.$file))
+                {
+                    $model->file = Yii::app()->getBasePath() . '/../resources/excel/'.$file;
+                    //if( $model->validate(false) )
+                    //{
+                        $totalRows = 0;
+                        $totalRowsDone = 0;
+                        $parser_other = new CsvParserOther();
+                        $parser_info = new CsvParserInfo();
+
+                        if( ($handle = fopen($model->file, 'r')) !== FALSE )
+                        {
+                            while( ($row = fgetcsv($handle, 2000, CSV_DELIMITER)) !== FALSE )
+                            {
+                                if( empty($row[2]) )
+                                {
+                                        continue;
+                                }
+
+                                $totalRows++;
+                                //echo $row[1]."\n";
+                                $main_string= $row[0];
+
+                                if(empty($row[8])) $ost = '';
+                                else $ost = $row[8];
+
+                                if(empty($row[7])) $type_item = '';
+                                else $type_item = $row[7];
+                                if(empty($row[6])) $pic = '';
+                                else $pic = $row[6];
+                                if(empty($row[3])) $row[3] = '';
+                                if($row[3] == 'other')
+                                {
+                                     $result = $parser_other->run($row[0]);
+                                     $price = trim($row[1]);
+                                     $season = '';
+                                     $shipi = '';
+                                     $country = '';
+                                }
+                                else
+                                {
+                                    $result = $parser_info->run($row[0]);
+                                    $country = $row[1];
+                                    $price = trim($row[2]);
+                                    if(empty($row[4])) $season = '';
+                                    else $season = $row[4];
+                                    if(empty($row[5])) $shipi = '';
+                                    else $shipi = $row[5];
+                                }
+                                //if(!empty($result)) echo $result['type']."<br>";
+                                if(!empty($result))
+                                {
+                                    $item = new Item2();
+                                    $id_new = $item->NewPrice($main_string, $price, $country, $ost);
+
+                                    if(!isset($_SESSION['new_price']) && $id_new != false)
+                                    {
+                                        $_SESSION['new_price'] = 'new';
+                                        //echo $_SESSION['new_price'];
+                                        $item->updateAll(array('new_price'=>'0'), 'type=:t', array(':t'=>$result['type']));
+                                    }
+
+                                    if($item->NewString($main_string, $country))
+                                    {
+                                        //echo 1;
+                                        $item->attributes=$result;
+                                        $item->main_string = $main_string;
+                                        $item->price = $price;
+                                        $item->pic = $pic;
+                                        $item->season = $season;
+                                        $item->shipi = $shipi;
+                                        $item->ost = $ost;
+                                        $item->type_item = $type_item;
+                                        $item->country = $country;
+                                        if($result['type'] == 'tire') $item->category = $item->ModelIdTire($result['model']);
+                                        elseif($result['type'] == 'disc') $item->category = $item->ModelIdDisc($result['model']);
+                                        elseif($result['type'] == 'other') $item->category = $item->ModelIdOther($result['model']);
+
+                                        if( $item->save() )
+                                        {
+                                            //echo $item->id."<br/>";
+                                            continue;
+                                        }
+                                        else echo "false<br/>";
+                                    }
+                                    elseif($id_new != false)
+                                    {
+                                        //echo $id_new."<br/>";
+                                        $item->updateByPk($id_new,
+                                                          array('price'=>$price, 'ost'=>$ost, 'new_price'=>'1', 'date_modify'=> new CDbExpression('NOW()')));
+                                    }
+                                    set_time_limit(0);
+                                }
+                                //print_r($result);
+                            }
+                            fclose($handle);
+                            Yii::app()->user->setFlash(
+                                'price',
+                                "Новый прайс загружен и обновлен! ".CHtml::link('Перейти в раздел.', array('item/'))
+                            );
+                        }
+                        unset($_SESSION['new_price']);
+
+                        //$this->redirect(array('index'));
+                    //}
+                }
+
+        //$file = Item::model()->find('pic != ""');
+        //Yii::app()->cache->flush();
+		//$this->render('index', array('model'=>$model, 'file'=>$file));
+	}
 
 }
