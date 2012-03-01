@@ -160,8 +160,17 @@ class UsersController extends Controller {
             $mas2 = array();
             foreach($page as $p_n){
                 //echo $p_n."<br/>";
-                if($p_n > 1) break;
+                //if($p_n > 3) break;
                 $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms='.$link_p.$p_n)->content;
+                file_put_contents(Yii::app()->getBasePath() . '/../pag/res'.$link_p.$p_n.'.txt',$result);
+                if($result == ''){
+		            while($result == '')
+		            {
+	   	                $result =  $obj->load('http://www.autoshinavrn.ru/viewpage.php?page_id=1&parms='.$link_p.$p_n)->content;
+		            }
+                }
+                //exit();
+                //file_put_contents('/home/m/mobil36rf/new/public_html/pag/res'.$link_p.$p_n.'.txt',$result);
                 $dom = new Zend_Dom_Query($result);
                 $results = $dom->query('//table.tbl-border/tr');
 
@@ -192,12 +201,13 @@ class UsersController extends Controller {
                            }
                            $k++;
                        }
+                       //sleep(2);
                     }
                     set_time_limit(0);
                     $i++;
                 }
                 $mas2 = array_merge($ar[$p_n], $mas2);
-                sleep(4);
+                sleep(2);
             }
 
             $new_str = "\"string\";\"country\";\"price\";\"type\";\"season\";\"shipi\";\"filepic\";\"type_item\";\"ostatok\";\r\n";
@@ -211,10 +221,10 @@ class UsersController extends Controller {
             elseif($link_p == '200000020') $name = 'disc';
             elseif($link_p == '400000020') $name = 'gruz';
 
-            file_put_contents('./resources/excel/'.date('Y.m.d').'_'.$name.'.csv', $new_str);
-            $this->upload_price(date('Y.m.d').'_'.$name.'.csv');
-        }
+            file_put_contents(Yii::app()->getBasePath() . '/../resources/excel/'.date('Y.m.d').'_'.$name.'.csv', $new_str);
 
+            //$this->upload_price(date('Y.m.d').'_'.$name.'.csv');
+        }
     }
 
     public function upload_price($file)
