@@ -600,8 +600,27 @@ class CsvParserInfo
 	}
 
 
+     //Диски 8.0J16 ET-15  D108.5 SLIK L79  (5x139.7) S2
+    public function parsedisc6($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET\-(\d+)\pZ+D(\d+\.\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'stupica' => $result[4],
+				'krepezh' => $result[6],
+				'model' => $result[5],
+				'w' => $result[1],
+                'color'=> $result[7],
+			);
+		}
+		return array();
+	}
+
         //Диски 6.0J15 ET52.5  D63.3 Евродиск FORD  (5x108) Black Focus 2
-        public function parsedisc6($string, $type)
+        public function parsedisc7($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+\.\d+)\pZ+D(\d+\.\d+)\pZ+(Евродиск\pZ+.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -620,7 +639,7 @@ class CsvParserInfo
 	}
 
         //Диски 5.5J13 ET45  D67 Евродиск HYUNDAI  (4x114.3) (52E45H)
-        public function parsedisc7($string, $type)
+        public function parsedisc8($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(Евродиск\pZ+.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -639,7 +658,7 @@ class CsvParserInfo
 	}
 
         //Диски 5.5J14 ET60  D65 KFZ FORD  (5x160) Tranzit арт.6250
-        public function parsedisc8($string, $type)
+        public function parsedisc9($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -659,7 +678,7 @@ class CsvParserInfo
 
         //Диски 8.0J18 ET40  D66.1 INFINITI 7  (5x114.3) HPB
 	//Диски 8.0J18 ET46  D72.6 BMW 70      (5x120)   S
-	public function parsedisc9($string, $type)
+	public function parsedisc10($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+\.\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -678,7 +697,7 @@ class CsvParserInfo
 	}
 
         //Диски 6.0J15 ET52.5  D64 KWM FORD  (5x108) Black
-        public function parsedisc10($string, $type)
+        public function parsedisc11($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+\.\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -696,7 +715,7 @@ class CsvParserInfo
 		return array();
 	}
 
-        public function parsedisc11($string, $type)
+        public function parsedisc12($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+\.\d+)\pZ+(.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
 		{
@@ -713,8 +732,82 @@ class CsvParserInfo
 		return array();
 	}
 
+    //Диски 8.0J16 ET-11  УАЗ  (5x139.7) Black Suzuki
+    public function parsedisc13($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+)\pZ+ET\-(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'krepezh' => $result[5],
+				'model' => $result[4],
+				'w' => $result[1],
+                'color'=> $result[6],
+			);
+		}
+		return array();
+	}
+
+    //Диски 10.0J15 ET-10  D58.6 КиК SPORT CAR  (4x98) Алмаз
+    public function parsedisc14($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+)\pZ+ET\pZ(\d+)\pZ+D(\d+\.\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'stupica' => $result[4],
+				'krepezh' => $result[6],
+				'model' => $result[5],
+				'w' => $result[1],
+                'color'=> $result[7],
+			);
+		}
+		return array();
+	}
+
+    //Диски 8.5x20 ET163  D281 LEMMERZ / ТЯГАЧ  (10x335) (208596/2700583)
+    public function parsedisc15($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'stupica' => $result[4],
+				'krepezh' => $result[6],
+				'model' => $result[5],
+				'w' => $result[1],
+                'color'=> $result[7],
+			);
+		}
+		return array();
+	}
+
+    //Диски 11.75x19.5 ET0 D221 LEMMERZ / ПРИЦЕП  (8x275)
+        public function parsedisc16($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+\.\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'stupica' => $result[4],
+				'krepezh' => $result[6],
+				'model' => $result[5],
+				'w' => $result[1],
+			);
+		}
+		return array();
+	}
+
         //Диски 5.5J14 ET49  Lanos Opel (4x100) Black
-        public function parsedisc12($string, $type)
+        public function parsedisc17($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -732,7 +825,7 @@ class CsvParserInfo
 	}
 
         //Диски 6.0J15 ET39  D54 Geely, Hyundai (4x100)
-        public function parsedisc13($string, $type)
+        public function parsedisc18($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
 		{
@@ -750,7 +843,7 @@ class CsvParserInfo
 	}
 
         //Диски 6.0J15 ET52.5  D63.3 Ford Focus  C-MAX (5x108)
-        public function parsedisc14($string, $type)
+        public function parsedisc19($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+\.\d+)\pZ+D(\d+\.\d+)\pZ+(.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
 		{
@@ -767,8 +860,26 @@ class CsvParserInfo
 		return array();
 	}
 
+    //Диски 8.0J18 ET40 OZ SARDEGNA (5x120)
+    //Диски 5.5J14 ET49  АЛЬФА  (4x100)
+    public function parsedisc25($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+(.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+                'vilet' => $result[3],
+                'krepezh' => $result[5],
+				'model' => $result[4],
+				'w' => $result[1],
+			);
+		}
+		return array();
+	}
+
         //Диски 8.0J18 ET45  D72 MAK MISTRAL  (5x108) Gun Met-Mirror Face (F8080MSQ45GG3)
-        public function parsedisc15($string, $type)
+        public function parsedisc20($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -786,8 +897,76 @@ class CsvParserInfo
 		return array();
 	}
 
+    //Диски 6.75x17.5 ET0 D161 LEMMERZ / ПРИЦЕП  (6x205) арт.2870063
+    public function parsedisc21($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+\.\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'vilet' => $result[3],
+				'stupica' => $result[4],
+				'krepezh' => $result[6],
+				'model' => $result[5],
+				'w' => $result[1],
+                'color'=> $result[7],
+			);
+		}
+		return array();
+	}
+        ////Диски 4.0J12  ET37  ОКА
+    
+        public function parsedisc22($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+                                'vilet' => $result[3],
+				'model' => $result[4],
+				'w' => $result[1],
+			);
+		}
+		return array();
+	}
+
+        //Диски 5.0J16  НИВА 2121
+    //Диски 5.0J13  MEFRO 06
+	public function parsedisc23($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+				'model' => $result[3],
+				'w' => $result[1],
+			);
+		}
+		return array();
+    }
+
+        //Диски 6.00X17.5 ET115  Валдай
+    //Диски 6.00X17.5 ET115  Валдай НИЖНИЙ
+        public function parsedisc24($string, $type)
+	{
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)X(\d+\.\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
+		{
+			return array(
+				'type' => $type,
+				'd' => $result[2],
+                                'vilet' => $result[3],
+				'model' => $result[4],
+				'w' => $result[1],
+			);
+		}
+		return array();
+	}    
+
         //Диски 4.0J12  ET45  Евродиск TICO  (4x114.3)
-        public function parsedisc16($string, $type)
+        public function parsedisc26($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+(Евродиск\pZ+.*)\pZ+\((.*?)\)$!isUu', $string, $result) )
 		{
@@ -803,70 +982,24 @@ class CsvParserInfo
 		return array();
 	}
 
-        ////Диски 4.0J12  ET37  ОКА
-        public function parsedisc17($string, $type)
+    //Диски 6.0J15 ET52.5  D63.3 MEFRO FORD FOCUS
+    public function parsedisc27($string, $type)
 	{
-		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
+		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+)\pZ+ET(\d+\.\d+)\pZ+D(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
 			return array(
 				'type' => $type,
 				'd' => $result[2],
-                                'vilet' => $result[3],
-				'model' => $result[4],
-				'w' => $result[1],
-			);
-		}
-		return array();
-	}
-
-        //Диски 5.0J16  НИВА 2121
-	public function parsedisc18($string, $type)
-	{
-		if(preg_match('!^Диски\pZ+(\d+\.\d+)J(\d+)\pZ+(.*)$!isUu', $string, $result) )
-		{
-			return array(
-				'type' => $type,
-				'd' => $result[2],
-				'model' => $result[3],
-				'w' => $result[1],
-			);
-		}
-		return array();
-	}
-
-    //Диски 6.75x17.5 ET0 D161 LEMMERZ / ПРИЦЕП  (6x205) арт.2870063
-    public function parsedisc19($string, $type)
-	{
-		if(preg_match('!^Диски\pZ+(\d+\.\d+)\pL+(\d+\.\d+)\pZ+ET(\d+)\pZ+D(\d+)\pZ+(.*)\pZ+\((.*?)\)\pZ+(.*)$!isUu', $string, $result) )
-		{
-			return array(
-				'type' => $type,
-				'd' => $result[2],
-                                'vilet' => $result[3],
-				'model' => $result[4],
-				'w' => $result[1],
-			);
-		}
-		return array();
-	}
-
-        //Диски 6.00X17.5 ET115  Валдай
-        public function parsedisc20($string, $type)
-	{
-		if(preg_match('!^Диски\pZ+(\d+\.\d+)X(\d+\.\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
-		{
-			return array(
-				'type' => $type,
-				'd' => $result[2],
-                                'vilet' => $result[3],
-				'model' => $result[4],
+                'vilet' => $result[3],
+                'stupica' => $result[4],
+				'model' => $result[5],
 				'w' => $result[1],
 			);
 		}
 		return array();
 	}
         //Диски 4.50ЕX16  ТР-Р Т-25А ПЕРЕДН.
-        public function parsedisc21($string, $type)
+        public function parsedisc28($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)EX(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -880,7 +1013,7 @@ class CsvParserInfo
 		return array();
 	}
         //Диски 5.5FX20 ET0 СЕЯЛКА
-        public function parsedisc23($string, $type)
+        public function parsedisc29($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)FX(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -896,7 +1029,7 @@ class CsvParserInfo
 	}
 
         //Диски 6.00F-16 ET0 ТРАКТОР
-        public function parsedisc24($string, $type)
+        public function parsedisc30($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+(\d+\.\d+)F-(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -912,7 +1045,7 @@ class CsvParserInfo
 	}
 
         //Диски W7X20 ET75  ТРАКТОР
-        public function parsedisc25($string, $type)
+        public function parsedisc31($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+W(\d+)X(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -928,7 +1061,7 @@ class CsvParserInfo
 	}
         
         //Диски DW11X38 ET0 ТРАКТОР
-        public function parsedisc26($string, $type)
+        public function parsedisc32($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+DW(\d+)X(\d+)\pZ+ET(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -944,7 +1077,7 @@ class CsvParserInfo
         }
 
         //Диски DW9X20 ET121.5  D145 ТРАКТОР ХТЗ-5020
-        public function parsedisc27($string, $type)
+        public function parsedisc33($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+DW(\d+)X(\d+)\pZ+ET(\d+\.\d+)\pZ+D(\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{
@@ -961,7 +1094,7 @@ class CsvParserInfo
 	}
 
         //Диски W8X32 ET116.4  ТР-Р Т-25А (ЗАДН)
-        public function parsedisc28($string, $type)
+        public function parsedisc34($string, $type)
 	{
 		if(preg_match('!^Диски\pZ+W(\d+)X(\d+)\pZ+ET(\d+\.\d+)\pZ+(.*)$!isUu', $string, $result) )
 		{

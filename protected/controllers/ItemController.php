@@ -96,7 +96,7 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
             if($item->save())
             {
                 if(!empty($_FILES ['Item'] ['tmp_name'] ['pictures'])){
-                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/..'.'/resources/upload/' . $_FILES ['Item'] ['name'] ['pictures']);
+                    $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->save(Yii::app()->getBasePath() . '/resources/upload/' . $_FILES ['Item'] ['name'] ['pictures']);
                     $imageHandler->load ( $_FILES ['Item'] ['tmp_name'] ['pictures'] )->thumb(Yii::app()->params['imgThumbWidth'],Yii::app()->params['imgThumbHeight'])->save(Yii::app()->getBasePath() . '/..'.'/resources/images/' .$_FILES ['Item'] ['name'] ['pictures']."_small.jpg");
                 }
 
