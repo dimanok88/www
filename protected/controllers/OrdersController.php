@@ -61,6 +61,21 @@ class OrdersController extends Controller
 	}
 
 	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+		$model=new Orders('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Orders']))
+			$model->attributes=$_GET['Orders'];
+
+		$this->render('admin',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
@@ -99,5 +114,22 @@ class OrdersController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+    public function actionAddCart()
+	{
+		//if(isset($_POST))
+		//{
+			$model = new Item();
+   			$item = $model->findByPk($_POST['add']);
+   			Yii::app()->shoppingCart->put($item, $_POST['count']);
+		//}
+		$positions = Yii::app()->shoppingCart->getPositions();
+		$this->renderPartial('_cart', array('positions'=>$positions));
+	}
+	public function actionRemoveCart()
+	{
+    	 Yii::app()->shoppingCart->clear();
+    	 $this->renderPartial('_cart');
 	}
 }

@@ -271,19 +271,41 @@ code {
 
 <p>Provides shpping cart functionality for models.</p>
 
+<p>Cart is a container object that holds items collection and have handy methods to work with it.</p>
+
+<p>It uses user session as a cart data storage.</p>
+
 <h2>Installing and configuring</h2>
+
+<h3>1 way: Registration in the config file</h3>
 
 <p>Add to <code>protected/config/main.php</code>:</p>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">import</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-    <span class="php-hl-comment">//</span><span class="php-hl-comment">…</span>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">import</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
     <span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.*</span><span class="php-hl-quotes">'</span>
-<span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
+<span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+</span><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+  <span class="php-hl-quotes">'</span><span class="php-hl-string">shoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+    </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+    </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+</span><span class="php-hl-brackets">)</span></pre></div></div>
 
-<h2>Preparing model</h2>
+<h3>2 way: Registration by necessity</h3>
 
-<p>Models that can be put into shopping cart should implement <code>IECartPosition</code>
-interface:</p>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cart</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">createComponent</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment">Important!</span>
+<span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">init</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h2>Preparing a model</h2>
+
+<p>Models that you are planning to put into the cart should implement <code>IECartPosition</code> interface:</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">Book</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">CActiveRecord</span> <span class="php-hl-reserved">implements</span> <span class="php-hl-identifier">IECartPosition</span> <span class="php-hl-brackets">{</span>
     <span class="php-hl-reserved">public</span> <span class="php-hl-reserved">static</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$className</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">__CLASS__</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
@@ -299,21 +321,208 @@ interface:</p>
     </span><span class="php-hl-brackets">}</span>
 <span class="php-hl-brackets">}</span></pre></div></div>
 
-<p><code>EShoppingCart</code> implements <a href="http://www.yiiframework.com/doc/api/CMap">CMap</a>,
-so we can work with it as map:</p>
+<h2>API</h2>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cart</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">EShoppingCart</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-var">$cart</span><span class="php-hl-brackets">[</span><span class="php-hl-brackets">]</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-var">$cart</span><span class="php-hl-brackets">[</span><span class="php-hl-brackets">]</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
- 
-</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cart</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">{</span>
-  <span class="php-hl-comment">//</span><span class="php-hl-comment"> …</span>
+<h3>EShoppingCart::put($position, $quantity)</h3>
+
+<p>Adds $quantity items to the cart.
+If item is already in the cart, item data is being updated and item quantity is summed with $quantity.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">1 item with id=1, quantity=1.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">1 item with id=1, quantity=3.</span>
+<span class="php-hl-var">$book2</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2 items with id=1 and id=2.</span></pre></div></div>
+
+<h3>EShoppingCart::update($position, $quantity)</h3>
+
+<p>Updates cart item.
+If item is already in the cart, item data is being updated and item quantity is set to $quantity.
+If there is no such item yet it will be added.
+If $quantity&lt;1 then item will be deleted.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">1 item with id=1, quantity=1.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">update</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">1 item with id=1, quantity=2.</span></pre></div></div>
+
+<h3>EShoppingCart::remove($key)</h3>
+
+<p>Removes item from the cart.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">1 item with id=1, quantity=2.</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">remove</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getId</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">no items</span></pre></div></div>
+
+<h3>EShoppingCart::clear()</h3>
+
+<p>Clears all cart items.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">clear</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::itemAt($key)</h3>
+
+<p>Returns item at key $key.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">itemAt</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::contains($key)</h3>
+
+<p>Tells if cart contains item with id=$key.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">itemAt</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::isEmpty()</h3>
+
+<p>Tells if cart is empty.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isEmpty</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<h3>EShoppingCart::getCount()</h3>
+
+<p>Returns positions count.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span></pre></div></div>
+
+<h3>EShoppingCart::getItemsCount()</h3>
+
+<p>Returns items count.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getItemsCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">5</span></pre></div></div>
+
+<h3>EShoppingCart::getCost($withDiscount)</h3>
+
+<p>Returns cart total.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price=100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price=200</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getCost</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">400</span></pre></div></div>
+
+<h3>EShoppingCart::getPositions()</h3>
+
+<p>Returns an array with all positions.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span><span class="php-hl-code">
+...
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h3>IECartPosition::getPrice()</h3>
+
+<p>Returns a price for a single item for this position.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-brackets">}</span></pre></div></div>
+
+<h3>IECartPosition::getSumPrice($withDiscount)</h3>
+
+<p>Returns position price = single item price*items count</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price = 100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">putting 2 items</span>
+<span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getSumPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">200 (2*100)</span>
 <span class="php-hl-brackets">}</span></pre></div></div>
 
-<p>This document is not complete, see API.</p>
+<h3>IECartPosition::getQuantity()</h3>
+
+<p>Returns position items quantity</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">price = 100</span>
+<span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">putting 2 items</span>
+<span class="php-hl-var">$positions</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPositions</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$positions</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+<span class="php-hl-var">$price</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getQuantity</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<h2>Discounts</h2>
+
+<p>There is a single discount system built in. It allows to apply a set of rules that
+will change cart total or a single position price.</p>
+
+<p>Discount is a class that implements IEDiscount and defines apply() method that describes
+how exactly discount is applied.</p>
+
+<p>Discount is calculated by applying Position::addDiscountPrice/Position::setDiscountPrice position's
+method or EShoppingCart::addDiscountPrice/EShoppingCart::setDiscountPrice cart-wide method.
+This methods are getting one parameter that holds a value of cart total reduction or individual position reduction.</p>
+
+<p>Discount class example:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-reserved">class</span> <span class="php-hl-identifier">TestDiscount</span> <span class="php-hl-reserved">extends</span> <span class="php-hl-identifier">IEDiscount</span> <span class="php-hl-brackets">{</span>
+    <span class="php-hl-comment">/*</span><span class="php-hl-comment">*
+     * % discount
+     </span><span class="php-hl-comment">*/</span>
+    <span class="php-hl-reserved">public</span> <span class="php-hl-var">$rate</span><span class="php-hl-code"> = </span><span class="php-hl-number">30</span><span class="php-hl-code">;
+ 
+    </span><span class="php-hl-reserved">public</span> <span class="php-hl-reserved">function</span> <span class="php-hl-identifier">apply</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+        <span class="php-hl-reserved">foreach</span> <span class="php-hl-brackets">(</span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+            <span class="php-hl-var">$quantity</span><span class="php-hl-code"> = </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getQuantity</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+            </span><span class="php-hl-reserved">if</span> <span class="php-hl-brackets">(</span><span class="php-hl-var">$quantity</span><span class="php-hl-code"> &gt; </span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span> <span class="php-hl-brackets">{</span>
+                <span class="php-hl-var">$discountPrice</span><span class="php-hl-code"> = </span><span class="php-hl-var">$this</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">rate</span><span class="php-hl-code"> * </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code"> / </span><span class="php-hl-number">100</span><span class="php-hl-code">;
+                </span><span class="php-hl-var">$position</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">addDiscountPrice</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$discountPrice</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+            </span><span class="php-hl-brackets">}</span>
+        <span class="php-hl-brackets">}</span>
+    <span class="php-hl-brackets">}</span>
+<span class="php-hl-brackets">}</span></pre></div></div>
+
+<p>This example dicount works like this:
+if there is more than one item for a single position, there will be $rate % discount for
+one item and it will be applied to position price.</p>
+
+<p>You can apply unlimited discount rules that will be called one by one:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">shoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+        </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+            <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+            </span><span class="php-hl-quotes">'</span><span class="php-hl-string">discounts</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
+            </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                <span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+                    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.discounts.TestDiscount</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+                    </span><span class="php-hl-quotes">'</span><span class="php-hl-string">rate</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-number">40</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+                </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">otherDiscount</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+            </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+        </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,</span></pre></div></div>
+
+<h2>Events</h2>
+
+<p>There are 2 events in ShoppingCart implemented in a standard Yii way:</p>
+
+<p>1) onUpdatePosition - is triggered when position is added or updated.</p>
+
+<p>2) onRemovePosition - is triggered when position is deleted.</p>
+
+<p>Usage:</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cN</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CallCenterNotifier</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attachEventHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">onUpdatePosition</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cN</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">updatePositionInShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
+
+<p>When onUpdatePosition event is fired, call center will be notified.</p>
+
+<h2>Working with a cart as CMap</h2>
+
+<p>ShoppingCart is a child of CMap so you can work with the cart as an array.</p>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-brackets">[</span><span class="php-hl-brackets">]</span><span class="php-hl-code"> = </span><span class="php-hl-var">$book</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">adding new position.</span>
+ 
+<span class="php-hl-comment">//</span><span class="php-hl-comment">iterating over all positions</span>
+<span class="php-hl-reserved">foreach</span><span class="php-hl-brackets">(</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span> <span class="php-hl-reserved">as</span> <span class="php-hl-var">$position</span><span class="php-hl-brackets">)</span>
+<span class="php-hl-brackets">{</span><span class="php-hl-code">
+...
+</span><span class="php-hl-brackets">}</span></pre></div></div>
         <hr />
-        <p style="text-align: right;">© 2009 — 2010, <a href="http://code.google.com/p/yiiext/">yiiext team</a>.</p>        
+        <p style="text-align: right;">© 2009 — 2011, <a href="http://code.google.com/p/yiiext/">yiiext team</a>.</p>        
     </div>
 </body>
 </html>

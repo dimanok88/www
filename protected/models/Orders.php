@@ -63,12 +63,12 @@ class Orders extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'id_item' => 'Id Item',
-			'id_user' => 'Id User',
-			'id_moderator' => 'Id Moderator',
-			'date_add' => 'Date Add',
-			'count' => 'Count',
+			'id' => 'Номер',
+			'id_item' => 'Предмет покупки',
+			'id_user' => 'Пользователь',
+			'id_moderator' => 'Менеджер',
+			'date_add' => 'Дата покупки',
+			'count' => 'Количестко',
 		);
 	}
 

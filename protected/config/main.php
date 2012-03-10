@@ -39,7 +39,7 @@ return array(
 
         'clienscript'=>array(
           'scriptMap'=>array(
-                //'jquery.js'=>'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js',
+                'jquery.js'=>'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js',
           )
         ),
 
@@ -86,7 +86,7 @@ return array(
 				),
                 array(
                     'class' => 'CWebLogRoute',
-                    'showInFireBug' => true, // firefox & chrome
+                    //'showInFireBug' => true, // firefox & chrome
                 ), 
 			),
 		),

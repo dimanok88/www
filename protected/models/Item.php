@@ -83,6 +83,9 @@ class Item extends CActiveRecord implements IECartPosition
 		);
 	}
 
+    function getPrice(){
+        return $this->price;
+    }
 	/**
 	 * @return array relational rules.
 	 */
@@ -186,7 +189,7 @@ class Item extends CActiveRecord implements IECartPosition
             return 'item' . $this->id;
         }
 
-        public function getPrice()
+        public function getPriceOut()
         {
             if( $this->price == 0 )
             {

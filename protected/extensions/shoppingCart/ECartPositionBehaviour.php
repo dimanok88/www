@@ -4,15 +4,15 @@
  * position in the cart
  *
  * @author pirrat <mrakobesov@gmail.com>
- * @version 0.7
+ * @version 0.9
  * @package ShoppingCart
  *
- * Can be used with not AR models.
+ * Can be used with non-AR models.
  */
 class ECartPositionBehaviour extends CActiveRecordBehavior {
 
     /**
-     * number of positions
+     * Positions number
      * @var int
      */
     private $quantity = 0;
@@ -23,15 +23,10 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
     private $refresh = true;
 
     /**
-     * Сумма скидки на позицию
+     * Position discount sum
      * @var float
      */
     private $discountPrice = 0.0;
-
-
-    public function init() {
-
-    }
 
     /**
      * Returns total price for all units of the position
@@ -40,9 +35,9 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
      *
      */
     public function getSumPrice($withDiscount = true) {
-        $fullSum = $this->owner->getPrice() * $this->quantity;
+        $fullSum = $this->getOwner()->getPrice() * $this->quantity;
         if($withDiscount)
-            $fullSum -=  $this->getDiscountPrice();
+            $fullSum -=  $this->discountPrice;
         return $fullSum;
     }
 
@@ -64,16 +59,16 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
     }
 
     /**
-     * Magic method, call on restore from session
-     * Refresh data to model
+     * Magic method. Called on session restore.
      */
     public function __wakeup() {
         if ($this->refresh === true)
-            $this->owner->refresh();
+            $this->getOwner()->refresh();
     }
 
     /**
-     *
+     * If we need to refresh model on restoring session.
+     * Default is true.
      * @param boolean $refresh
      */
     public function setRefresh($refresh) {
@@ -81,16 +76,20 @@ class ECartPositionBehaviour extends CActiveRecordBehavior {
     }
 
     /**
-     * Установить сумму скидки на позицию
-     * @param  $price
+     * Add $price to position discount sum
+     * @param float $price
      * @return void
      */
     public function addDiscountPrice($price) {
+        $this->discountPrice += $price;
+    }
+
+    /**
+     * Set position discount sum
+     * @param float $price
+     * @return void
+     */
+    public function setDiscountPrice($price) {
         $this->discountPrice = $price;
     }
-
-    public function getDiscountPrice() {
-        return $this->discountPrice;
-    }
-
 }

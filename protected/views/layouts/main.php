@@ -34,6 +34,9 @@ $cs->scriptMap=array(
 
 <div class="container" id="page">
 
+    <div id="cart">
+		<? $this->renderPartial('/orders/_cart'); ?>
+    </div>
 	<div id="header">
 		<div id="logo">Панель управления сайтом</div>
 	</div>
@@ -79,6 +82,7 @@ $cs->scriptMap=array(
                         ),
                     ),
                     array('label'=>'Пользователи', 'url'=>array('users/listUsers'), 'visible'=>!Yii::app()->user->isGuest),
+                    array('label'=>'Заказы', 'url'=>array('orders/'), 'visible'=>!Yii::app()->user->isGuest),
                     array('label'=>'Выйти', 'url'=>array('users/logout'), 'visible'=>!Yii::app()->user->isGuest),
                     array('label'=>'Войти', 'url'=>array('users/login'), 'visible'=>Yii::app()->user->isGuest),
                 ),

@@ -3,7 +3,7 @@
  * Shopping cart class
  *
  * @author pirrat <mrakobesov@gmail.com>
- * @version 0.7
+ * @version 0.9
  * @package ShoppingCart
  */
 
@@ -16,14 +16,16 @@ class EShoppingCart extends CMap {
     public $refresh = true;
 
     public $discounts = array();
+	
+	public $cartId = __CLASS__;
+
     /**
-     * Сумма скидки на всю корзину
+     * Cart-wide discount sum
      * @var float
      */
     protected $discountPrice = 0.0;
 
-    public function init() {
-
+    public function init(){
         $this->restoreFromSession();
     }
 
@@ -31,7 +33,7 @@ class EShoppingCart extends CMap {
      * Restores the shopping cart from the session
      */
     public function restoreFromSession() {
-        $data = Yii::app()->getUser()->getState(__CLASS__);
+        $data = unserialize(Yii::app()->getUser()->getState($this->cartId));
         if (is_array($data) || $data instanceof Traversable)
             foreach ($data as $key => $product)
                 parent::add($key, $product);
@@ -41,7 +43,7 @@ class EShoppingCart extends CMap {
     /**
      * Add item to the shopping cart
      * If the position was previously added to the cart,
-     * then information of it is updated, and count increases by $quantity
+     * then information about it is updated, and count increases by $quantity
      * @param IECartPosition $position
      * @param int count of elements positions
      */
@@ -59,6 +61,8 @@ class EShoppingCart extends CMap {
 
 
     /**
+     * Add $value items to position with $key specified
+     * @return void
      * @param mixed $key
      * @param mixed $value
      */
@@ -80,9 +84,9 @@ class EShoppingCart extends CMap {
 
     /**
      * Updates the position in the shopping cart
-     * If the position was previously added, then it will be updated in shopping cart,
-     * if the position was not previously in the cart, it will be added there.
-     * If the count of less than 1, the position will be deleted.
+     * If position was previously added, then it will be updated in shopping cart,
+     * if position was not previously in the cart, it will be added there.
+     * If count is less than 1, the position will be deleted.
      *
      * @param IECartPosition $position
      * @param int $quantity
@@ -92,7 +96,8 @@ class EShoppingCart extends CMap {
             throw new InvalidArgumentException('invalid argument 1, product must implement CComponent interface');
 
         $key = $position->getId();
-
+		
+		$position->detachBehavior("CartPosition");
         $position->attachBehavior("CartPosition", new ECartPositionBehaviour());
         $position->setRefresh($this->refresh);
 
@@ -104,7 +109,7 @@ class EShoppingCart extends CMap {
             parent::add($key, $position);
 
         $this->applyDiscounts();
-        $this->onUpdatePoistion(new CEvent($this));
+        $this->onUpdatePosition(new CEvent($this));
         $this->saveState();
     }
 
@@ -113,7 +118,7 @@ class EShoppingCart extends CMap {
      * @return void
      */
     protected function saveState() {
-        Yii::app()->getUser()->setState(__CLASS__, $this->toArray());
+        Yii::app()->getUser()->setState($this->cartId, serialize($this->toArray()));
     }
 
     /**
@@ -144,23 +149,31 @@ class EShoppingCart extends CMap {
         }
 
         if($withDiscount)
-        {
             $price -= $this->discountPrice;
-        }
 
         return $price;
     }
 
+    /**
+     * onRemovePosition event
+     * @param  $event
+     * @return void
+     */
     public function onRemovePosition($event) {
         $this->raiseEvent('onRemovePosition', $event);
     }
 
-    public function onUpdatePoistion($event) {
-        $this->raiseEvent('onUpdatePoistion', $event);
+    /**
+     * onUpdatePoistion event
+     * @param  $event
+     * @return void
+     */
+    public function onUpdatePosition($event) {
+        $this->raiseEvent('onUpdatePosition', $event);
     }
 
     /**
-     * apply discounts for all positions
+     * Apply discounts to all positions
      * @return void
      */
     protected function applyDiscounts() {
@@ -172,6 +185,22 @@ class EShoppingCart extends CMap {
         }
     }
 
+    /**
+     * Set cart-wide discount sum
+     *
+     * @param float $price
+     * @return void
+     */
+    public function setDiscountPrice($price){
+        $this->discountPrice = $price;
+    }
+
+    /**
+     * Add $price to cart-wide discount sum
+     *
+     * @param float $price
+     * @return void
+     */
     public function addDiscountPrice($price){
         $this->discountPrice += $price;
     }
@@ -186,6 +215,7 @@ class EShoppingCart extends CMap {
     }
 
     /**
+     * Returns if cart is empty
      * @return bool
      */
     public function isEmpty()

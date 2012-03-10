@@ -277,14 +277,31 @@ code {
 
 <h2>Установка и настройка</h2>
 
+<h3>1 вариант: Подключение через конфиг</h3>
+
 <p>В <code>protected/config/main.php</code> добавить:</p>
 
-<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-quotes">'</span><span class="php-hl-string">import</span><span class="php-hl-quotes">'</span><span class="php-hl-code">=&gt;</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.*</span><span class="php-hl-quotes">'</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-code">,
+ 
+</span><span class="php-hl-quotes">'</span><span class="php-hl-string">components</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
   <span class="php-hl-quotes">'</span><span class="php-hl-string">shoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt;
     </span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
-        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
+        <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,
     </span><span class="php-hl-brackets">)</span><span class="php-hl-code">,
 </span><span class="php-hl-brackets">)</span></pre></div></div>
+
+<h3>2 вариант: Подключение по необходимости</h3>
+
+<div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cart</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">createComponent</span><span class="php-hl-brackets">(</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span>
+    <span class="php-hl-quotes">'</span><span class="php-hl-string">class</span><span class="php-hl-quotes">'</span><span class="php-hl-code"> =&gt; </span><span class="php-hl-quotes">'</span><span class="php-hl-string">ext.yiiext.components.shoppingCart.EShoppingCart</span><span class="php-hl-quotes">'</span>
+<span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-comment">//</span><span class="php-hl-comment">Важно</span>
+<span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">init</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+ 
+</span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-var">$cart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
 <h2>Подготавливаем модель</h2>
 
@@ -361,13 +378,13 @@ code {
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$position</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">isEmpty</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
-<h3>EShoppingCart::getСount()</h3>
+<h3>EShoppingCart::getCount()</h3>
 
 <p>Возвращает количество позиций</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-code">,</span><span class="php-hl-number">2</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
 </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book2</span><span class="php-hl-code">,</span><span class="php-hl-number">3</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">get</span><span class="php-hl-code">С</span><span class="php-hl-identifier">ount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span></pre></div></div>
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">getCount</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">2</span></pre></div></div>
 
 <h3>EShoppingCart::getItemsCount()</h3>
 
@@ -435,7 +452,8 @@ code {
 
 <p>В методе apply должен быть описан механизм применения скидки.</p>
 
-<p>Применяется она путем вызова метода addDiscountPrice либо у позиции, либо у корзины( EShoppingCart::addDiscountPrice и Position::addDiscountPrice).
+<p>Применяется она путем вызова метода Position::addDiscountPrice/Position::setDiscountPrice у позиции,
+либо EShoppingCart::addDiscountPrice/EShoppingCart::setDiscountPrice у корзины.
 В метод передается значение на которое будет уменьшена стоимость(всей корзины или отдельной позиции соответственно).</p>
 
 <p>Пример класса скидки:</p>
@@ -488,16 +506,16 @@ code {
 <p>Пример использования:</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$cN</span><span class="php-hl-code"> = </span><span class="php-hl-reserved">new</span> <span class="php-hl-identifier">CallCenterNotifier</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
-</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attachEventHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">onUpdatePoistion</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cN</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">updatePositionInShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
+</span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">attachEventHandler</span><span class="php-hl-brackets">(</span><span class="php-hl-quotes">'</span><span class="php-hl-string">onUpdatePosition</span><span class="php-hl-quotes">'</span><span class="php-hl-code">,</span><span class="php-hl-reserved">array</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$cN</span><span class="php-hl-code">, </span><span class="php-hl-quotes">'</span><span class="php-hl-string">updatePositionInShoppingCart</span><span class="php-hl-quotes">'</span><span class="php-hl-brackets">)</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
  
 </span><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
 </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">put</span><span class="php-hl-brackets">(</span><span class="php-hl-var">$book</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;</span></pre></div></div>
 
-<p>При срабатывание события onUpdatePoistion, об этом будет оповещен call center.</p>
+<p>При срабатывание события onUpdatePosition, об этом будет оповещен call center.</p>
 
-<h2>Сmap - работаем с корзиной, как с массивом.</h2>
+<h2>CMap - работаем с корзиной, как с массивом.</h2>
 
-<p>Класс ShoppingCart наследует Сmap, это позволяет работать с корзиной как с массивом.</p>
+<p>Класс ShoppingCart наследует CMap, это позволяет работать с корзиной как с массивом.</p>
 
 <div class="hl-code"><div class="php-hl-main"><pre><span class="php-hl-var">$book</span><span class="php-hl-code"> = </span><span class="php-hl-identifier">Book</span><span class="php-hl-code">::</span><span class="php-hl-identifier">model</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">findByPk</span><span class="php-hl-brackets">(</span><span class="php-hl-number">1</span><span class="php-hl-brackets">)</span><span class="php-hl-code">;
 </span><span class="php-hl-identifier">Yii</span><span class="php-hl-code">::</span><span class="php-hl-identifier">app</span><span class="php-hl-brackets">(</span><span class="php-hl-brackets">)</span><span class="php-hl-code">-&gt;</span><span class="php-hl-identifier">shoppingCart</span><span class="php-hl-brackets">[</span><span class="php-hl-brackets">]</span><span class="php-hl-code"> = </span><span class="php-hl-var">$book</span><span class="php-hl-code">; </span><span class="php-hl-comment">//</span><span class="php-hl-comment">добавляем в корзину позицию.</span>
@@ -508,7 +526,7 @@ code {
 ...
 </span><span class="php-hl-brackets">}</span></pre></div></div>
         <hr />
-        <p style="text-align: right;">© 2009 — 2010, <a href="http://code.google.com/p/yiiext/">yiiext team</a>.</p>        
+        <p style="text-align: right;">© 2009 — 2011, <a href="http://code.google.com/p/yiiext/">yiiext team</a>.</p>        
     </div>
 </body>
 </html>

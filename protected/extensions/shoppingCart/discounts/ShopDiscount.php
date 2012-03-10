@@ -6,7 +6,7 @@ class ShopDiscount extends IEDiscount
     {
         $userDiscount = 0;
 
-        $user = Users::model()->findByPk(Yii::app()->user->id);
+        /*$user = Users::model()->findByPk(Yii::app()->user->id);
         if( !is_null($user) )
         {
             $userDiscount = $user->discount;
@@ -19,7 +19,7 @@ class ShopDiscount extends IEDiscount
                 $discountPrice = $userDiscount * $position->getPrice() / 100 * $position->getQuantity();
                 $position->addDiscountPrice($discountPrice);
             }
-        }
+        }*/
     }
 }
 

@@ -32,4 +32,7 @@
 .next_filter fieldset { border: 1px dashed #000000; padding: 5px;  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;}
 .next_filter fieldset legend { font-weight: bold; margin: 0 2px;}
 
-ul.yiiPager .first, ul.yiiPager .last { display: inline !important;;}
+ul.yiiPager .first, ul.yiiPager .last { display: inline !important;}
+
+.loading { background: url("../images/ajax-loader.gif") no-repeat; width:32px; height: 32px;}
+.success { background: url("../images/success.png") no-repeat; width:32px; height: 32px;}
