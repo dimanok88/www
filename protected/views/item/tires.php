@@ -99,32 +99,7 @@ $this->breadcrumbs = array(
             //'name'=>'',
             'type'=>'raw',
             'htmlOptions' => array('style' => 'text-align:center;'),
-            'value'=>'
-            CHtml::imageButton(
-        	"/images/cart.jpg",
-	        array(
-                "onClick"=>CHtml::ajax(array
-                (
-                        "url"=>array("orders/addCart"),
-                        "data"=>array("type"=>"tire", "add"=>$data->id, "count"=>"js:$(\"#tire".$data->id."\").val()"),
-                        "update"=>"#cart",
-                        "type"=>"POST",
-		                "beforeSend" => "js:function(){
-		                    $(\"#message".$data->id."\").addClass(\"loading\");
-
-		                }",
-		                "success"=>"js:function(html){
-		                 	setTimeout(\'$(\"#message".$data->id."\").removeClass(\"loading\")\', 1000);
-		                 	$(\"#message".$data->id."\").addClass(\"success\");
-		                 	$(\"#cart\").html(html); return false;
-		                 }
-		                ",
-		                "complete" => "js:function(){
-                        	setTimeout(\'$(\"#message".$data->id."\").removeClass(\"success\")\', 1000); return false;
-		           		}",
-                )),
-                "style"=>"cursor:pointer;"
-        ));'
+            'value'=>'Orders::model()->AddCartBut($data->id, "tire")'
 	),
         
 		array(

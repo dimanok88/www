@@ -11,3 +11,6 @@
 <? else:?>
 	<div>В корзине пусто!</div>
 <?endif;?>
+<br/>
+    <?= CHtml::link('В корзину', array('orders/cart'));?>
+

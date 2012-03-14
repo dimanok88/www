@@ -34,9 +34,16 @@ $cs->scriptMap=array(
 
 <div class="container" id="page">
 
-    <div id="cart">
-		<? $this->renderPartial('/orders/_cart'); ?>
-    </div>
+    <?
+    if(Yii::app()->user->checkAccess('moderator') || Yii::app()->user->checkAccess('admin')){
+        if(Yii::app()->controller->id != 'orders'):?>
+            <div id="cart">
+		        <? $this->renderPartial('/orders/_cart'); ?>
+        </div>
+        <? endif;
+    }
+    ?>
+
 	<div id="header">
 		<div id="logo">Панель управления сайтом</div>
 	</div>

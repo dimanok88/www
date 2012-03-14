@@ -84,10 +84,10 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
-                array(
+                /*array(
                     'class' => 'CWebLogRoute',
-                    //'showInFireBug' => true, // firefox & chrome
-                ), 
+                    'showInFireBug' => true, // firefox & chrome
+                ),*/
 			),
 		),
 

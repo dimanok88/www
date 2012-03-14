@@ -94,4 +94,34 @@ class Orders extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+
+    public function AddCartBut($id, $type)
+    {
+        $but = CHtml::ajaxLink(
+        	CHtml::image('/images/cart.jpg'), array("orders/addCart"),
+                array
+                (
+                        "url"=>array("orders/addCart"),
+                        "data"=>array("type"=>$type, "add"=>$id, "count"=>"js:$('#".$type.$id."').val()"),
+                        "update"=>"#cart",
+                        "type"=>"POST",
+		                "beforeSend" => "js:function(){
+		                    $('#message".$id."').addClass('loading');
+
+		                }",
+		                "success"=>"js:function(html){
+		                 	setTimeout('$(\'#message".$id."\').removeClass(\'loading\')', 1000);
+		                 	$('#message".$id."').addClass('success');
+		                 	$('#cart').html(html); return false;
+		                 }
+		                ",
+		                "complete" => "js:function(){
+                        	setTimeout('$(\'#message".$id."\').removeClass(\'success\')', 1000); return false;
+		           		}",
+                )
+        );
+
+        return $but;
+    }
 }

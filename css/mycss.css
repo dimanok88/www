@@ -26,6 +26,7 @@
 .items { max-width: 1000px !important; width: 900px !important;}
 .items tbody { overflow-x: hidden; overflow-y: auto; height: 600px;}
 #type-item-grid .items tbody { overflow: hidden; height: auto !important; }
+#orders-grid .items tbody { overflow: hidden; height: auto !important; }
 #users .items tbody { overflow: hidden; height: auto !important; }
 
 .select{ background: none repeat scroll 0 0 #ccccff !important; }
@@ -35,4 +36,6 @@
 ul.yiiPager .first, ul.yiiPager .last { display: inline !important;}
 
 .loading { background: url("../images/ajax-loader.gif") no-repeat; width:32px; height: 32px;}
-.success { background: url("../images/success.png") no-repeat; width:32px; height: 32px;}
+.items .success { background: url("../images/success.png") no-repeat; width:32px; height: 32px;}
+
+#cart {border: 1px solid #000000; padding: 10px 20px;  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position: absolute; right: 250px; background: #ccffcc; box-shadow: 7px 7px 3px #888;}

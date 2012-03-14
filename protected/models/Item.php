@@ -191,11 +191,21 @@ class Item extends CActiveRecord implements IECartPosition
 
         public function getPriceOut()
         {
-            if( $this->price == 0 )
+            if( (int)$this->price == 0 )
             {
                 return 'Звоните';
             }
             return number_format($this->price, 2, ",", " ");
+            //return $this->price;
+        }
+
+        public function getPriceOther($price)
+        {
+            if( (int)$price == 0 )
+            {
+                return 'Звоните';
+            }
+            return number_format($price, 2, ",", " ");
             //return $this->price;
         }
 

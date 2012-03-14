@@ -132,4 +132,44 @@ class OrdersController extends Controller
     	 Yii::app()->shoppingCart->clear();
     	 $this->renderPartial('_cart');
 	}
+
+
+    public function actionCart()
+    {
+        $positions = Yii::app()->shoppingCart->getPositions();
+        //CVarDumper::dump($positions, 10, true);
+        $array = array();
+
+        //$type_list = Item::model()->getTypeList();
+        foreach($positions as $position) {
+            $count = $position->getQuantity();
+            $price = $position['price'];
+            $type = $position['type'];
+            $item_title = $position['main_string'];
+            $id_item = $position['id'];
+            $summ = $position->getSumPrice();
+
+            $array[] = array('id'=>$id_item,
+                             'string'=>$item_title,
+                             'type'=>$type,
+                             'count'=>$count,
+                             'price'=>$price,
+                             'summ'=>$summ,
+            );
+        }
+
+        if(empty($array)) $data = new CArrayDataProvider($array);
+        else $data = new CArrayDataProvider($array, array('keyField' => 'id'));
+
+        $this->render('cart', array('items'=>$data));
+    }
+
+    public function actionDeleteOrd($id, $type)
+    {
+        if(!empty($id))
+        {
+            $model = Item::model()->findByPk($id);
+            Yii::app()->shoppingCart->remove($model->getId());
+        }
+    }
 }
