@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="www" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" config_file="$PROJECT_DIR$/protected/tests/phpunit.xml" scope="Directory" path="$PROJECT_DIR$">
+    <RunnerSettings RunnerId="PhpUnitDebugRunner" />
+    <ConfigurationWrapper RunnerId="PhpUnitDebugRunner" />
+    <method />
+  </configuration>
+</component>

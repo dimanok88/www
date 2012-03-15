@@ -35,7 +35,7 @@ $cs->scriptMap=array(
 <div class="container" id="page">
 
     <?
-    if(Yii::app()->user->checkAccess('moderator') || Yii::app()->user->checkAccess('admin')){
+    if(Yii::app()->user->role == 'moderator' || Yii::app()->user->role == 'admin'){
         if(Yii::app()->controller->action->id != 'cart'):?>
             <div id="cart">
 		        <? $this->renderPartial('/orders/_cart'); ?>
@@ -89,7 +89,11 @@ $cs->scriptMap=array(
                         ),
                     ),
                     array('label'=>'Пользователи', 'url'=>array('users/listUsers'), 'visible'=>!Yii::app()->user->isGuest),
-                    array('label'=>'Заказы', 'url'=>array('orders/'), 'visible'=>!Yii::app()->user->isGuest),
+                    array('label'=>'Заказы', 'url'=>array('orders/'), 'visible'=>!Yii::app()->user->isGuest,
+                        'items'=>array(
+                                array('label' => 'Типы заказов', 'url' => array('ordersType/')),
+                            ),
+                        ),
                     array('label'=>'Выйти', 'url'=>array('users/logout'), 'visible'=>!Yii::app()->user->isGuest),
                     array('label'=>'Войти', 'url'=>array('users/login'), 'visible'=>Yii::app()->user->isGuest),
                 ),

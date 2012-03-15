@@ -31,19 +31,20 @@ class OrdersController extends Controller
 	 */
 	public function actionUpdate($id = '')
 	{
-        $model=new Orders;
+        $model=new OrdersList();
 
 		if(!empty($id))
-            $model=$this->loadModel($id);
+            $model=OrdersList::model()->findByPk($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Orders']))
+		if(isset($_POST['OrdersList']))
 		{
-			$model->attributes=$_POST['Orders'];
+			$model->attributes=$_POST['OrdersList'];
+            $model->id_moderator = Yii::app()->user->id;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('orders/'));
 		}
 
 		$this->render('update',array(
@@ -205,7 +206,7 @@ class OrdersController extends Controller
         $order_list->id_user = $_POST['users'];
         $order_list->id_moderator = Yii::app()->user->id;
         $order_list->date_add = time();
-        $order_list->type = 'prov';
+        $order_list->type = '1';
         if($order_list->save())
         {
             $positions = Yii::app()->shoppingCart->getPositions();
@@ -234,5 +235,27 @@ class OrdersController extends Controller
         $user = Users::model()->getUserInfo($orders->id_user);
 
         $this->render('schet', array('order'=>$orders, 'order_list_item'=>$order_list_item, 'user'=>$user));
+    }
+
+    public function actionClient($order)
+    {
+        $this->layout = '//layouts/none';
+
+        $orders = OrdersList::model()->findByPk($order);
+        $order_list_item = Orders::model()->findAll('id_order_list=:ord', array(':ord'=>$order));
+        $user = Users::model()->getUserInfo($orders->id_user);
+
+        $this->render('client', array('order'=>$orders, 'order_list_item'=>$order_list_item, 'user'=>$user));
+    }
+
+    public function actionChek($order)
+    {
+        $this->layout = '//layouts/none';
+
+        $orders = OrdersList::model()->findByPk($order);
+        $order_list_item = Orders::model()->findAll('id_order_list=:ord', array(':ord'=>$order));
+        $user = Users::model()->getUserInfo($orders->id_user);
+
+        $this->render('chek', array('order'=>$orders, 'order_list_item'=>$order_list_item, 'user'=>$user));
     }
 }

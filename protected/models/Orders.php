@@ -65,7 +65,7 @@ class Orders extends CActiveRecord
 			'id' => 'Номер',
 			'id_item' => 'Предмет покупки',
 			'id_order_list' => 'Заказ',
-			'count' => 'Количестко',
+			'count' => 'Количество',
 		);
 	}
 

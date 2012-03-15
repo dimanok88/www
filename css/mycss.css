@@ -31,6 +31,7 @@
 .items { max-width: 1000px !important; width: 900px !important;}
 .items tbody { overflow-x: hidden; overflow-y: auto; height: 600px;}
 #type-item-grid .items tbody { overflow: hidden; height: auto !important; }
+#orders-type-grid .items tbody { overflow: hidden; height: auto !important; }
 #orders-grid .items tbody { overflow: hidden; height: auto !important; }
 #users .items tbody { overflow: hidden; height: auto !important; }
 
@@ -49,3 +50,5 @@ ul.yiiPager .first, ul.yiiPager .last { display: inline !important;}
 .total_summ {border: 1px solid black; border-radius: 5px; padding: 10px; margin: 0 0 15px 0; text-decoration: none;  font-size: 16px; font-weight: bold; background: #d0e5f5; color: black; -moz-box-shadow: 7px 7px 3px #888;
 -webkit-box-shadow: 7px 7px 3px #888;
 box-shadow: 7px 7px 3px #888;}
+
+.clear { clear: both;}

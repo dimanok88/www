@@ -46,7 +46,11 @@ $('.search-form form').submit(function(){
             'name'=>'date_add',
             'value'=>'Users::model()->getDate($data->date_add)',
         ),
-		'type',
+		'type'=>array(
+            'filter'=>OrdersType::model()->AllTypeOrd(),
+            'name'=>'type',
+            'value'=>'OrdersType::model()->getTypeOrd($data->type)',
+        ),
 		array(
 			'class'=>'CButtonColumn',
 		),

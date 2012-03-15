@@ -1,13 +1,10 @@
 <p><b>Дата: </b> <?= Users::model()->getDate($order->date_add)?><br />
-<b>Имя: </b>&nbsp;<?= $user->name;?><br />
-<b>Телефон: </b>&nbsp;<?= $user->phone;?><br />
-<b>E-mail: </b>&nbsp;<?= $user->email;?><br />
-<p><b>Адрес Доставки:</b> <?= $user->address?></p>
-<p><b>Комментарий: </b><br/>
-   <?= $order->comment;?>
+<b>ИП Григорьева  Елена Николаевна</b><br />
+<b>ОГРН  308366806500060</b><br />
+<b>ИНН 366101179094</b><br />
 </p>
 <hr>
-<p><b><font size="5">Заказ № <?= $order->id; ?></font></b></p>
+<p><b><font size="5">Товарный чек № <?= $order->id; ?></font></b></p>
 <p>&nbsp;</p>
 <table border="0" width="92%" id="table1" cellspacing="0">
 	<tr>
@@ -42,6 +39,6 @@ $s = $mt->Convert($summ);
 ?>
 <p><b>Сумма прописью: <?= $s;?>. Без НДС.</b></p>
 <p>&nbsp;</p>
-<p><b>Принял __________________________________________ </b></p>
+<p><b>Продавец: Кулагин А.Н.</b></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
