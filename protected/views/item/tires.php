@@ -100,7 +100,7 @@ $this->breadcrumbs = array(
             'type'=>'raw',
             'htmlOptions' => array('style' => 'text-align:center;'),
             'value'=>'Orders::model()->AddCartBut($data->id, "tire")'
-	),
+	    ),
         
 		array(
             'class' => 'CButtonColumn',

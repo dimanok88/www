@@ -12,6 +12,11 @@
 .percent li { margin: 7px 10px; padding: 10px; border: 1px #000000 dashed; display: inline-block; width: 230px;}
 .percent li.default_list { background: #C9E0ED;}
 
+.orders { margin: 0; padding: 0; list-style-type: none; width:  100%;}
+.orders li { margin: 7px 10px; padding: 20px 30px; border: 1px #000000 solid; width: 100%;
+    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background: #ccffcc;
+}
+
 .main_pic {position: absolute; margin: -30px 0 0 -100px;
     padding: 5px;
     background: #ffffff;
@@ -39,3 +44,8 @@ ul.yiiPager .first, ul.yiiPager .last { display: inline !important;}
 .items .success { background: url("../images/success.png") no-repeat; width:32px; height: 32px;}
 
 #cart {border: 1px solid #000000; padding: 10px 20px;  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position: absolute; right: 250px; background: #ccffcc; box-shadow: 7px 7px 3px #888;}
+
+
+.total_summ {border: 1px solid black; border-radius: 5px; padding: 10px; margin: 0 0 15px 0; text-decoration: none;  font-size: 16px; font-weight: bold; background: #d0e5f5; color: black; -moz-box-shadow: 7px 7px 3px #888;
+-webkit-box-shadow: 7px 7px 3px #888;
+box-shadow: 7px 7px 3px #888;}

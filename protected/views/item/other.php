@@ -78,6 +78,19 @@
            'checkBoxHtmlOptions'=>array('name'=>'item_check[]'),
         ),
 
+        array(
+			//'name'=>'',
+			'type'=>'raw',
+			'htmlOptions' => array('style' => 'text-align:center;'),
+			'value'=>'Chtml::textField("count", "1", array("style"=>"width:50px;", "id"=>"tire".$data->id))."<div id=\"message".$data->id."\"></div>"',
+		),
+	    array(            // display a column with "view", "update" and "delete" buttons
+            //'name'=>'',
+            'type'=>'raw',
+            'htmlOptions' => array('style' => 'text-align:center;'),
+            'value'=>'Orders::model()->AddCartBut($data->id, "tire")'
+	    ),
+
 		array(
             'class' => 'CButtonColumn',
             'header' => 'Действия',

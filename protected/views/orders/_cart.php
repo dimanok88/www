@@ -8,9 +8,9 @@
   				      ), 'style'=>"cursor:pointer;"
   			  )
 	); ?>
+    <br/>
+    <?= CHtml::link('В корзину', array('orders/cart'));?>
 <? else:?>
 	<div>В корзине пусто!</div>
 <?endif;?>
-<br/>
-    <?= CHtml::link('В корзину', array('orders/cart'));?>
 

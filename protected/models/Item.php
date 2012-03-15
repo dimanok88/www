@@ -497,6 +497,14 @@ class Item extends CActiveRecord implements IECartPosition
         return $image;
     }
 
+    public function getItem($id)
+    {
+        $item = $this->findByPk($id);
+
+        return $item;
+    }
+
+
     public function AllItems($type = '', $type_item = '', $new_price = '', $season = '')
     {
             $data = array();

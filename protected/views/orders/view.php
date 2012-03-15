@@ -1,28 +1,22 @@
-<?php
-$this->breadcrumbs=array(
-	'Orders'=>array('index'),
-	$model->id,
-);
 
-$this->menu=array(
-	array('label'=>'List Orders', 'url'=>array('index')),
-	array('label'=>'Create Orders', 'url'=>array('create')),
-	array('label'=>'Update Orders', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Orders', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Orders', 'url'=>array('admin')),
-);
+<h1>Номер заказа <?php echo $order->id; ?></h1>
+    <div class="total_summ">
+        <div style="float: right;">
+            <?= CHtml::link('Счет', "Javascript:void()",
+                            array('onClick'=>"window.open('".Yii::app()->createUrl('order/schet', array('order'=>$order->id))."', 'popup', 'toolbar=0, width=640, height=600')"))?><br/>
+            <?= CHtml::link('Накладная', "Javascript:void()",
+                            array('onClick'=>"window.open('".Yii::app()->createUrl('order/naklad', array('order'=>$order->id))."', 'popup', 'toolbar=0, width=640, height=600')"))?>
+        </div>
+        
+        <b>Итого: </b> <?= Orders::model()->Summ($order->id); ?><br/>
+        <b>Получатель:</b> <?= Users::model()->getUser($order->id_user)?>
+    </div>
+<?
+        $this->widget('zii.widgets.CListView', array(
+            'dataProvider'=>$dataProvider,
+            'itemView'=>'_view',
+            'id'=>'oders',
+            'ajaxUpdate'=>true,
+            'itemsTagName' => 'ul',
+            'itemsCssClass' =>'orders',));
 ?>
-
-<h1>View Orders #<?php echo $model->id; ?></h1>
-
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'id_item',
-		'id_user',
-		'id_moderator',
-		'date_add',
-		'count',
-	),
-)); ?>

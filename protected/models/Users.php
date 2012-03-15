@@ -73,7 +73,7 @@ class Users extends CActiveRecord
 		return array(
 			array('login, password, email, name, role, phone', 'required'),
 			array('active, id_user_reg, send_mail', 'numerical', 'integerOnly'=>true),
-            array('login, email, code_active', 'unique'),
+            array('login, email', 'unique'),
 			array('login, name', 'length', 'max'=>30),
 			array('password', 'length', 'max'=>60),
             array('password_req', 'length', 'max'=>60),
@@ -229,5 +229,56 @@ class Users extends CActiveRecord
         $email->view = 'regUser';
         $email->viewVars = array('login'=>$this->login,'phone'=>$this->phone);
         $email->send();
+    }
+
+    public function getUser($id)
+    {
+        $user = $this->findByPk($id);
+        return $user->name."(".$user->phone.")";
+    }
+
+    public function AllUsers($addEmptyItem = false)
+    {
+        $result = array();
+
+        $criteria = new CDbCriteria();
+        $criteria->condition = "role != 'admin' AND role!='moderator'";
+
+        $values = $this->findAll($criteria);
+
+        if( $addEmptyItem )
+        {
+            $result[''] = '';
+        }
+
+        foreach($values as $value)
+        {
+            $result[$value->id] = $value->name."(".$value->email.")";
+        }
+
+        return $result;
+    }
+
+
+    public function AllModer($addEmptyItem = false)
+    {
+        $result = array();
+
+        $criteria = new CDbCriteria();
+        $criteria->condition = "role = 'admin' OR role='moderator'";
+
+        $values = $this->findAll($criteria);
+
+        if( $addEmptyItem )
+        {
+            $result[''] = '';
+        }
+
+        foreach($values as $value)
+        {
+            $result[$value->id] = $value->login;
+        }
+
+        return $result;
     }
 }

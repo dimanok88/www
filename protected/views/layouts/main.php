@@ -36,7 +36,7 @@ $cs->scriptMap=array(
 
     <?
     if(Yii::app()->user->checkAccess('moderator') || Yii::app()->user->checkAccess('admin')){
-        if(Yii::app()->controller->id != 'orders'):?>
+        if(Yii::app()->controller->action->id != 'cart'):?>
             <div id="cart">
 		        <? $this->renderPartial('/orders/_cart'); ?>
         </div>

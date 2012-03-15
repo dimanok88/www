@@ -6,8 +6,7 @@
  * The followings are the available columns in table 'orders':
  * @property integer $id
  * @property integer $id_item
- * @property integer $id_user
- * @property integer $id_moderator
+ * @property integer $id_order_list
  * @property integer $date_add
  * @property integer $count
  */
@@ -38,11 +37,11 @@ class Orders extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_item, id_user, id_moderator, date_add, count', 'required'),
-			array('id_item, id_user, id_moderator, date_add, count', 'numerical', 'integerOnly'=>true),
+			array('id_item, id_order_list, count', 'required'),
+			array('id_item, id_order_list, count', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, id_item, id_user, id_moderator, date_add, count', 'safe', 'on'=>'search'),
+			array('id, id_item, id_order_list, count', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,9 +64,7 @@ class Orders extends CActiveRecord
 		return array(
 			'id' => 'Номер',
 			'id_item' => 'Предмет покупки',
-			'id_user' => 'Пользователь',
-			'id_moderator' => 'Менеджер',
-			'date_add' => 'Дата покупки',
+			'id_order_list' => 'Заказ',
 			'count' => 'Количестко',
 		);
 	}
@@ -85,9 +82,7 @@ class Orders extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('id_item',$this->id_item);
-		$criteria->compare('id_user',$this->id_user);
-		$criteria->compare('id_moderator',$this->id_moderator);
-		$criteria->compare('date_add',$this->date_add);
+		$criteria->compare('id_order_list',$this->id_order_list);
 		$criteria->compare('count',$this->count);
 
 		return new CActiveDataProvider($this, array(
@@ -123,5 +118,25 @@ class Orders extends CActiveRecord
         );
 
         return $but;
+    }
+
+    public function countRefresh($count, $id)
+    {
+        $it = CHtml::textField("count[".$id."]", $count, array('size'=>'5'));
+
+        return $it;
+    }
+
+    public function Summ($id_orders_list)
+    {
+        $orders = $this->findAll('id_order_list=:ord_list', array(':ord_list'=>$id_orders_list));
+        $summ = 0;
+        foreach($orders as $ord)
+        {
+            $price_item = Item::model()->getItem($ord['id_item']);
+            $summ += $price_item['price'] * $ord['count'];
+        }
+
+        return Item::model()->getPriceOther($summ);
     }
 }

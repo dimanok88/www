@@ -251,4 +251,3 @@ $url = "http://".$_SERVER['HTTP_HOST'].Yii::app()->request->getRequestUri();
     }
 }
 ?>
- 

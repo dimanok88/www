@@ -1,6 +1,10 @@
 <h1>Корзина</h1>
 
 <div>
+    <?= CHtml::form();?>
+    <div class="row button-column">
+        <?= CHtml::submitButton('Обновить');?>
+    </div>
     <?php $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'orders-grid',
         'dataProvider'=>$items,
@@ -14,13 +18,15 @@
                 'header'=>'Товар',
                 'name'=>'string',
             ),
-            'type'=>array(
+            /*'type'=>array(
                 'header'=>'Тип',
                 'name'=>'type',
-            ),
+            ),*/
             'count'=>array(
                 'header'=>'Количество',
                 'name'=>'count',
+                'type'=>'raw',
+                'value'=>'Orders::model()->countRefresh($data["count"], $data["id"])'
             ),
             'price'=>array(
                 'header'=>'Цена за шт.',
@@ -31,7 +37,7 @@
                 'header'=>'Общая сумма',
                 'name'=>'summ',
                 'value'=>'Item::model()->getPriceOther($data["summ"])',
-                'footer'=>'Итого: '.Yii::app()->shoppingCart->getCost(),
+                'footer'=>'Итого: '.Item::model()->getPriceOther(Yii::app()->shoppingCart->getCost()),
             ),
 
             array(
@@ -42,5 +48,17 @@
             ),
         ),
     )); ?>
+    <div class="row button-column">
+        <?= CHtml::submitButton('Обновить');?>
+    </div>
+<?= CHtml::endForm();?>
 
+    <?= CHtml::Form(array('orders/add'));?>
+        <?= CHtml::dropDownList('users', '',Users::model()->AllUsers()); ?>
+        <?= CHtml::submitButton('Оформить заказ');?>
+    <?= CHtml::endForm();?>
+
+    <?
+    //$this->renderPartial('_newUser', array('userModel'=>$usermodel))
+    ?>
 </div>

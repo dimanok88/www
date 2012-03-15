@@ -31,12 +31,19 @@ $('.search-form form').submit(function(){
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
-		'id_item',
-		'id_user',
-		'id_moderator',
+        'id',
+		'id_user'=>array(
+            'name'=>'id_user',
+            'filter'=> Users::model()->AllUsers(),
+            'value'=>'Users::model()->getUser($data->id_user)',
+        ),
+		'id_moderator'=>array(
+            'name'=>'id_moderator',
+            'filter'=> Users::model()->AllModer(),
+            'value'=>'Users::model()->getUser($data->id_moderator)',
+        ),
 		'date_add',
-		'count',
+		'type',
 		array(
 			'class'=>'CButtonColumn',
 		),
