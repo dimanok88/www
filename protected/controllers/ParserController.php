@@ -40,9 +40,12 @@ class ParserController extends Controller
 
                                 if(empty($row[7])) $type_item = '';
                                 else $type_item = $row[7];
+
                                 if(empty($row[6])) $pic = '';
                                 else $pic = $row[6];
+
                                 if(empty($row[3])) $row[3] = '';
+                                
                                 if($row[3] == 'other')
                                 {
                                      $result = $parser_other->run($row[0]);
@@ -58,6 +61,7 @@ class ParserController extends Controller
                                     $price = trim($row[2]);
                                     if(empty($row[4])) $season = '';
                                     else $season = $row[4];
+
                                     if(empty($row[5])) $shipi = '';
                                     else $shipi = $row[5];
                                 }
@@ -131,7 +135,7 @@ class ParserController extends Controller
             if(count($file) > 0)
             {
                 $model = new Item();
-                $files = $model->findAll('pic != "" GROUP BY pic');
+                $files = $model->findAll('pic != ""');
                 $imageHandler = new CImageHandler();
 
                 foreach($files as $val)

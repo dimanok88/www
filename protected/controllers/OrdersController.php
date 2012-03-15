@@ -154,6 +154,13 @@ class OrdersController extends Controller
         //CVarDumper::dump($positions, 10, true);
         $array = array();
 
+        $user = new Users();
+
+        if(isset($_POST['Users']))
+        {
+            $this->AddUser($_POST['Users']);
+        }
+
         if(isset($_POST['count']))
         {
             $count_new = $_POST['count'];
@@ -187,7 +194,7 @@ class OrdersController extends Controller
         if(empty($array)) $data = new CArrayDataProvider($array);
         else $data = new CArrayDataProvider($array, array('keyField' => 'id'));
 
-        $this->render('cart', array('items'=>$data));
+        $this->render('cart', array('items'=>$data, 'userModel'=>$user));
     }
 
     public function actionDeleteOrd($id, $type)
@@ -257,5 +264,24 @@ class OrdersController extends Controller
         $user = Users::model()->getUserInfo($orders->id_user);
 
         $this->render('chek', array('order'=>$orders, 'order_list_item'=>$order_list_item, 'user'=>$user));
+    }
+
+    public function AddUser($post)
+    {
+        $model = new Users();
+
+                if(isset($post))
+                {
+
+                    $model->attributes = $post;
+
+                        $model->password = crypt($post['password'], substr($post['password'], 0, 2));
+                        $model->password_req = crypt($post['password_req'], substr($post['password_req'], 0, 2));
+                    if($model->save())
+                    {
+                        $this->refresh();
+                    }
+                }
+
     }
 }

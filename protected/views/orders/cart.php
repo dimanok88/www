@@ -1,5 +1,6 @@
 <h1>Корзина</h1>
 
+<? if($items->itemCount >0 ){?>
 <div>
     <?= CHtml::form();?>
     <div class="row button-column">
@@ -52,13 +53,20 @@
         <?= CHtml::submitButton('Обновить');?>
     </div>
 <?= CHtml::endForm();?>
+<br/><br/>
+    <div id=new_user>
 
     <?= CHtml::Form(array('orders/add'));?>
         <?= CHtml::dropDownList('users', '',Users::model()->AllUsers()); ?>
         <?= CHtml::submitButton('Оформить заказ');?>
     <?= CHtml::endForm();?>
 
+        <br/><br/>
     <?
-    //$this->renderPartial('_newUser', array('userModel'=>$usermodel))
+    $this->renderPartial('application.views.users.newed', array('model'=>$userModel))
     ?>
+    </div>
 </div>
+<?} else{?>
+    <div>Корзина пуста!</div>
+<?}?>

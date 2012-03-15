@@ -12,7 +12,7 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Name',
+		'title',
 		'sys_name',
 		array(
 			'class'=>'CButtonColumn',
