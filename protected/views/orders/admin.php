@@ -42,7 +42,10 @@ $('.search-form form').submit(function(){
             'filter'=> Users::model()->AllModer(),
             'value'=>'Users::model()->getUser($data->id_moderator)',
         ),
-		'date_add',
+		'date_add'=>array(
+            'name'=>'date_add',
+            'value'=>'Users::model()->getDate($data->date_add)',
+        ),
 		'type',
 		array(
 			'class'=>'CButtonColumn',
