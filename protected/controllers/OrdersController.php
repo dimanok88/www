@@ -228,6 +228,11 @@ class OrdersController extends Controller
     public function actionSchet($order)
     {
         $this->layout = '//layouts/none';
-        $this->render('dogovor', array('page'=>$art));
+
+        $orders = OrdersList::model()->findByPk($order);
+        $order_list_item = Orders::model()->findAll('id_order_list=:ord', array(':ord'=>$order));
+        $user = Users::model()->getUserInfo($orders->id_user);
+
+        $this->render('schet', array('order'=>$orders, 'order_list_item'=>$order_list_item, 'user'=>$user));
     }
 }

@@ -39,10 +39,11 @@ class OrdersList extends CActiveRecord
 		return array(
 			array('id_user, id_moderator, type', 'required'),
 			array('id_user, id_moderator', 'numerical', 'integerOnly'=>true),
+            array('comment', 'default'),
 			array('type', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, date_add, id_user, id_moderator, type', 'safe', 'on'=>'search'),
+			array('id, date_add, id_user, comment, id_moderator, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +69,7 @@ class OrdersList extends CActiveRecord
 			'id_user' => 'Пользователь',
 			'id_moderator' => 'Менеджер',
 			'type' => 'Тип',
+            'comment'=>'Комментарий',
 		);
 	}
 
@@ -87,6 +89,7 @@ class OrdersList extends CActiveRecord
 		$criteria->compare('id_user',$this->id_user);
 		$criteria->compare('id_moderator',$this->id_moderator);
 		$criteria->compare('type',$this->type,true);
+        $criteria->compare('comment',$this->comment,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

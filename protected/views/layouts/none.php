@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<title><?php echo CHtml::encode($this->title); ?></title>
+	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
 </head>
-<body>
+<body onload="window.print()">
 
 	<?php echo $content; ?>
 

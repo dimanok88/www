@@ -19,6 +19,7 @@ return array(
         'application.extensions.shoppingCart.*',
         'application.extensions.categorytree.*',
 		'application.extensions.parser.*',
+        'application.extensions.int2str.*',
 	),
 
 	'components'=>array(

@@ -3,12 +3,12 @@
     <div class="total_summ">
         <div style="float: right;">
             <?= CHtml::link('Счет', "Javascript:void()",
-                            array('onClick'=>"window.open('".Yii::app()->createUrl('order/schet', array('order'=>$order->id))."', 'popup', 'toolbar=0, width=640, height=600')"))?><br/>
+                            array('onClick'=>"window.open('".Yii::app()->createUrl('orders/schet', array('order'=>$order->id))."', 'popup', 'toolbar=0, scrollbars=1, width=640, height=600')"))?><br/>
             <?= CHtml::link('Накладная', "Javascript:void()",
-                            array('onClick'=>"window.open('".Yii::app()->createUrl('order/naklad', array('order'=>$order->id))."', 'popup', 'toolbar=0, width=640, height=600')"))?>
+                            array('onClick'=>"window.open('".Yii::app()->createUrl('orders/naklad', array('order'=>$order->id))."', 'popup', 'toolbar=0, scrollbars=1, width=640, height=600')"))?>
         </div>
         
-        <b>Итого: </b> <?= Orders::model()->Summ($order->id); ?><br/>
+        <b>Итого: </b> <?= Orders::model()->Summ($order->id, true); ?><br/>
         <b>Получатель:</b> <?= Users::model()->getUser($order->id_user)?>
     </div>
 <?

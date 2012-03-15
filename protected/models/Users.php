@@ -237,6 +237,12 @@ class Users extends CActiveRecord
         return $user->name."(".$user->phone.")";
     }
 
+    public function getUserInfo($id)
+    {
+        $user = $this->findByPk($id);
+        return $user;
+    }
+
     public function AllUsers($addEmptyItem = false)
     {
         $result = array();
@@ -280,5 +286,14 @@ class Users extends CActiveRecord
         }
 
         return $result;
+    }
+
+    public function getDate($time,$short=false)
+    {
+        if(!is_numeric($time)) $time = CDateTimeParser::parse($time,'yyyy-MM-dd hh:mm:ss');
+        if($short == true) $time = date('Y.m.d', $time);
+        else $time = date('Y-m-d H:i:s', $time);
+
+        return $time;
     }
 }

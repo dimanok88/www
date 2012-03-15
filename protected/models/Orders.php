@@ -127,7 +127,7 @@ class Orders extends CActiveRecord
         return $it;
     }
 
-    public function Summ($id_orders_list)
+    public function Summ($id_orders_list, $format= false)
     {
         $orders = $this->findAll('id_order_list=:ord_list', array(':ord_list'=>$id_orders_list));
         $summ = 0;
@@ -137,6 +137,8 @@ class Orders extends CActiveRecord
             $summ += $price_item['price'] * $ord['count'];
         }
 
-        return Item::model()->getPriceOther($summ);
+        if($format == true ) return Item::model()->getPriceOther($summ);
+        
+        return $summ;
     }
 }
