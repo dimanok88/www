@@ -3,18 +3,8 @@
   <component name="ChangeListManager">
     <list id="561d862a-a758-4946-86aa-96d8a15764c4" name="Default" comment="" />
     <list default="true" id="f39c27c6-4e84-44b3-949e-577d09220d96" name="New changelist" comment="orders">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/orders/cart_item.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/OrdersController.php" afterPath="$PROJECT_DIR$/protected/controllers/OrdersController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Orders.php" afterPath="$PROJECT_DIR$/protected/models/Orders.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/layouts/main.php" afterPath="$PROJECT_DIR$/protected/views/layouts/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/_view.php" afterPath="$PROJECT_DIR$/protected/views/orders/_view.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/cart.php" afterPath="$PROJECT_DIR$/protected/views/orders/cart.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/chek.php" afterPath="$PROJECT_DIR$/protected/views/orders/chek.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/client.php" afterPath="$PROJECT_DIR$/protected/views/orders/client.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/schet.php" afterPath="$PROJECT_DIR$/protected/views/orders/schet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/orders/view.php" afterPath="$PROJECT_DIR$/protected/views/orders/view.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/parser/index.php" afterPath="$PROJECT_DIR$/protected/views/parser/index.php" />
     </list>
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,10 +64,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chek.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="chek.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/orders/chek.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="42" selection-start="826" selection-end="826" vertical-scroll-proportion="0.34228188">
+            <state line="17" column="42" selection-start="826" selection-end="826" vertical-scroll-proportion="-10.625">
               <folding />
             </state>
           </provider>
@@ -113,16 +103,16 @@
       <file leaf-file-name="Orders.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/models/Orders.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="129" selection-start="3913" selection-end="4017" vertical-scroll-proportion="0.0">
+            <state line="124" column="77" selection-start="3526" selection-end="3526" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Item.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/models/Item.php">
+      <file leaf-file-name="main.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="38" column="107" selection-start="1538" selection-end="1589" vertical-scroll-proportion="0.20134228">
               <folding />
             </state>
           </provider>
@@ -150,7 +140,6 @@
         <option value="$PROJECT_DIR$/protected/views/users/newed.php" />
         <option value="$PROJECT_DIR$/protected/views/parser/index.php" />
         <option value="$PROJECT_DIR$/protected/views/orders/cart.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/main.php" />
         <option value="$PROJECT_DIR$/protected/views/orders/cart_item.php" />
         <option value="$PROJECT_DIR$/protected/controllers/OrdersController.php" />
         <option value="$PROJECT_DIR$/protected/models/Orders.php" />
@@ -159,6 +148,7 @@
         <option value="$PROJECT_DIR$/protected/views/orders/schet.php" />
         <option value="$PROJECT_DIR$/protected/views/orders/client.php" />
         <option value="$PROJECT_DIR$/protected/views/orders/chek.php" />
+        <option value="$PROJECT_DIR$/protected/views/layouts/main.php" />
       </list>
     </option>
   </component>
@@ -723,6 +713,7 @@
     <frame x="0" y="24" width="1280" height="976" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293124" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -736,7 +727,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -837,13 +827,6 @@
         <state line="40" column="29" selection-start="1091" selection-end="1091" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="103" selection-start="1585" selection-end="1585" vertical-scroll-proportion="-16.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/orders/cart_item.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="49" column="63" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
@@ -859,20 +842,6 @@
     <entry file="file://$PROJECT_DIR$/protected/controllers/OrdersController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="189" column="126" selection-start="4894" selection-end="4999" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Item.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Orders.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="129" selection-start="3913" selection-end="4017" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -907,7 +876,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/orders/chek.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="42" selection-start="826" selection-end="826" vertical-scroll-proportion="0.34228188">
+        <state line="17" column="42" selection-start="826" selection-end="826" vertical-scroll-proportion="-10.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-9.377113">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Orders.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="124" column="77" selection-start="3526" selection-end="3526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="107" selection-start="1538" selection-end="1589" vertical-scroll-proportion="0.20134228">
           <folding />
         </state>
       </provider>
