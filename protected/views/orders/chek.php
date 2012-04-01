@@ -14,18 +14,20 @@
 		<td width="20%" style="border-style: solid; border-width: 1px" align="center"><b>Сумма руб.</b></td>
 	</tr>
 
-        <? foreach($order_list_item as $ord):
+        <?
+        $type_price = $_GET['type_price'];
+    foreach($order_list_item as $ord):
             $item = Item::model()->getItem($ord['id_item']);
         ?>
             <tr>
                 <td width="5%" style="border-style: solid; border-width: 1px"><?= $ord['count']?></td>
                 <td width="48%" style="border-style: solid; border-width: 1px"><?= $item->main_string; ?></td>
-                <td style="border-style: solid; border-width: 1px" width="20%"><?= Item::model()->getPriceOther($item->price); ?></td>
-                <td width="20%" style="border-style: solid; border-width: 1px"><?= Item::model()->getPriceOther($item->price*$ord['count']);?></td>
+                <td style="border-style: solid; border-width: 1px" width="20%"><?= Item::model()->getPriceOther(Percent::model()->getPercent($item['type'], $item['type_item'], $type_price, $item->price)); ?></td>
+                <td width="20%" style="border-style: solid; border-width: 1px"><?= Item::model()->getPriceOther(Percent::model()->getPercent($item['type'], $item['type_item'], $type_price, $item->price)*$ord['count']);?></td>
             </tr>
         <? endforeach; ?>
 
-    <? $summ = Orders::model()->Summ($order->id);?>
+    <? $summ = Orders::model()->Summ($order->id, false, $_GET['type_price']);?>
 	<tr>
 		<td colspan="3" style="border-style: solid; border-width: 1px">
 		<p align="right"><b>Итого: </b></td>

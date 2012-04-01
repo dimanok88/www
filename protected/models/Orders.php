@@ -127,14 +127,17 @@ class Orders extends CActiveRecord
         return $it;
     }
 
-    public function Summ($id_orders_list, $format= false)
+    public function Summ($id_orders_list, $format= false, $type = '')
     {
         $orders = $this->findAll('id_order_list=:ord_list', array(':ord_list'=>$id_orders_list));
         $summ = 0;
         foreach($orders as $ord)
         {
             $price_item = Item::model()->getItem($ord['id_item']);
-            $summ += $price_item['price'] * $ord['count'];
+            if(!empty($type))
+                $summ += Percent::model()->getPercent($price_item['type'], $price_item['type_item'], $type, $price_item['price']) * $ord['count'];
+            else
+                $summ += $price_item['price'] * $ord['count'];
         }
 
         if($format == true ) return Item::model()->getPriceOther($summ);

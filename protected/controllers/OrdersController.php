@@ -18,9 +18,11 @@ class OrdersController extends Controller
             );
 
         $order = OrdersList::model()->findByPk($id);
+
+        $user = Users::model()->findByPk($order['id_user']);
         
 		$this->render('view',array(
-			'dataProvider'=>$dataProvider, 'order'=>$order
+			'dataProvider'=>$dataProvider, 'order'=>$order , 'type_price'=>$user['type_user']
 		));
 	}
 
@@ -161,27 +163,38 @@ class OrdersController extends Controller
             $this->AddUser($_POST['Users']);
         }
 
-        if(isset($_POST['count']))
+
+
+        $this->render('cart', array('userModel'=>$user));
+    }
+
+
+    public function actionCartItem()
+    {
+        $positions = Yii::app()->shoppingCart->getPositions();
+        //CVarDumper::dump($positions, 10, true);
+        $array = array();
+
+        if(!Yii::app()->user->getState('user'))
         {
-            $count_new = $_POST['count'];
-
-            foreach($count_new as $val=>$key)
-       	    {
-                $update_item = Item::model()->findByPk($val);
-                Yii::app()->shoppingCart->update($update_item, $key);
-	        }
-
-            $this->refresh();
+            $u = $_POST['users'];
+            Yii::app()->user->setState('user', $u);
         }
+        $user = Users::model()->findByPk(Yii::app()->user->getState('user'));
+        $type_price = $user['type_user'];
+
+        $total = 0;
         //$type_list = Item::model()->getTypeList();
         foreach($positions as $position) {
             $count = $position->getQuantity();
-            $price = $position['price'];
+            $price = Percent::model()->getPercent($position['type'], $position['type_item'], $type_price, $position['price']);
             $type = $position['type'];
             $item_title = $position['main_string'];
             $id_item = $position['id'];
-            $summ = $position->getSumPrice();
-
+            //echo $position->getQuantity()." ".$price;
+            $s = $position->getQuantity() * $price;
+            $summ = $s;
+            $total +=$summ;
             $array[] = array('id'=>$id_item,
                              'string'=>$item_title,
                              'type'=>$type,
@@ -194,7 +207,7 @@ class OrdersController extends Controller
         if(empty($array)) $data = new CArrayDataProvider($array);
         else $data = new CArrayDataProvider($array, array('keyField' => 'id'));
 
-        $this->render('cart', array('items'=>$data, 'userModel'=>$user));
+        $this->render('cart_item', array('items'=>$data, 'user'=>Yii::app()->user->getState('user'), 'total'=>$total));
     }
 
     public function actionDeleteOrd($id, $type)
@@ -208,9 +221,23 @@ class OrdersController extends Controller
 
     public function  actionAdd()
     {
+        if(isset($_POST['count']) && !isset($_POST['succ']))
+        {
+            $count_new = $_POST['count'];
+
+            foreach($count_new as $val=>$key)
+       	    {
+                $update_item = Item::model()->findByPk($val);
+                Yii::app()->shoppingCart->update($update_item, $key);
+	        }
+
+            $this->redirect(array('orders/cartItem'));
+        }
+        else{
+
         $order_list = new OrdersList();
 
-        $order_list->id_user = $_POST['users'];
+        $order_list->id_user = Yii::app()->user->getState('user');
         $order_list->id_moderator = Yii::app()->user->id;
         $order_list->date_add = time();
         $order_list->type = '1';
@@ -230,6 +257,7 @@ class OrdersController extends Controller
             Yii::app()->shoppingCart->clear();
         }
         $this->redirect(array('orders/'));
+        }
     }
 
 

@@ -13,7 +13,7 @@
     <b>Сумма: </b>
 
 	<?php
-    $price_item = $item->price*$data->count;
+    $price_item = Percent::model()->getPercent($item['type'], $item['type_item'], $type_price, $item->price)*$data->count;
      echo Item::model()->getPriceOther($price_item);
     ?>
     <br />
